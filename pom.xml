@@ -7,8 +7,51 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>valid4j</name>
-  <url>http://org.valid4j</url>
+  <name>Valid4J</name>
+  <url>http://valid4j.org</url>
+  <description>Simple validation framework for Java</description>
+  <inceptionYear>2014</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>Valid4J</name>
+    <url>http://www.valid4j.org</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>helsing</id>
+      <name>Patrik Helsing</name>
+      <email>patrik@helsing.se</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/helsing/valid4j.git</connection>
+    <developerConnection>scm:git:git@github.com:helsing/valid4j.git</developerConnection>
+    <url>http://github.com/helsing/valid4j/tree/master</url>
+  </scm>
+
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/helsing/valid4j/issues</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Travis CI</system>
+    <url>http://travis-ci.org/#!/helsing/valid4j</url>
+  </ciManagement>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdkVersion>1.6</jdkVersion>
+  </properties>
 
   <build>
     <plugins>
@@ -16,8 +59,15 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>${jdkVersion}</source>
+          <target>${jdkVersion}</target>
+          <compilerVersion>1.6</compilerVersion>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <debug>true</debug>
+          <fork>false</fork>
+          <compilerArgument>-Xlint:unchecked</compilerArgument>
         </configuration>
       </plugin>
       <plugin>
@@ -33,10 +83,6 @@
     </plugins>
   </build>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.hamcrest</groupId>
@@ -50,4 +96,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
 </project>
