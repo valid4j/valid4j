@@ -9,6 +9,7 @@ public class ExceptionFactories {
 		private final Constructor<T> exceptionConstructor;
 		
 		public OneArgumentFactory(Constructor<T> exceptionConstructor) {
+			// TODO: How about using contracts here?
 			if (!Modifier.isPublic(exceptionConstructor.getModifiers())) {
 				throw new AssertionError("Exception constructor must be public");
 			}
@@ -30,6 +31,7 @@ public class ExceptionFactories {
 			try {
 				return exceptionConstructor.newInstance(msg);
 			} catch (InstantiationException e) {
+				// TODO: If this really happens? What about actually returning the caught exception?
 				throw new AssertionError("Exception class must not be abstract", e);
 			} catch (IllegalAccessException e) {
 				throw new AssertionError("Exception constructor must be public", e);
