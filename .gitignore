@@ -1,7 +1,9 @@
 .classpath
 .project
 .settings/
+.idea
 
+*.iml
 *.class
 
 # Package Files #
