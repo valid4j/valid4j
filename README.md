@@ -7,6 +7,10 @@ express pre- and post-conditions in your code. Use the global default
 policy to signal logical violations in your code or optionally specify 
 your own handling.
 
+Statically import the library entry point:
+
+    import static org.valid4j.DesignByContract.*;
+
 Use assertive preconditions to check for programming errors in calling clients:
 
     // Express your preconditions using plain boolean expressions, with a helpful error message (optional)
