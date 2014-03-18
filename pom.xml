@@ -15,7 +15,8 @@
   <licenses>
     <license>
       <name>Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
     </license>
   </licenses>
 
@@ -29,6 +30,11 @@
       <id>helsing</id>
       <name>Patrik Helsing</name>
       <email>patrik@helsing.se</email>
+    </developer>
+    <developer>
+      <id>guranxp</id>
+      <name>Göran Persson</name>
+      <email>guranxp@gmail.com</email>
     </developer>
   </developers>
 
