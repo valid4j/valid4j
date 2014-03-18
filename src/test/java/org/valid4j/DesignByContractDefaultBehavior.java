@@ -1,12 +1,14 @@
 package org.valid4j;
 
 import java.io.*;
+import java.util.Date;
 
 import org.junit.*;
 import org.junit.rules.*;
 import org.valid4j.exceptions.*;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 import static org.valid4j.DesignByContract.*;
 
 public class DesignByContractDefaultBehavior {
@@ -25,8 +27,25 @@ public class DesignByContractDefaultBehavior {
 	}
 	
 	@Test
-	public void shouldPassWhenRequiredConditionIsMatched() {
+	public void shouldPassWhenNullDescribedRequiredConditionIsTrue() {
+		require(true, nullMessage());
+	}
+	
+	@Test
+	public void shouldPassWhenArgumentDescribedRequiredConditionIsTrue() {
+		require(true, "Some %s and %s", "this", "that");
+	}
+	
+	@Test
+	public void shouldPassWhenRequiredConditionMatches() {
 		require(3, equalTo(3));
+	}
+	
+	@Test
+	public void shouldPassValidObjectAsRequiredResult() {
+		Date argument = new Date();
+		Date result = require(argument, notNullValue());
+		assertThat(result, sameInstance(argument));
 	}
 
 	@Test
@@ -40,31 +59,52 @@ public class DesignByContractDefaultBehavior {
 	}
 	
 	@Test
-	public void shouldPassWhenEnsuredConditionIsMatched() {
+	public void shouldPassWhenNullDescribedEnsuredConditionIsTrue() {
+		ensure(true, nullMessage());
+	}
+	
+	@Test
+	public void shouldPassWhenArgumentDescribedEnsuredConditionIsTrue() {
+		ensure(true, "%s and %s", "This", "that");
+	}
+	
+	@Test
+	public void shouldPassWhenEnsuredConditionMatches() {
 		ensure(4, equalTo(4));
+	}
+	
+	@Test
+	public void shouldPassValidObjectAsEnsuredResult() {
+		Date argument = new Date();
+		Date result = ensure(argument, notNullValue());
+		assertThat(result, sameInstance(argument));
 	}
 
 	@Test
 	public void shouldThrowWhenRequireFails() {
 		thrown.expect(RequireViolation.class);
-		thrown.expectMessage(containsString("require violation"));
-		
 		require(false);
 	}
 	
 	@Test
 	public void shouldThrowWithMessageWhenRequireFails() {
 		thrown.expect(RequireViolation.class);
-		thrown.expectMessage(containsString("require violation"));
 		thrown.expectMessage(containsString("some message"));
-		
-		require(false, "some message");
+		require(false, "some %s", "message");
+	}
+
+	@Test
+	public void shouldThrowWithIllegalFormatMessageWhenRequireFails() {
+		thrown.expect(RequireViolation.class);
+		thrown.expectMessage(containsString("some %s %d"));
+		thrown.expectMessage(containsString("message"));
+		thrown.expectMessage(containsString("hi"));
+		require(false, "some %s %d", "message", "hi");
 	}
 
 	@Test
 	public void shouldThrowWithMatchingMessageWhenRequireFails() {
 		thrown.expect(RequireViolation.class);
-		thrown.expectMessage(containsString("require violation"));
 		thrown.expectMessage(containsString("expected: not <2>"));
 		thrown.expectMessage(containsString("was: <2>"));
 		
@@ -114,6 +154,11 @@ public class DesignByContractDefaultBehavior {
 		thrown.expectCause(sameInstance(t));
 		
 		neverGetHere(t);
+	}
+	
+	// Return null message as a String in order to let the compiler bind to proper method.
+	private static String nullMessage() {
+		return null;
 	}
 
 }

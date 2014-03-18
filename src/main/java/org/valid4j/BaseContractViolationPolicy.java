@@ -13,22 +13,12 @@ public abstract class BaseContractViolationPolicy implements ContractViolationPo
 	public BaseContractViolationPolicy(ErrorMessageBuilder errorMessageBuilder) {
 		this.msg = errorMessageBuilder;
 	}
-
-	@Override
-	public void require(boolean condition) {
-		require(condition, null);
-	}
 	
 	@Override
 	public void require(Object o, Matcher<?> matcher) {
 		if (!matcher.matches(o)) {
 			require(false, withMismatchMessageOf(o, matcher));
 		}
-	}
-
-	@Override
-	public void ensure(boolean condition) {
-		ensure(condition, null);
 	}
 
 	@Override

@@ -11,6 +11,8 @@ import org.hamcrest.*;
  */
 public class DesignByContract {
 	
+	private static final String NULL_MESSAGE = null;
+	
 	private static ContractViolationPolicy policy = new DefaultContractViolationPolicy();
 	
 	public static void setPolicy(ContractViolationPolicy aPolicy) {
@@ -20,27 +22,29 @@ public class DesignByContract {
 	}
 	
 	public static void require(boolean condition) {
-		policy.require(condition);
+		policy.require(condition, NULL_MESSAGE);
 	}
 	
-	public static void require(Object o, Matcher<?> matcher) {
+	public static <T> T require(T o, Matcher<?> matcher) {
 		policy.require(o, matcher);
+		return o;
 	}
 	
-	public static void require(boolean condition, String msg) {
-		policy.require(condition, msg);
+	public static void require(boolean condition, String msg, Object... values) {
+		policy.require(condition, msg, values);
 	}
 
 	public static void ensure(boolean condition) {
-		policy.ensure(condition);
+		policy.ensure(condition, NULL_MESSAGE);
 	}
 
-	public static void ensure(Object o, Matcher<?> matcher) {
+	public static <T> T ensure(T o, Matcher<?> matcher) {
 		policy.ensure(o, matcher);
+		return o;
 	}
 
-	public static void ensure(boolean condition, String msg) {
-		policy.ensure(condition, msg);
+	public static void ensure(boolean condition, String msg, Object... values) {
+		policy.ensure(condition, msg, values);
 	}
 
 	public static void neverGetHere(String msg) {
