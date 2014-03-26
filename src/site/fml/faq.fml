@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd" title="Frequently Asked Questions"
+  toplink="true">
+
+  <part id="general">
+    <title>General</title>
+
+    <faq id="unit-test-instead-of-contracts">
+      <question>
+        I use unit-testing. What's the point of contracts?
+      </question>
+      <answer>
+        <p>Unit-testing only detect errors for the test-cases that have been written, when they
+        are executed in a controlled test environment. Contracts detect errors also when the
+        code is running live in the wild.</p>
+      </answer>
+    </faq>
+
+    <faq id="recover-from-contract-violations">
+      <question>
+        Why shouldn't I try to catch and recover from a contract violation?
+      </question>
+      <answer>
+        <p>You're doing it wrong if you do. A require violation implies a bug at
+          the calling client side. You should correct the bug at the calling side, thereby
+          preventing the violation to happen in the first place.
+        </p>
+        <p>An ensure violation implies a bug at the supplier side. The supplier does not
+        live up to their obligations. You should correct the bug at the supplier side. If the
+        supplier can not live up to their promises, throw a recoverable exception instead, that
+        the client can catch and recover from.
+        </p>
+      </answer>
+    </faq>
+
+  </part>
+
+  <part id="install">
+
+    <title>Installation</title>
+
+    <faq id="how-install">
+      <question>
+        How do I install Foo?
+      </question>
+      <answer>
+        <p>some markup goes here</p>
+      </answer>
+    </faq>
+
+  </part>
+
+</faqs>

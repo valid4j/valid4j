@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="valid4j">
+
+  <skin>
+    <groupId>lt.velykis.maven.skins</groupId>
+    <artifactId>reflow-maven-skin</artifactId>
+    <version>1.1.0</version>
+  </skin>
+
+  <publishDate position="navigation-bottom" />
+  <version position="navigation-bottom" />
+
+  <custom>
+    <reflowSkin>
+      <theme>bootswatch-spacelab</theme>
+      <brand>
+        <name>valid4j</name>
+        <href>http://helsing.github.io/valid4j/</href>
+      </brand>
+      <slogan position="bannerLeft">Simple validation for Java</slogan>
+      <titleTemplate>%1$s</titleTemplate>
+      <toc>sidebar</toc>
+      <topNav>Menu|reports</topNav>
+      <bottomNav maxSpan="0">
+        <column>Empty</column>
+      </bottomNav>
+    </reflowSkin>
+  </custom>
+
+  <body>
+    <menu name="Menu">
+      <item name="Overview" href="index.html" />
+      <item name="Concepts" href="concepts.html" />
+      <item name="JavaDoc" href="apidocs/index.html" />
+      <item name="FAQ" href="faq.html" />
+      <item name="Developer notes" href="developer/notes.html" collapse="true">
+        <item name="View on GitHub" href="https://github.com/helsing/valid4j" />
+        <item name="Download as .zip" href="https://github.com/helsing/valid4j/zipball/master" />
+        <item name="Download as .tar.gz" href="https://github.com/helsing/valid4j/tarball/master" />
+      </item>
+    </menu>
+    <menu ref="reports" />
+    <!-- <links> -->
+    <!-- <item name="Main" href="index.html" /> -->
+    <!-- <item name="JavaDoc" href="apidocs/index.html" /> -->
+    <!-- </links> -->
+  </body>
+</project>

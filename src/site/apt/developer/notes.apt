@@ -1,0 +1,34 @@
+Developer notes
+
+* Generate the site. 
+
++--
+  mvn site
++--
+
+  The site can be previewed in folder <<<./target/site>>>
+
+* Deploy the site
+
+  Configure github server in your <<<settings.xml>>>.
+
++--
+  <settings>
+    <servers>
+      <server>
+        <id>github</id>
+        <username>your-username</username>
+        <password>your-password</password>
+      </server>
+    </servers>
+  </settings>
++--
+
+  Use maven to deploy site.
+
++--
+  mvn site-deploy
++--
+
+  This is the same as commit and push site to the github branch <<<gh-pages>>>.
+  Site will be available at {{{http://helsing.github.io/valid4j/}helsing.github.io/valid4j}}
