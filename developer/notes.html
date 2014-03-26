@@ -115,20 +115,90 @@
   <h2 id="Developer_notes">Developer notes</h2>
  </div> 
  <div class="section"> 
-  <h3 id="Generate_the_site">Generate the site. </h3> 
-  <p>The site will be found in folder <tt>./target/site</tt></p> 
+  <h3 id="General_information">General information</h3> 
+  <ul> 
+   <li><a class="externalLink" href="http://central.sonatype.org/pages/apache-maven.html">How to release to Central Repository</a></li> 
+   <li><a class="externalLink" href="http://semver.org/">How to use semantic versioning</a></li> 
+  </ul> 
+ </div> 
+ <div class="section"> 
+  <h3 id="Generate_the_project_site">Generate the project site</h3> 
   <div class="source"> 
    <pre>  mvn site
 </pre> 
   </div> 
+  <p>The site can be previewed in folder <tt>./target/site</tt></p> 
  </div> 
  <div class="section"> 
-  <h3 id="Deploy_the_site">Deploy the site</h3> 
-  <p>This is the same as commit and push site to github branch <tt>gh-pages</tt>. Site will be available at <a class="externalLink" href="http://helsing.github.io/valid4j/">helsing.github.io/valid4j</a></p> 
+  <h3 id="Deploy_the_project_site">Deploy the project site</h3> 
+  <p>Configure github server in your <tt>settings.xml</tt>.</p> 
+  <div class="source"> 
+   <pre>  &lt;settings&gt;
+    &lt;servers&gt;
+      &lt;server&gt;
+        &lt;id&gt;github&lt;/id&gt;
+        &lt;username&gt;your-github-username&lt;/username&gt;
+        &lt;password&gt;your-github-password&lt;/password&gt;
+      &lt;/server&gt;
+    &lt;/servers&gt;
+  &lt;/settings&gt;
+</pre> 
+  </div> 
+  <p>Use maven to deploy site.</p> 
   <div class="source"> 
    <pre>  mvn site-deploy
 </pre> 
   </div> 
+  <p>This is the same as commit and push site to the github branch <tt>gh-pages</tt>. Site will be available at <a class="externalLink" href="http://helsing.github.io/valid4j/">helsing.github.io/valid4j</a></p> 
+ </div> 
+ <div class="section"> 
+  <h3 id="Generate_all_artifacts_and_sign_them">Generate all artifacts and sign them</h3> 
+  <p>Configure your GPG passphrase in <tt>settings.xml</tt></p> 
+  <div class="source"> 
+   <pre>  &lt;settings&gt;
+    ...
+    &lt;profiles&gt;
+      &lt;profile&gt;
+        &lt;id&gt;gpg-signing&lt;/id&gt;
+        &lt;activation&gt;
+          &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+        &lt;/activation&gt;
+        &lt;properties&gt;
+          &lt;gpg.passphrase&gt;your-gpg-passphrase&lt;/gpg.passphrase&gt;
+        &lt;/properties&gt;
+      &lt;/profile&gt;
+    &lt;/profiles&gt;
+  &lt;/settings&gt;
+</pre> 
+  </div> 
+  <p>Generate artifacts (pom, jar, sources-jar, javadocs-jar) and sign them.</p> 
+  <div class="source"> 
+   <pre>  mvn install -Prelease
+</pre> 
+  </div> 
+ </div> 
+ <div class="section"> 
+  <h3 id="Deploy_snapshot_artifacts">Deploy snapshot artifacts</h3> 
+  <p>Configure ossrh (Sonatype Open Source Software Repository Hosting) server in your <tt>settings.xml</tt>.</p> 
+  <div class="source"> 
+   <pre>  &lt;settings&gt;
+    &lt;servers&gt;
+      ...
+      &lt;server&gt;
+        &lt;id&gt;ossrh&lt;/id&gt;
+        &lt;username&gt;your-jira-username&lt;/username&gt;
+        &lt;password&gt;your-jira-password&lt;/password&gt;
+      &lt;/server&gt;
+    &lt;/servers&gt;
+  &lt;/settings&gt;
+</pre> 
+  </div> 
+  <p>Deploy current snapshot jar (unsigned, no-sources, no-javadocs).</p> 
+  <div class="source"> 
+   <pre>  mvn deploy
+</pre> 
+  </div> 
+  <p>This will upload the current snapshot to <a class="externalLink" href="https://oss.sonatype.org/index.html#nexus-search;quick~org.valid4j">Sonatype OSS repository</a>.</p> 
  </div> 
 </div>
 			</div>
@@ -140,8 +210,11 @@
 						<li class="nav-header">Table of Contents</li>
 		<li class="dropdown"><a href="#Developer_notes" title="Developer notes">Developer notes <b class="caret"></b></a>
 			<ul class="nav nav-list">
-		<li><a href="#Generate_the_site" title="Generate the site.">Generate the site.</a>
-		<li><a href="#Deploy_the_site" title="Deploy the site">Deploy the site</a>
+		<li><a href="#General_information" title="General information">General information</a>
+		<li><a href="#Generate_the_project_site" title="Generate the project site">Generate the project site</a>
+		<li><a href="#Deploy_the_project_site" title="Deploy the project site">Deploy the project site</a>
+		<li><a href="#Generate_all_artifacts_and_sign_them" title="Generate all artifacts and sign them">Generate all artifacts and sign them</a>
+		<li><a href="#Deploy_snapshot_artifacts" title="Deploy snapshot artifacts">Deploy snapshot artifacts</a>
 				<li class="divider"></li>
 			</ul>
 		</li>
@@ -171,7 +244,7 @@
 		<div class="row">
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
-				<p class="copyright">Copyright &copy;2014 <a href="http://www.valid4j.org">Valid4J</a>. All Rights Reserved.</p>
+				<p class="copyright">Copyright &copy;2014 <a href="http://valid4j.org">Valid4J</a>. All Rights Reserved.</p>
 				<p><a href="http://github.com/andriusvelykis/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a> by <a href="http://andrius.velykis.lt" target="_blank" title="Andrius Velykis">Andrius Velykis</a>.</p>
 			</div>
 		</div>
