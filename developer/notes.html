@@ -114,19 +114,21 @@
  <div class="page-header">
   <h2 id="Developer_notes">Developer notes</h2>
  </div> 
-</div> 
-<div class="section"> 
- <h2 id="Generating_the_site">Generating the site</h2> 
- <div class="source"> 
-  <pre>  mvn site
+ <div class="section"> 
+  <h3 id="Generate_the_site">Generate the site. </h3> 
+  <p>The site will be found in folder <tt>./target/site</tt></p> 
+  <div class="source"> 
+   <pre>  mvn site
 </pre> 
+  </div> 
  </div> 
-</div> 
-<div class="section"> 
- <h2 id="Deploy_the_site">Deploy the site</h2> 
- <div class="source"> 
-  <pre>  mvn site-deploy
+ <div class="section"> 
+  <h3 id="Deploy_the_site">Deploy the site</h3> 
+  <p>This is the same as commit and push site to github branch <tt>gh-pages</tt>. Site will be available at <a class="externalLink" href="http://helsing.github.io/valid4j/">helsing.github.io/valid4j</a></p> 
+  <div class="source"> 
+   <pre>  mvn site-deploy
 </pre> 
+  </div> 
  </div> 
 </div>
 			</div>
@@ -136,9 +138,13 @@
 				<div class="well">
 					<ul class="nav nav-list">
 						<li class="nav-header">Table of Contents</li>
-		<li><a href="#Developer_notes" title="Developer notes">Developer notes</a>
-		<li><a href="#Generating_the_site" title="Generating the site">Generating the site</a>
+		<li class="dropdown"><a href="#Developer_notes" title="Developer notes">Developer notes <b class="caret"></b></a>
+			<ul class="nav nav-list">
+		<li><a href="#Generate_the_site" title="Generate the site.">Generate the site.</a>
 		<li><a href="#Deploy_the_site" title="Deploy the site">Deploy the site</a>
+				<li class="divider"></li>
+			</ul>
+		</li>
 					</ul>
 				</div>
 			</div>
