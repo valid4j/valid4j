@@ -1,6 +1,14 @@
 Developer notes
 
-* Generate the site. 
+* General information
+
+  * {{{http://central.sonatype.org/pages/apache-maven.html}How to release to Central Repository}}
+  
+  * {{{http://semver.org/}How to use semantic versioning}}
+  
+  []
+
+* Generate the project site
 
 +--
   mvn site
@@ -8,7 +16,7 @@ Developer notes
 
   The site can be previewed in folder <<<./target/site>>>
 
-* Deploy the site
+* Deploy the project site
 
   Configure github server in your <<<settings.xml>>>.
 
@@ -17,8 +25,8 @@ Developer notes
     <servers>
       <server>
         <id>github</id>
-        <username>your-username</username>
-        <password>your-password</password>
+        <username>your-github-username</username>
+        <password>your-github-password</password>
       </server>
     </servers>
   </settings>
@@ -32,3 +40,57 @@ Developer notes
 
   This is the same as commit and push site to the github branch <<<gh-pages>>>.
   Site will be available at {{{http://helsing.github.io/valid4j/}helsing.github.io/valid4j}}
+
+* Generate all artifacts and sign them
+
+  Configure your GPG passphrase in <<<settings.xml>>>
+
++--
+  <settings>
+    ...
+    <profiles>
+      <profile>
+        <id>gpg-signing</id>
+        <activation>
+          <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+          <gpg.passphrase>your-gpg-passphrase</gpg.passphrase>
+        </properties>
+      </profile>
+    </profiles>
+  </settings>
++--
+
+  Generate artifacts (pom, jar, sources-jar, javadocs-jar) and sign them.
+
++--
+  mvn install -Prelease
++--
+
+* Deploy snapshot artifacts
+
+  Configure ossrh (Sonatype Open Source Software Repository Hosting) server in your <<<settings.xml>>>.
+
++--
+  <settings>
+    <servers>
+      ...
+      <server>
+        <id>ossrh</id>
+        <username>your-jira-username</username>
+        <password>your-jira-password</password>
+      </server>
+    </servers>
+  </settings>
++--
+
+  Deploy current snapshot jar (unsigned, no-sources, no-javadocs).
+
++--
+  mvn deploy
++--
+
+  This will upload the current snapshot to {{{https://oss.sonatype.org/index.html#nexus-search;quick~org.valid4j}Sonatype OSS repository}}.
+
+  
