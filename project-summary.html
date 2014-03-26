@@ -33,7 +33,7 @@
 
 	</head>
 
-	<body class="page-index project-valid4j" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-project-summary project-valid4j" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -46,10 +46,10 @@
 					<a class="brand" href="http://helsing.github.io/valid4j/">valid4j</a>
 					<div class="nav-collapse collapse" id="top-nav-collapse">
 						<ul class="nav pull-right">
-							<li class="dropdown active">
+							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li class="active"><a href="" title="Overview">Overview</a></li>
+									<li ><a href="index.html" title="Overview">Overview</a></li>
 									<li ><a href="concepts.html" title="Concepts">Concepts</a></li>
 									<li ><a href="apidocs/index.html" title="JavaDoc">JavaDoc</a></li>
 									<li ><a href="faq.html" title="FAQ">FAQ</a></li>
@@ -69,7 +69,7 @@
 									<li class="dropdown-submenu ">
 										<a href="project-info.html" title="Project Information">Project Information</a>
 										<ul class="dropdown-menu">
-											<li class="active"><a href="" title="About">About</a></li>
+											<li ><a href="index.html" title="About">About</a></li>
 											<li ><a href="plugin-management.html" title="Plugin Management">Plugin Management</a></li>
 											<li ><a href="distribution-management.html" title="Distribution Management">Distribution Management</a></li>
 											<li ><a href="dependency-info.html" title="Dependency Information">Dependency Information</a></li>
@@ -80,7 +80,7 @@
 											<li ><a href="plugins.html" title="Project Plugins">Project Plugins</a></li>
 											<li ><a href="license.html" title="Project License">Project License</a></li>
 											<li ><a href="team-list.html" title="Project Team">Project Team</a></li>
-											<li ><a href="project-summary.html" title="Project Summary">Project Summary</a></li>
+											<li class="active"><a href="" title="Project Summary">Project Summary</a></li>
 											<li ><a href="dependencies.html" title="Dependencies">Dependencies</a></li>
 										</ul>
 									</li>
@@ -112,64 +112,91 @@
 			<div class="body-content">
 <div class="section"> 
  <div class="page-header">
-  <h2 id="Overview">Overview</h2>
+  <h2 id="Project_Summary">Project Summary</h2>
  </div> 
- <p>Valid4J is a simple validation library for Java which makes it possible to use your favorite <a class="externalLink" href="http://hamcrest.org/JavaHamcrest/">hamcrest-matchers</a> to express pre- and post-conditions in your code, as well as making customized validation. Use the global default policy to signal logical violations in your code or optionally specify your own handling.</p> 
-</div> 
-<div class="section"> 
- <h2 id="Installation">Installation</h2> 
- <p>TODO: The library is not yet uploaded to Maven central. Add this dependency to your <tt>pom.xml</tt></p> 
- <div class="source"> 
-  <pre>    &lt;dependency&gt;
-      &lt;groupId&gt;org.valid4j&lt;/groupId&gt;
-      &lt;artifactId&gt;valid4j&lt;/artifactId&gt;
-      &lt;version&gt;TODO&lt;/version&gt;
-    &lt;/dependency&gt;
-</pre> 
+ <a name="Project_Summary"></a> 
+ <div class="section"> 
+  <h3 id="Project_Information">Project Information</h3> 
+  <a name="Project_Information"></a> 
+  <table border="0" class="bodyTable table table-striped table-hover"> 
+   <thead> 
+    <tr class="a"> 
+     <th>Field</th> 
+     <th>Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr class="b"> 
+     <td>Name</td> 
+     <td>Valid4J</td> 
+    </tr> 
+    <tr class="a"> 
+     <td>Description</td> 
+     <td>Simple validation framework for Java</td> 
+    </tr> 
+    <tr class="b"> 
+     <td>Homepage</td> 
+     <td><a class="externalLink" href="http://valid4j.org">http://valid4j.org</a></td> 
+    </tr> 
+   </tbody> 
+  </table> 
  </div> 
-</div> 
-<div class="section"> 
- <h2 id="Getting_started">Getting started</h2> 
- <p>Statically import the library entry point:</p> 
- <div class="source"> 
-  <pre>    import static org.valid4j.DesignByContract.*;
-</pre> 
+ <div class="section"> 
+  <h3 id="Project_Organization">Project Organization</h3> 
+  <a name="Project_Organization"></a> 
+  <table border="0" class="bodyTable table table-striped table-hover"> 
+   <thead> 
+    <tr class="a"> 
+     <th>Field</th> 
+     <th>Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr class="b"> 
+     <td>Name</td> 
+     <td>Valid4J</td> 
+    </tr> 
+    <tr class="a"> 
+     <td>URL</td> 
+     <td><a class="externalLink" href="http://www.valid4j.org">http://www.valid4j.org</a></td> 
+    </tr> 
+   </tbody> 
+  </table> 
  </div> 
- <p>Use assertive preconditions to check for programming errors in calling clients:</p> 
- <div class="source"> 
-  <pre>    // Express your preconditions using plain boolean expressions
-    require(v &gt; 0.0, &quot;The value (%f) must be positive&quot;, v);
-    
-    // Or use hamcrest-matchers
-    require(v, containsString(&quot;great!&quot;));
-</pre> 
+ <div class="section"> 
+  <h3 id="Build_Information">Build Information</h3> 
+  <a name="Build_Information"></a> 
+  <table border="0" class="bodyTable table table-striped table-hover"> 
+   <thead> 
+    <tr class="a"> 
+     <th>Field</th> 
+     <th>Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr class="b"> 
+     <td>GroupId</td> 
+     <td>org.valid4j</td> 
+    </tr> 
+    <tr class="a"> 
+     <td>ArtifactId</td> 
+     <td>valid4j</td> 
+    </tr> 
+    <tr class="b"> 
+     <td>Version</td> 
+     <td>0.0.1-SNAPSHOT</td> 
+    </tr> 
+    <tr class="a"> 
+     <td>Type</td> 
+     <td>jar</td> 
+    </tr> 
+    <tr class="b"> 
+     <td>JDK Rev</td> 
+     <td>1.6</td> 
+    </tr> 
+   </tbody> 
+  </table> 
  </div> 
- <p>Use assertive postconditions to check for programming errors in your supplied code:</p> 
- <div class="source"> 
-  <pre>    ensure(result != null);
-    ensure(result, greaterThan(3.0));
-</pre> 
- </div> 
- <p>Make use of the convenient pass-through of valid objects:</p> 
- <div class="source"> 
-  <pre>    // Initialize members with valid arguments
-    this.member = require(argument, notNullValue());
-
-    // Return valid results
-    return ensure(result, notNullValue());
-</pre> 
- </div> 
-</div> 
-<div class="section"> 
- <h2 id="And_beyond">And beyond...</h2> 
- <ul> 
-  <li><a href="./concepts.html">In-depth concepts...</a></li> 
-  <li><a href="./faq.html">FAQ</a></li> 
- </ul> 
-</div> 
-<div class="section"> 
- <h2 id="Project_license">Project license</h2> 
- <p>This software is licensed under <a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache Software License, Version 2.0</a></p> 
 </div>
 			</div>
 		</div>
@@ -178,11 +205,14 @@
 				<div class="well">
 					<ul class="nav nav-list">
 						<li class="nav-header">Table of Contents</li>
-		<li><a href="#Overview" title="Overview">Overview</a>
-		<li><a href="#Installation" title="Installation">Installation</a>
-		<li><a href="#Getting_started" title="Getting started">Getting started</a>
-		<li><a href="#And_beyond" title="And beyond...">And beyond...</a>
-		<li><a href="#Project_license" title="Project license">Project license</a>
+		<li class="dropdown"><a href="#Project_Summary" title="Project Summary">Project Summary <b class="caret"></b></a>
+			<ul class="nav nav-list">
+		<li><a href="#Project_Information" title="Project Information">Project Information</a>
+		<li><a href="#Project_Organization" title="Project Organization">Project Organization</a>
+		<li><a href="#Build_Information" title="Build Information">Build Information</a>
+				<li class="divider"></li>
+			</ul>
+		</li>
 					</ul>
 				</div>
 			</div>
