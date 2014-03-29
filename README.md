@@ -9,7 +9,7 @@ your own handling.
 
 Statically import the library entry point:
 
-    import static org.valid4j.DesignByContract.*;
+    import static org.valid4j.Assertive.*;
 
 Use assertive preconditions to check for programming errors in calling clients:
 
