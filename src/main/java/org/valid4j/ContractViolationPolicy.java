@@ -12,8 +12,8 @@ public interface ContractViolationPolicy {
 
 	void ensure(Object o, Matcher<?> matcher);
 
-	void neverGetHere(Throwable t);
-
-	void neverGetHere(String msg);
+	void neverGetHere(String msg, Object... values);
+	
+	void neverGetHere(Throwable t, String msg, Object... values);
 
 }

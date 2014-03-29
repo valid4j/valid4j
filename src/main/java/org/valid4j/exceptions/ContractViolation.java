@@ -7,7 +7,8 @@ public class ContractViolation extends RuntimeException {
 	protected ContractViolation(String msg) {
 		super(msg);
 	}
-	protected ContractViolation(Throwable t) {
-		super(t);
+		
+	protected ContractViolation(Throwable t, String msg) {
+		super(msg, t);
 	}
 }

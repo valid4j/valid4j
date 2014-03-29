@@ -47,11 +47,24 @@ public class DesignByContract {
 		policy.ensure(condition, msg, values);
 	}
 
+	public static void neverGetHere() {
+		policy.neverGetHere(NULL_MESSAGE);
+	}
+
 	public static void neverGetHere(String msg) {
 		policy.neverGetHere(msg);
 	}
 
-	public static void neverGetHere(Throwable t) {
-		policy.neverGetHere(t);
+	public static void neverGetHere(String msg, Object... values) {
+		policy.neverGetHere(msg, values);
 	}
+		
+	public static void neverGetHere(Throwable t) {
+		policy.neverGetHere(t, NULL_MESSAGE);
+	}
+
+	public static void neverGetHere(Throwable t, String msg, Object... values) {
+		policy.neverGetHere(t, msg, values);
+	}
+
 }

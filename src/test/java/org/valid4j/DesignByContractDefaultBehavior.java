@@ -8,7 +8,7 @@ import org.junit.rules.*;
 import org.valid4j.exceptions.*;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.valid4j.DesignByContract.*;
 
 public class DesignByContractDefaultBehavior {
@@ -107,55 +107,76 @@ public class DesignByContractDefaultBehavior {
 		thrown.expect(RequireViolation.class);
 		thrown.expectMessage(containsString("expected: not <2>"));
 		thrown.expectMessage(containsString("was: <2>"));
-		
 		require(2, not(equalTo(2)));
 	}
 
 	@Test
 	public void shouldThrowWhenEnsureFails() {
 		thrown.expect(EnsureViolation.class);
-		thrown.expectMessage(containsString("ensure violation"));
-		
 		ensure(false);
 	}
 
 	@Test
 	public void shouldThrowWithMessageWhenEnsureFails() {
 		thrown.expect(EnsureViolation.class);
-		thrown.expectMessage(containsString("ensure violation"));
 		thrown.expectMessage(containsString("this should fail"));
-		
 		ensure(false, "this should fail");
+	}
+
+	@Test
+	public void shouldThrowWithIllegalFormatMessageWhenEnsureFails() {
+		thrown.expect(EnsureViolation.class);
+		thrown.expectMessage(containsString("some %s %d"));
+		thrown.expectMessage(containsString("message"));
+		thrown.expectMessage(containsString("hi"));
+		ensure(false, "some %s %d", "message", "hi");
 	}
 
 	@Test
 	public void shouldThrowWithMatchingMessageWhenEnsureFails() {
 		thrown.expect(EnsureViolation.class);
-		thrown.expectMessage(containsString("ensure violation"));
 		thrown.expectMessage(containsString("was: <3>"));
 		thrown.expectMessage(containsString("expected: <5>"));
-		
 		ensure(3, equalTo(5));
 	}
-	
+
 	@Test
 	public void shouldThrowWhenReachingUnreachableCode() {
 		thrown.expect(NeverGetHereViolation.class);
-		thrown.expectMessage(containsString("never get here"));
-		thrown.expectMessage(containsString("some message"));
-		
-		neverGetHere("some message");
+		neverGetHere();
 	}
 	
 	@Test
 	public void shouldThrowWhenReachingUnexpectedException() {
-		final Throwable t = new UnsupportedEncodingException();
+		final Throwable cause = new UnsupportedEncodingException();
 		thrown.expect(NeverGetHereViolation.class);
-		thrown.expectCause(sameInstance(t));
-		
-		neverGetHere(t);
+		thrown.expectCause(sameInstance(cause));
+		neverGetHere(cause);
+	}
+
+	@Test
+	public void shouldThrowWithMessageWhenReachingUnreachableCode() {
+		thrown.expect(NeverGetHereViolation.class);
+		thrown.expectMessage(containsString("something"));
+		neverGetHere("something");
+	}
+
+	@Test
+	public void shouldThrowWithFormattedMessageWhenReachingUnreachableCode() {
+		thrown.expect(NeverGetHereViolation.class);
+		thrown.expectMessage(containsString("some 3"));
+		neverGetHere("some %d", 3);
 	}
 	
+	@Test
+	public void shouldThrowWithMessageWhenReachingUnexpectedException() {
+		final Throwable t = new UnsupportedEncodingException();
+		thrown.expect(NeverGetHereViolation.class);
+		thrown.expectMessage(containsString("any message"));
+		thrown.expectCause(sameInstance(t));
+		neverGetHere(t, "any message");
+	}
+
 	// Return null message as a String in order to let the compiler bind to proper method.
 	private static String nullMessage() {
 		return null;

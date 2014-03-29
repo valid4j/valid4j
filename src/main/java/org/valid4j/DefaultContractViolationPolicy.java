@@ -17,18 +17,18 @@ public class DefaultContractViolationPolicy extends BaseContractViolationPolicy 
 	@Override
 	public void ensure(boolean condition, String msg, Object... values) {
 		if (!condition) {
-			handleContractViolation(new EnsureViolation(withMessage("ensure violation", msg)));
+			handleContractViolation(new EnsureViolation(withFormattedMessage(msg, values)));
 		}
 	}
 
 	@Override
-	public void neverGetHere(String msg) {
-		handleContractViolation(new NeverGetHereViolation(withMessage("never get here", msg)));
+	public void neverGetHere(String msg, Object... values) {
+		handleContractViolation(new NeverGetHereViolation(withFormattedMessage(msg, values)));
 	}
 
 	@Override
-	public void neverGetHere(Throwable t) {
-		handleContractViolation(new NeverGetHereViolation(t));
+	public void neverGetHere(Throwable t, String msg, Object... values) {
+		handleContractViolation(new NeverGetHereViolation(t, withFormattedMessage(msg, values)));
 	}
 
 	private static String withFormattedMessage(String msg, Object... values) {
