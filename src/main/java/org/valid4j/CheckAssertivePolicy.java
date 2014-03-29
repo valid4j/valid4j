@@ -47,6 +47,7 @@ public class CheckAssertivePolicy implements AssertivePolicy {
 		handleNeverGetHereViolation(cause, msg, values);
 	}
 
+	// TODO: Move all the handle*() methods into a new interface, ContractViolationPolicy
 	private void handleRequireViolation(String msg, Object... values) {
 		handleContractViolation(new RequireViolation(withFormattedMessage(msg, values)));
 	}

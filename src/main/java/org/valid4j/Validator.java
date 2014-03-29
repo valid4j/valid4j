@@ -2,6 +2,7 @@ package org.valid4j;
 
 import org.hamcrest.*;
 
+// TODO: Make new names for methods in this class...
 public class Validator<T extends RuntimeException> {
 	
 	private final ErrorMessageBuilder error;
