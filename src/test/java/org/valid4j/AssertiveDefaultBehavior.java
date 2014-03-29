@@ -9,9 +9,9 @@ import org.valid4j.exceptions.*;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.valid4j.DesignByContract.*;
+import static org.valid4j.Assertive.*;
 
-public class DesignByContractDefaultBehavior {
+public class AssertiveDefaultBehavior {
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();

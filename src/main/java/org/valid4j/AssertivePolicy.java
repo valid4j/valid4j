@@ -2,7 +2,7 @@ package org.valid4j;
 
 import org.hamcrest.Matcher;
 
-public interface ContractViolationPolicy {
+public interface AssertivePolicy {
 
 	void require(boolean condition, String msg, Object... values);
 
@@ -12,8 +12,6 @@ public interface ContractViolationPolicy {
 
 	void ensure(Object o, Matcher<?> matcher);
 
-	void neverGetHere(String msg, Object... values);
-	
 	void neverGetHere(Throwable t, String msg, Object... values);
 
 }
