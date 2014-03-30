@@ -7,7 +7,7 @@ import static org.valid4j.Validator.*;
 import org.junit.*;
 import org.junit.rules.*;
 
-public class ValidationBehavior {
+public class ValidatorBehavior {
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
