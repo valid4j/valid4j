@@ -103,7 +103,7 @@
           <showWarnings>true</showWarnings>
           <debug>false</debug>
           <fork>false</fork>
-          <compilerArgument>-Xlint:unchecked</compilerArgument>
+          <compilerArgument>-Xlint:-options</compilerArgument>
         </configuration>
       </plugin>
 
@@ -127,7 +127,7 @@
         </configuration>
         <inherited>true</inherited>
       </plugin>
-
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
@@ -136,6 +136,12 @@
           <skipDeploy>true</skipDeploy><!-- don't deploy site with maven-site-plugin -->
         </configuration>
         <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-module-markdown</artifactId>
+            <version>1.5</version>
+          </dependency>
+        
           <dependency>
             <groupId>lt.velykis.maven.skins</groupId>
             <artifactId>reflow-velocity-tools</artifactId>

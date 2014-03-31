@@ -33,11 +33,7 @@
       <item name="Concepts" href="concepts.html" />
       <item name="JavaDoc" href="apidocs/index.html" />
       <item name="FAQ" href="faq.html" />
-      <item name="Developer notes" href="developer/notes.html" collapse="true">
-        <item name="View on GitHub" href="https://github.com/helsing/valid4j" />
-        <item name="Download as .zip" href="https://github.com/helsing/valid4j/zipball/master" />
-        <item name="Download as .tar.gz" href="https://github.com/helsing/valid4j/tarball/master" />
-      </item>
+      <item name="GitHub" href="https://github.com/helsing/valid4j" />
     </menu>
     <menu ref="reports" />
     <!-- <links> -->
