@@ -72,7 +72,7 @@
   <properties>
     <github.global.server>github</github.global.server>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jdkVersion>1.6</jdkVersion>
+    <jdkVersion>1.7</jdkVersion>
 
     <!-- Plugin versions -->
     <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
@@ -98,7 +98,7 @@
           <encoding>${project.build.sourceEncoding}</encoding>
           <source>${jdkVersion}</source>
           <target>${jdkVersion}</target>
-          <compilerVersion>1.6</compilerVersion>
+          <compilerVersion>${jdkVersion}</compilerVersion>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
           <debug>false</debug>
