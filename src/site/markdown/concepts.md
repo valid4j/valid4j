@@ -10,16 +10,14 @@ _recoverable exceptions_.
 ## Programming errors
 
 Programming errors are usually the result of an oversight of assumptions that really doesn't hold.
-This may result in logical contradictions, like trying to use a non-existent object (eg NullPointerException) 
-or invoking a method with an argument that (eg IllegalArgumentException).
-These are logical errors that should be avoided already at design time. It doesn't make sense
-to `try` these invocations in order to `catch` and recover from them. Programming errors
-need to be corrected in the code at design time.
-  
-Needless to say, these kind of logical errors will still occur from time to time in a normally buggy 
-program. Programming by contract gives us a technique to detect, expose, find and finally resolve bugs
-in our programs.
-  
+This may result in logical contradictions, like trying to use a non-existent object 
+(eg `NullPointerException`) or invoking a method with an incomprehensible argument 
+(eg `IllegalArgumentException`).
+
+Logical errors must be corrected at design time. It doesn't make sense to `try` illogical
+invocations in order to `catch` and recover from them. But we want our programs to detect, 
+expose and locate these bugs.
+
 ## Recoverable exceptions
 
 Recoverable exceptions, on the other hand, signal exceptional cases that a correct program can and
