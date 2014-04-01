@@ -26,6 +26,10 @@ public class Assertive {
 	private static AssertivePolicy ensurePolicy = new CheckAssertivePolicy(new EnsureViolationPolicy());
 	private static UnreachablePolicy neverGetHerePolicy = new NeverGetHerePolicy();
 	
+	private Assertive() {
+	  neverGetHere("Prevent instantiation");
+	}
+	
 	/**
 	 * Precondition that clients are required to fulfill.
 	 * Violations are considered to be programming errors, 

@@ -1,5 +1,7 @@
 package org.valid4j;
 
+import static org.valid4j.Assertive.neverGetHere;
+
 import org.hamcrest.Matcher;
 
 /**
@@ -12,6 +14,10 @@ import org.hamcrest.Matcher;
  */
 public class Validation {
 
+  private Validation() {
+    neverGetHere("Prevent instantiation");
+  }
+  
   /**
    * Validate the boolean expression that is supposed to be true. 
    * If not, a recoverable exception will be thrown that the client

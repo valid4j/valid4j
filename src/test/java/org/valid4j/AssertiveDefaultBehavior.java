@@ -14,7 +14,7 @@ import static org.valid4j.Assertive.*;
 public class AssertiveDefaultBehavior {
 	
 	@Rule
-	public ExpectedException thrown = ExpectedException.none();
+	public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
 
 	@Test
 	public void shouldPassWhenRequiredConditionIsTrue() {

@@ -1,7 +1,9 @@
 package org.valid4j.exceptions;
 
-// TODO: Make this an Error instead.
-public class ContractViolation extends RuntimeException {
+/**
+ * Exception thrown to indicate that a programming error have been detected.
+ */
+public class ContractViolation extends AssertionError {
 	
 	private static final long serialVersionUID = 4277032519114670211L;
 	
