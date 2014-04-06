@@ -1,7 +1,7 @@
 package org.valid4j;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.valid4j.Validation.validate;
@@ -16,30 +16,32 @@ public class ValidationBehavior {
   public ExpectedException thrown = ExpectedException.none();
 
   @SuppressWarnings("serial")
-  public static class MyException extends RuntimeException {
-  }
-
-  @Test
-  public void shouldPass() {
-    validate(true, new MyException());
-  }
-
-  @Test
-  public void shouldThrowWhenValidationFails() {
-    thrown.expect(MyException.class);
-    validate(false, new MyException());
+  public static class CheckedRecoverableException extends Exception {
   }
   
   @Test
-  public void shouldPassArgument() {
-    Integer argument = 7;
-    Integer result = validate(argument, is(equalTo(7)), new MyException());
+  public void shouldPassValidation() throws CheckedRecoverableException {
+    validate(true, new CheckedRecoverableException());
+  }
+
+  @Test
+  public void shouldPassThroughValidArgument() throws CheckedRecoverableException {
+    Object argument = new Object();
+    Object result = validate(argument, notNullValue(), new CheckedRecoverableException());
     assertThat(result, sameInstance(argument));
   }
+
+  @Test
+  public void shouldThrowWhenValidationFails() throws CheckedRecoverableException {
+    final CheckedRecoverableException recoverableException = new CheckedRecoverableException();
+    thrown.expect(sameInstance(recoverableException));
+    validate(false, recoverableException);
+  }
   
   @Test
-  public void shouldThrowWhenMatchValidationFails() {
-    thrown.expect(MyException.class);
-    validate(new Object(), is(false), new MyException());
+  public void shouldThrowWhenMatchValidationFails() throws CheckedRecoverableException {
+    final CheckedRecoverableException recoverableException = new CheckedRecoverableException();
+    thrown.expect(sameInstance(recoverableException));
+    validate(new Object(), nullValue(), recoverableException);
   }
 }

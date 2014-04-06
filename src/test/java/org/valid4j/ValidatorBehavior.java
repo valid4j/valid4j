@@ -13,53 +13,50 @@ public class ValidatorBehavior {
 	public ExpectedException thrown = ExpectedException.none();
 	 
 	@SuppressWarnings("serial")
-	public static class MyValidationException extends RuntimeException {
-		public MyValidationException(String msg) {
+	public static class MyRecoverableException extends Exception {
+		public MyRecoverableException(String msg) {
 			super(msg);
 		}
 	}
 
-	private final Validator<MyValidationException> validate = validator(MyValidationException.class);
+	private final Validator<MyRecoverableException> example = validator(MyRecoverableException.class);
 
 	@Test
-	public void shouldPassValidation() {
-		validate.argument(true);
+	public void shouldPassValidation() throws MyRecoverableException {
+		example.validate(true);
 	}
 	
 	@Test
-	public void shouldPassValidationWithMessage() {
-		validate.argument(true, "This must be %s", "ok");
+	public void shouldPassValidationWithMessage() throws MyRecoverableException {
+		example.validate(true, "This must be %s", "ok");
 	}
 
 	@Test
-	public void shouldPassMatchingValidation() {
-		int value = validate.argument(3, equalTo(3));
-		assertThat(value, equalTo(3));
+	public void shouldPassMatchingValidation() throws MyRecoverableException {
+	  Object argument = new Object();
+		Object result = example.validate(argument, notNullValue());
+		assertThat(result, sameInstance(argument));
 	}
 	
 	@Test
-	public void shouldThrowWhenValidationFails() {
-		thrown.expect(MyValidationException.class);
-		thrown.expectMessage(equalTo("the validated expression is false"));
-		
-		validate.argument(false);
+	public void shouldThrowWhenValidationFails() throws MyRecoverableException {
+		thrown.expect(MyRecoverableException.class);
+		example.validate(false);
 	}
 
 	@Test
-	public void shouldThrowWithDescriptiveMessageWhenValidationFails() {
-		thrown.expect(MyValidationException.class);
+	public void shouldThrowWithDescriptiveMessageWhenValidationFails() throws MyRecoverableException {
+		thrown.expect(MyRecoverableException.class);
 		thrown.expectMessage(containsString("Must be true"));
-		
-		validate.argument(false, "Must be %s", true);
+		example.validate(false, "Must be %s", true);
 	}
 
 	@Test
-	public void shouldThrowWithDescriptiveMessageWhenMatchingValidationFails() {
-		thrown.expect(MyValidationException.class);
+	public void shouldThrowWithDescriptiveMessageWhenMatchingValidationFails() throws MyRecoverableException {
+		thrown.expect(MyRecoverableException.class);
 		thrown.expectMessage(containsString("expected: not <2>"));
 		thrown.expectMessage(containsString("was: <2>"));
-		
-		validate.argument(2, not(equalTo(2)));
+		example.validate(2, not(equalTo(2)));
 	}
 	
 }

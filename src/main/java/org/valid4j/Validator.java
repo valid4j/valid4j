@@ -2,58 +2,47 @@ package org.valid4j;
 
 import org.hamcrest.*;
 
-// TODO: Make new names for methods in this class...
-public class Validator<T extends RuntimeException> {
+public class Validator<T extends Exception> {
 	
-	private final ErrorMessageBuilder error;
 	private final ExceptionFactory<T> exception;
 	
-	public static Validator<IllegalArgumentException> validator() {
-		return validator(IllegalArgumentException.class);
-	}
-	
-	public static <X extends RuntimeException> Validator<X> validator(Class<X> validationException) {
+	public static <X extends Exception> Validator<X> validator(Class<X> validationException) {
 		return new Validator<X>(ExceptionFactories.builder(validationException));
 	}
-	
-	public Validator(ExceptionFactory<T> exceptionBuilder) {
-		this(exceptionBuilder, new ErrorMessageBuilder());
-	}
 		
-	public Validator(ExceptionFactory<T> exceptionFactory, ErrorMessageBuilder errorMsgBuilder) {
+	public Validator(ExceptionFactory<T> exceptionFactory) {
 		this.exception = exceptionFactory;
-		this.error = errorMsgBuilder;
 	}
 
-	public void argument(boolean condition) throws T {
+	public void validate(boolean condition) throws T {
 		if (!condition) {
-			throw newValidationException("the validated expression is false");
+			throw newRecoverableException("the validated expression is false");
 		}
 	}
 
-	public void argument(boolean condition, String formatString, Object... params) {
+	public void validate(boolean condition, String formatString, Object... params) throws T {
 		if (!condition) {
-			throw newValidationException(withMessage(formatString, params));
+			throw newRecoverableException(withMessage(formatString, params));
 		}
 	}
 
-	public <V> V argument(V actual, Matcher<?> matcher) {
+	public <V> V validate(V actual, Matcher<?> matcher) throws T {
 		if (!matcher.matches(actual)) {
-			throw newValidationException(withMessage(actual, matcher));
+			throw newRecoverableException(withMessage(actual, matcher));
 		}
 		return actual;
 	}
 
-	private T newValidationException(final String msg) {
+	private T newRecoverableException(final String msg) {
 		return exception.newInstance(msg);
 	}
 
-	private String withMessage(String formatString, Object... params) {
-		return error.withMessage(formatString, params);
+	private String withMessage(String formatString, Object... values) {
+		return Message.withFormattedMessage(formatString, values);
 	}
 
 	private String withMessage(Object actual, Matcher<?> matcher) {
-		return error.withMismatchOf(actual, matcher);
+		return Message.withMismatchMessageOf(actual, matcher);
 	}
 
 }

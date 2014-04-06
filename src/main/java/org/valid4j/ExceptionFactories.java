@@ -4,7 +4,7 @@ import java.lang.reflect.*;
 
 public class ExceptionFactories {
 
-	public static class OneArgumentFactory<T extends RuntimeException> implements ExceptionFactory<T> {
+	public static class OneArgumentFactory<T extends Exception> implements ExceptionFactory<T> {
 
 		private final Constructor<T> exceptionConstructor;
 		
@@ -43,7 +43,7 @@ public class ExceptionFactories {
 		}
 	}
 
-	public static class NoArgumentFactory<T extends RuntimeException> implements ExceptionFactory<T> {
+	public static class NoArgumentFactory<T extends Exception> implements ExceptionFactory<T> {
 
 		private final Constructor<T> exceptionConstructor;
 		
@@ -67,7 +67,7 @@ public class ExceptionFactories {
 		}
 	}
 
-	public static <X extends RuntimeException> ExceptionFactory<X> builder(Class<X> exceptionClass) {
+	public static <X extends Exception> ExceptionFactory<X> builder(Class<X> exceptionClass) {
 		try {
 			return new OneArgumentFactory<X>(exceptionClass.getConstructor(String.class));
 		} catch (NoSuchMethodException e) {
