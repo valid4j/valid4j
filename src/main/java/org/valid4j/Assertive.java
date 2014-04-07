@@ -4,18 +4,20 @@ import org.hamcrest.*;
 
 /**
  * Entry point for the global assertive policy.
- * 
+ * <p>
  * Violations indicate the presence of a programming error. 
  * Never try to catch and recover from a programming error. Rather
  * a reasonable global approach would be to return a HTTP 500 response, 
  * restart the application or similar.
- * 
+ * <p>
  * All error messages are {@link java.lang.String#format format strings} as defined by {@link java.lang.String}.
- * 
+ * <p>
  * Example:
- * <code>
+ * <pre>
+ * {@code
  *   require(i > 0, "The value must be greater than zero: %d", i);
- * </code>
+ * }
+ * </pre>
  */
 public class Assertive {
 	

@@ -9,13 +9,13 @@ violations in your code or optionally specify your own handling.
 Installation
 ------------
 
-TODO: The library is not yet uploaded to Maven central.
+This library is available at [Maven Central Repository](http://search.maven.org/). 
 Add this dependency to your `pom.xml`
   
     <dependency>
       <groupId>org.valid4j</groupId>
       <artifactId>valid4j</artifactId>
-      <version>TODO</version>
+      <version>0.3.0</version>
     </dependency>
 
 Getting started

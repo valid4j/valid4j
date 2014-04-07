@@ -1,7 +1,7 @@
 package org.valid4j;
 
 /**
- * Class that constructs a runtime exception given a string argument.
+ * Factory that constructs a recoverable exception given a string argument.
  */
 public interface ExceptionFactory<T extends Exception> {
 
