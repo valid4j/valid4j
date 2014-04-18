@@ -5,35 +5,35 @@ In-depth
 
 Programming by contract is a simple, yet powerful, technique to achieve assertive programming.
 The basic idea of valid4j is to make a clear distinction between _programming errors_ and 
-_recoverable exceptions_. 
-  
+_recoverable exceptions_. Programming errors are not recoverable exceptions and should not
+be handled as such.
+
 ## Programming errors
 
 Programming errors are usually the result of an oversight of assumptions that really doesn't hold.
 This may result in logical contradictions, like trying to use a non-existent object 
-(eg `NullPointerException`) or invoking a method with an incomprehensible argument 
-(eg `IllegalArgumentException`).
+(e.g. `NullPointerException`) or invoking a method with an incomprehensible argument 
+(e.g. `IllegalArgumentException`).
 
 Logical errors must be corrected at design time. It doesn't make sense to `try` illogical
-invocations in order to `catch` and recover from them. But we want our programs to detect, 
-expose and locate these bugs.
+invocations in order to `catch` and recover from them. But we still want our programs to detect, 
+expose and locate these bugs. Programming by contract gives us a technique to do just that.
 
 ## Recoverable exceptions
 
 Recoverable exceptions, on the other hand, signal exceptional cases that a correct program can and
 should handle gracefully. This might be network connection errors, file system errors or data input
-validation errors. This is what we in everyday talk refers to as error handling, fault tolerance and the like.
+validation errors. This is what we in everyday talk refer to as error handling, fault tolerance and the like.
   
 According to the Java exception hierarchy, as a general rule programming errors should inherit from 
-`RuntimeException` whereas `Error` is reserved for internal errors of the Java runtime system.
-  
-However, there is also lots of differing opinions regarding the proper use of checked vs unchecked exceptions.
+`RuntimeException` whereas `Error` is reserved for internal errors of the Java runtime system. However, 
+there is also differing opinions regarding the proper use of checked vs unchecked exceptions.
 This has led to the widespread use of `RuntimeException` also for recoverable exceptions.
-  
-Valid4J prefers to use `Error` to signal programming errors, and is agnostic to the question of
-checked vs unchecked recoverable exceptions.
 
-# Defensive programming
+Valid4J prefers to use `Error` to signal programming errors, and is agnostic to the question of
+using checked or unchecked recoverable exceptions.
+
+## Defensive programming, don't do it
 
 ...a common, but sad example... 
   
@@ -68,48 +68,71 @@ by "maybe"/"perhaps"/"if you're lucky" statements, obscuring the real semantics
 and valid error handling. Are there any programming errors hidden in this code? How do I
 know? Defensive programming hides programming errors in a bloat of code and - which is worse - 
 are handled as ordinary recoverable errors! Programming errors should not be dealt with this way.
-Fail fast, don't let bugs go undetected.
+Fail fast and don't let programming errors go undetected.
 
-# Contracts
+---
 
-What are your obligations?
-What are my obligations?
+# Programming by contracts
 
-Principle of design by contract is to clarify the responsibilities by the calling (client) 
-side and the corresponding responsibilities of the called (supplier) side. Delegating 
-responsibilities is key to all good design. We do this by setting up which conditions must 
-be met for the cooperation between client and supplier.
+The principle of design by contract is to clarify the responsibilities of the calling side 
+(client) and the corresponding responsibilities of the called side (supplier). Delegating 
+responsibilities is key to all good design. We do this by specifying which conditions must 
+be met by the client, and which conditions must be met by the supplier.
+
+![The agreement](images/handshake.jpg "Handshake")
 
 A violation of the precondition means that the client has not fulfilled the contract, hence 
-the logical error lies on the client side. The client is _required_ to make sure the 
+there is a programming error on the client side. The client is _required_ to make sure the 
 preconditions hold before calling a method.
 
 A violation of the postcondition means that the supplier has not fulfilled the contract, 
-hence the logical error lies on the supplier side. The supplier _ensures_ that the 
+hence there is a programming error on the supplier side. The supplier _ensures_ that the 
 postcondition holds before returning from a method.
 
 By using the mechanism of contracts, bugs in the software are instantly exposed as soon as 
 they are detected in runtime. A contract violation means that an assumption in the 
-software doesn’t hold. This means we are executing in an unknown state. The only reasonable 
-response is to abort the application (possibly followed with some kind of global recovery,
-like restarting the application, returning a HTTP 500 response or similar). The alternative 
-would have been to ignore the violation, continue running the software in an unknown state 
-and hence producing unknown results. This is not acceptable.
+software doesn’t hold. This means we are executing in an unknown state. 
+
+Never try to catch and recover from a contract violation. A bug-free application should
+not rely on contracts being evaluated at all. A reasonable approach would be to abort the 
+application, possibly followed with some kind of global recovery, like restarting the 
+application, returning a HTTP 500 response or similar. 
+
+### Require contracts (preconditions)
+
+* The clients' responsibility. What the client is _required_ to fulfill.
+* Expresses what has to be fulfilled before a method may be called.
+* Expressed as condition(s) on the state of the supplier, and/or input parameters.
+
+### Ensure contracts (postconditions)
+
+* The suppliers' responsibility. What the supplier _ensures_ will be fulfilled.
+* Expresses what is fulfilled after the method has executed.
+* Expressed as condition(s) on the state of the supplier, and/or return values.
+* Recoverable exception(s) may be thrown in those cases where the method can not
+  fulfill its postcondition(s). (This is error handling, not contracts...)
+  
+### Invariants
+
+* Expresses what is always fulfilled for an objects.
+* **Important**: Must hold _even if_ an exception is thrown!
+* This is trickier that it seems... Be careful - dragons be here!
+
+Prefer immutable classes and check invariants at exit of constructor. This 
+is a much simpler special case of invariants.
+
+---
 
 # Assertive programming
 
-Using contracts we clarify the responsibilities between the calling side (client) and 
-the called side (supplier). It's easy to see what conditions we can rely on and which 
-conditions we are to achieve, and also who is responsible to achieve those conditions 
-(client or supplier). The readability of the code is improved. No cluttering with 
-unnecessary if-else statements. Code to the point.
+Using contracts it's easy to see what assumptions we can rely on and which 
+conditions we are to achieve. The readability of the code is improved. Any if-else
+statements or try-catch clauses deal with proper error handling and fault tolerance, 
+not programming errors. Code to the point!
 
-Contracts are enforced at runtime and will be checked whenever this code is executed. 
-Any bugs in the software have greater probability to be detected, exposed, found and 
-eventually fixed! 
-
-Contracts help out when debugging. Passed contracts shows what conditions are true. 
-"Don’t assume – test!"
+Contractual assumptions are evaluated at runtime and any violations will immediately
+be detected, exposed and located which greatly speeds up and simplifies bug fixing. 
+Slow, boring and tedious debugging is not needed any more.
 
     // Example of assertive client code
     Stuff result = supplier.method(someParam);
@@ -124,123 +147,123 @@ Contracts help out when debugging. Passed contracts shows what conditions are tr
       return ensure(r, notNullValue());
     }
 
-A contract violation implies a logical error in the program. Therefore it doesn't
-make sense to try to recover from it. If you do, you're doing it wrong...
-
-If a bug is detected in your application, it means it is in an unknown state, a state 
-that your code is not prepared to handle. A reasonable _global_ recovery policy would perhaps
-be to restart your application, return a HTTP 500 response or similar.
-
 Beneficial side effects of using contracts is that it
-• encourages the use of a single exit/return statement where the ensure contract 
-  may be checked. Several return statements each checking the contract would 
+* encourages the use of a single exit/return statement where the ensure contract 
+  may be checked. Several return statements, each checking the postcondition, would 
   clutter the code and be error prone.
-• makes it obvious for the programmer to reason about what recoverable exceptions 
+* makes it obvious for the programmer to reason about what recoverable exceptions 
   could occur when executing the code, i.e. the cases when the ensure contracts 
   cannot be fulfilled.
 
-## Require contracts (preconditions)
-
-* The clients' responsibility. What the client is _required_ to fulfill.
-* Expresses what has to be fulfilled before a method may be called.
-* Conditions on the state of the supplier, and/or input parameters.
-
-## Ensure contracts (postconditions)
-
-* The suppliers' responsibility. What the supplier _ensures_ will be fulfilled.
-* Expresses what is fulfilled after the method has executed.
-* Conditions on the state of the supplier, and/or return values.
-* Recoverable exception(s) may be thrown in those cases where the method can not
-  fulfill its postcondition(s). (This is error handling, not contracts...)
-  
-## Invariants
-
-* Expresses what is always fulfilled for an objects.
-* **Important**: Must hold _even if_ an exception is thrown!
-* This is trickier that it seems... Be careful - dragons be here!
-
-# Invariants
-
-Dragons be here...
-Prefer immutable classes and check invariants at exit of constructor. This 
-is a much simpler special case of invariants.
+---
 
 # Good manners to keep
 
-If you are using contracts to clarify the responsibilities between clients and suppliers 
+Easy! Right? If you are using contracts to clarify the responsibilities between clients and suppliers 
 there are a couple of things to keep in mind. 
 
 ## Separate queries from commands
 
 There are two types of methods in the world:
 
-* Commands/mutators - which change the program state in any way.
-* Queries/accessors - which do not change the program state. These are side-effect free functions. 
+* Commands/mutators - methods that change the program state in any way.
+* Queries/accessors - methods that do not change the program state. These are side-effect free functions. 
 
 You should separate commands from queries. Your methods should have a single 
 well-defined responsibility. Either they are commands, methods that change 
 the current state of your program. Or they are queries, side-effect free methods 
-that just return a result. Contract checking shall not change the (perceived) 
-program state. Perceived that is, like acquiring & releasing a mutex is ok, caching is ok. 
+that just return a result. Evaluating and verifying contracts shall not change the 
+(perceived) program state. (Perceived that is; like acquiring & releasing a mutex 
+may be ok, caching may be ok.)
 
 Why? Goes without saying! Contracts are a part of the specification, not the semantics. 
 The outcome of a contract check must not depend on how many times it has been 
-checked (if any).
-
-Evaluating your contracts must be a side-effect free function. Think of contracts as assertions. 
-Your program should execute correctly even if your contracts aren't checked at all at runtime. 
-Therefore it is important that no state-altering methods (i.e. commands) are invoked when 
-evaluating contract conditions.
+checked (if any). A bug-free application should not rely on contracts being evaluated at all.
 
 Only use queries in contract conditions. Never use commands in contracts.
 
-## Provide a complete interface for your clients
+## Provide a complete (and usable) interface for your clients
 
 Specifying preconditions is the same as putting requirements on your clients. You are
 essentially demanding them to fulfill their responsibilities. Make sure they also
-have the possibility to achieve that.
+have the _possibility_ to achieve that.
 
     public class BadManners {
       public BadManners(int i) {
-        require(isValid(i)); // Using private methods in contracts...
+        require(isValid(i)); // Never use private methods in contracts!!
                              // ...makes the class pretty useless
-                             // DON'T DO THIS!
       }
-      private static boolean isValid(int i) {
-        ...
-      }
+      private static boolean isValid(int i) { ... }
     }
 
 When specifying your contracts, provide your clients with a public interface to make it
-possible for them to fulfill their obligations.
+possible for them to fulfill their obligations. Using private methods as a contract specification
+makes the class pretty useless. No client can fulfill their responsibilities if it's not 
+possible for them to check if they actually _have_ fulfilled them.
 
-## Don't use contracts for error handling. Don't use error handling for contracts.
+## Contracts vs. error handling
 
-Example country codes? Error handling at system boundaries. Never catch and try to recover from contract 
-violations - you're doing it wrong if you do. Instead use the uncaughtExceptionHandler for global recovery.
-Do not use contracts for error handling!
-Contracts ensure the correctness of a program.
+Contracts is not error handling! Error handling is not contracts!
 
-Recoverable exceptions are used for fault tolerance and error handling. Contracts are no 
-substitute for proper error handling and recovery.
+Use contracts to ensure the correctness of a program. Contracts are used to detect logical 
+errors or internal contradictions, making sure that the collaborating classes that constitute
+your program fulfill their obligations. Do not use contracts to deal with situations that
+couldn't be considered in your control, like invalid user input, network connection errors, 
+or file system issues. Contracts are no substitute for proper error handling and recovery.
 
-The difference is all about specification. How much responsibility can we put on 
-our clients? Contracts are not an input checking tool.
+Use error handling to ensure the robustness of a program. To deal with exceptional cases
+outside your control, like erroneous user input or failed network connections, we need
+error handling. Do not use error handling to deal with logical errors, i.e. programming errors.
 
-Compare with having external ”systems” as users, networks, hard disk drives, etc.
-”External” in this context means outside of our thread of control.
-
-    public void doSomething() throws CouldNotDoSomething {
-      require(isGood());
-      
-      if (tryStuff()) {
-        this.state = GREAT;
-      } else {
-        throw CouldNotDoSomething();
+    // Example of using contracts when creating new instances of Country
+    public class Country {
+    
+      // Use contract to specify that it is the _clients_ responsibility
+      // to make sure only valid country codes are given to the constructor.
+      // Invoking this constructor with an invalid country code is considered
+      // to be a programming error on the clients part.
+      public Country(String code) {
+        require(isValidCountryCode(code));
+        // 
       }
-      
-      ensure(isGreat());
+    
+      // Make method available (i.e public) for clients to use, making it possible
+      // for them to fulfill their part of the contract
+      public static boolean isValidCountryCode(String code) {
+        // ...
+      }
     }
+
+The above code is an example on how to use contracts to push a responsibility to
+the client. A client which doesn't fulfill the contract has a programming error.
+
+Below is the same code using a technique of error handling instead.
+
+    // Example of using error handling when creating new instances of Country
+    public static class Country {
+    
+      // Define a recoverable exception for clients to catch and recover from
+      public static class InvalidCountryCodeException extends RuntimeException {}
+    
+      // Use error handling to throw a recoverable exception in the case an
+      // invalid country code is supplied to the constructor. A proper client 
+      // will have to catch and recover from such an exception should it occur.
+      public Country(String code) {
+        validate(isValidCountryCode(code), new InvalidCountryCodeException());
+      
+      }
+    
+      // Validation code may or may not be available for clients to use directly.
+      private static boolean isValidCountryCode(String code) {
+        // ...
+      }
+    }
+    
+How do I choose between using contracts and/or error handling? Well, you are the
+designer of the class, and can decide how much responsibility you can and will
+put on your clients. What is the anticipated usage of the class? Also remember 
+that (recoverable) exceptions should be used for exceptional cases, not the 
+normal flow.
 
 A rule of thumb:
 
@@ -248,24 +271,24 @@ Anticipated or foreseeable input shall be handled by fault tolerant code, eg use
 input or all kind of data which originates from an external source.
 
 Anticipated or foreseeable error conditions shall be handled by fault tolerance 
-code, eg filesystem full or all kind of conditions that originates from an external 
+code, eg file system full or all kind of conditions that originates from an external 
 source.
 
-# Contracts and inheritence
+# Contracts and inheritance
 
 LSP. Preconditions may be weakened for subclasses. Postconditions may be strengthened for subclasses. 
 (it's not as easy as to say that contracts can simply be inherited by subclasses)
 
 * It must always be possible to replace a base-class with any sub-class.
-* Think Liskovs Substitution Principle (LSP). SubClass is-a BaseClass.
+* Think Liskov's Substitution Principle (LSP). SubClass is-a BaseClass.
 * Subclasses may have weaker preconditions, but not stronger.
 * Subclasses may have stronger postconditions, but not weaker.
 
-It's alright for subclasses to require less from its client than the baseclass.
-It's alright for subclasses to ensure more to its clients than the baseclass.
+It's all right for subclasses to require less from its client than the base class.
+It's all right for subclasses to ensure more to its clients than the base class.
 
-Subclasses must not require more from their clients than the baseclass.
-Subclasses must not ensure less to its clients than the baseclass.
+Subclasses must not require more from their clients than the base class.
+Subclasses must not ensure less to its clients than the base class.
 
 # Contracts and multi-threading
 
