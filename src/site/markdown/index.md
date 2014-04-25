@@ -6,8 +6,7 @@ favorite [hamcrest-matchers](http://hamcrest.org/JavaHamcrest/) to express pre- 
 in your code, as well as making customized validation. Use the global default policy to signal logical 
 violations in your code or optionally specify your own handling.
 
-Installation
-------------
+## Installation
 
 This library is available at [Maven Central Repository](http://search.maven.org/). 
 Add this dependency to your `pom.xml`
@@ -18,14 +17,11 @@ Add this dependency to your `pom.xml`
       <version>0.3.0</version>
     </dependency>
 
-Getting started
----------------
+## Getting started
 
 Statically import the library entry point:
 
-
     import static org.valid4j.Assertive.*;
-
 
 Use assertive preconditions to check for programming errors in calling clients:
 
@@ -48,13 +44,35 @@ Make use of the convenient pass-through of valid objects:
     // Return valid results
     return ensure(result, notNullValue());
 
-And beyond...
--------------
+## Getting started with validation
+
+Statically import the library entry point:
+
+    import static org.valid4j.Validation.*;
+
+Use condition checking to perform simpler error handling and throw recoverable exceptions:
+
+    // Express conditions using plain boolean expressions
+    validate(v > 0.0, new NotValidException());
+    
+    // Or use hamcrest-matchers
+    validate(v, containsString("great!"), new MissingGreatException());
+
+## Motivation for valid4j
+
+The rationale behind valid4j (that we think is lacking from comparable alternatives
+from e.g. Google Guava, or Apache Commons):
+
+  * provide better support for programming by contract, using pre- and post-conditions
+  * similar support for recoverable exceptions, as for programming errors
+  * make use of hamcrest library for extensibility
+  * make it possible to customize the global policy for contract violations
+
+## And beyond...
 
   * [In-depth concepts...](./concepts.html)
   * [FAQ](./faq.html)
 
-Project license
----------------
+## Project license
 
-  This software is licensed under [Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+This software is licensed under [Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
