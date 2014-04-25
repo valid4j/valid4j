@@ -6,6 +6,9 @@ import static org.valid4j.Message.withMismatchMessageOf;
 import org.hamcrest.Matcher;
 import org.valid4j.exceptions.EnsureViolation;
 
+/**
+ * Policy for handling post-conditions by throwing a contract violation.
+ */
 public class EnsureViolationPolicy implements ViolationPolicy {
 
   @Override
