@@ -10,18 +10,30 @@ public class Message {
 
   public static String withFormattedMessage(String msg, Object... values) {
     try {
-      return msg != null ? String.format(msg, values) : null;
+      if (msg != null) {
+        return String.format(msg, values);
+      } else if (values.length > 0) {
+        return fallbackFormattingOf("null", values);
+      } else {
+        return null;
+      }
     } catch (IllegalFormatException e) {
-      StringBuilder sb = new StringBuilder(msg);
-      sb.append(Arrays.toString(values));
-      return sb.toString();
+      return fallbackFormattingOf(msg, values);
     }
   }
 
   public static String withMismatchMessageOf(Object actual, Matcher<?> matcher) {
-    return new StringDescription().appendText("expected: ")
-        .appendDescriptionOf(matcher).appendText("\n but was: ")
-        .appendValue(actual).toString();
+    return new StringDescription().
+        appendText("expected: ").
+        appendDescriptionOf(matcher).
+        appendText("\n but was: ").
+        appendValue(actual).
+        toString();
   }
-
+  
+  private static String fallbackFormattingOf(String msg, Object... values) {
+    return new StringBuilder(msg).
+        append(Arrays.toString(values)).
+        toString();
+  }
 }
