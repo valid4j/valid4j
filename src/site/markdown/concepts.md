@@ -181,7 +181,7 @@ Why? Goes without saying! Contracts are a part of the specification, not the sem
 The outcome of a contract check must not depend on how many times it has been 
 checked (if any). A bug-free application should not rely on contracts being evaluated at all.
 
-Only use queries in contract conditions. Never use commands in contracts.
+Only use queries in contract evaluations. Never use commands in contract evaluations.
 
 ### Provide a complete (and usable) interface for clients
 
@@ -266,8 +266,10 @@ What is the anticipated usage of the class? Is it possible to require clients
 to fulfill certain tasks? 
 
 A guideline to bear in mind is that in a bug-free application, the contract checking
-should be possible to switch off. (We are not recommending to switch them off, though, 
-nota bene.) Proper error handling can not be switched off and still be a correct program.
+should be possible to switch off. (_Possible_ that is; we are not recommending to switch 
+them off, though, nota bene.) Proper error handling can not be switched off since there 
+will be clients that rely on recoverable exceptions being thrown when exceptional conditions
+occur.
 
 Also remember that (recoverable) exceptions should be used for exceptional cases, 
 not the normal flow in a program.
