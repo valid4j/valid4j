@@ -3,6 +3,7 @@ package org.valid4j;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.valid4j.exceptions.NeverGetHereViolation;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -55,4 +56,12 @@ public class AssertiveDisabledBehavior {
         verifyZeroInteractions(t, value);
     }
 
+  @Test(expected = NeverGetHereViolation.class)
+  public void shouldThrowDefaultErrorWhenReachingNeverGetHere() {
+    Throwable t = mock(Throwable.class);
+    String format = "message %s";
+    Object value = mock(Object.class);
+
+    throw neverGetHere(t, format, value);
+  }
 }

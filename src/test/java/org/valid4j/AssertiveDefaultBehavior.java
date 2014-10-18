@@ -1,14 +1,17 @@
 package org.valid4j;
 
-import java.io.*;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.valid4j.exceptions.EnsureViolation;
+import org.valid4j.exceptions.NeverGetHereViolation;
+import org.valid4j.exceptions.RequireViolation;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-import org.junit.*;
-import org.junit.rules.*;
-import org.valid4j.exceptions.*;
-
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.valid4j.Assertive.*;
 
 public class AssertiveDefaultBehavior {
@@ -145,8 +148,14 @@ public class AssertiveDefaultBehavior {
 		thrown.expect(NeverGetHereViolation.class);
 		neverGetHere();
 	}
-	
-	@Test
+
+  @Test
+  public void shouldReturnThrowableToGiveCompilerHintOfUnreachableCode() {
+    thrown.expect(NeverGetHereViolation.class);
+    throw neverGetHere();
+  }
+
+  @Test
 	public void shouldThrowWhenReachingUnexpectedException() {
 		final Throwable cause = new UnsupportedEncodingException();
 		thrown.expect(NeverGetHereViolation.class);

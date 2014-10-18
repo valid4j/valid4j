@@ -1,11 +1,13 @@
 package org.valid4j;
 
 import org.hamcrest.Matcher;
+import org.valid4j.exceptions.NeverGetHereViolation;
 
 import static org.valid4j.AssertiveCachingProvider.cached;
 import static org.valid4j.AssertiveDefaultProvider.defaultProvider;
 import static org.valid4j.AssertiveDisabledProvider.disabledProvider;
 import static org.valid4j.AssertiveFallbackProvider.fallbackIfNotSuppliedBy;
+import static org.valid4j.Message.withFormattedMessage;
 
 /**
  * Entry point for the global assertive policy.
@@ -156,8 +158,9 @@ public class Assertive {
    * Unreachable code have been reached.
    * This is considered to be a programming error.
    */
-  public static void neverGetHere() {
+  public static Error neverGetHere() {
     provider.neverGetHerePolicy().neverGetHere(NO_CAUSE, NULL_MESSAGE);
+    return unreachableError(NO_CAUSE, NULL_MESSAGE);
   }
 
   /**
@@ -166,8 +169,9 @@ public class Assertive {
    *
    * @param msg descriptive message
    */
-  public static void neverGetHere(String msg) {
+  public static Error neverGetHere(String msg) {
     provider.neverGetHerePolicy().neverGetHere(NO_CAUSE, msg);
+    return unreachableError(NO_CAUSE, msg);
   }
 
   /**
@@ -177,8 +181,9 @@ public class Assertive {
    * @param msg    message {@link java.lang.String#format format string}
    * @param values values passed into the msg format string
    */
-  public static void neverGetHere(String msg, Object... values) {
+  public static Error neverGetHere(String msg, Object... values) {
     provider.neverGetHerePolicy().neverGetHere(NO_CAUSE, msg, values);
+    return unreachableError(NO_CAUSE, msg, values);
   }
 
   /**
@@ -187,8 +192,9 @@ public class Assertive {
    *
    * @param t the throwable being unexpectedly caught.
    */
-  public static void neverGetHere(Throwable t) {
+  public static Error neverGetHere(Throwable t) {
     provider.neverGetHerePolicy().neverGetHere(t, NULL_MESSAGE);
+    return unreachableError(t, NULL_MESSAGE);
   }
 
   /**
@@ -199,7 +205,15 @@ public class Assertive {
    * @param msg    message {@link java.lang.String#format format string}
    * @param values values passed into the msg format string
    */
-  public static void neverGetHere(Throwable t, String msg, Object... values) {
+  public static Error neverGetHere(Throwable t, String msg, Object... values) {
     provider.neverGetHerePolicy().neverGetHere(t, msg, values);
+    return unreachableError(t, msg, values);
+  }
+
+  // This is indeed meant as an unreachable error, and is the fallback error returned
+  // if Assertive have been disabled. If clients have used the invocation style of
+  // "throw neverGetHere(...)", this is the error that will be thrown in that case.
+  private static Error unreachableError(Throwable cause, String msg, Object... values) {
+    return new NeverGetHereViolation(cause, withFormattedMessage(msg, values));
   }
 }
