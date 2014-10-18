@@ -6,11 +6,11 @@ import org.hamcrest.Matcher;
  * An implementation of the assertive policy that checks the given conditions
  * for violations.
  */
-public class CheckAssertivePolicy implements AssertivePolicy {
+public class CheckingPolicy implements AssertivePolicy {
 
   private final ViolationPolicy violationPolicy;
 
-  public CheckAssertivePolicy(ViolationPolicy violationPolicy) {
+  public CheckingPolicy(ViolationPolicy violationPolicy) {
     this.violationPolicy = violationPolicy;
   }
   
