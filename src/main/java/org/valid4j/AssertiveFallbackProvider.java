@@ -22,21 +22,20 @@ public class AssertiveFallbackProvider implements AssertivePolicyProvider {
 
   @Override
   public AssertivePolicy requirePolicy() {
-    return defaultIfNull(delegate.requirePolicy(), fallback.requirePolicy());
+    AssertivePolicy firstHand = delegate.requirePolicy();
+    return firstHand != null ? firstHand : fallback.requirePolicy();
   }
 
   @Override
   public AssertivePolicy ensurePolicy() {
-    return defaultIfNull(delegate.ensurePolicy(), fallback.ensurePolicy());
+    AssertivePolicy firstHand = delegate.ensurePolicy();
+    return firstHand != null ? firstHand : fallback.ensurePolicy();
   }
 
   @Override
   public UnreachablePolicy neverGetHerePolicy() {
-    return defaultIfNull(delegate.neverGetHerePolicy(), fallback.neverGetHerePolicy());
-  }
-
-  private static <T> T defaultIfNull(T firstHand, T fallback) {
-    return firstHand != null ? firstHand : fallback;
+    UnreachablePolicy firstHand = delegate.neverGetHerePolicy();
+    return firstHand != null ? firstHand : fallback.neverGetHerePolicy();
   }
 
 }
