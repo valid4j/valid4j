@@ -36,7 +36,7 @@ import static org.valid4j.Message.withFormattedMessage;
  */
 public class Assertive {
 
-  public static final String ASSERTIVE_PROPERTY_NAME = Assertive.class.getName();
+  public static final String ASSERTIVE_PROPERTY_NAME = AssertiveProvider.class.getName();
   public static final String DISABLED = "disabled";
 
   private static final String NULL_MESSAGE = null;
