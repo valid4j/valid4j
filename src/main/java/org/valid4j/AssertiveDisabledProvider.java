@@ -3,9 +3,9 @@ package org.valid4j;
 /**
  * An assertive policy provider that disables all checks and assertive handling
  */
-public class AssertiveDisabledProvider implements AssertivePolicyProvider {
+public class AssertiveDisabledProvider implements AssertiveProvider {
 
-  public static AssertivePolicyProvider disabledProvider() {
+  public static AssertiveProvider disabledProvider() {
     return new AssertiveDisabledProvider();
   }
 

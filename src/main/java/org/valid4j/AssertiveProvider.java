@@ -3,7 +3,7 @@ package org.valid4j;
 /**
  * Provider of assertive policies.
  */
-public interface AssertivePolicyProvider {
+public interface AssertiveProvider {
 	
 	/**
 	 * @return the policy to use for checking preconditions

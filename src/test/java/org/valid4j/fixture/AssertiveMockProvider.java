@@ -1,13 +1,13 @@
 package org.valid4j.fixture;
 
 import org.valid4j.AssertivePolicy;
-import org.valid4j.AssertivePolicyProvider;
+import org.valid4j.AssertiveProvider;
 import org.valid4j.UnreachablePolicy;
 
 /**
  * Customized assertive policy provider in order to test customized behavior.
  */
-public class AssertiveMockProvider implements AssertivePolicyProvider {
+public class AssertiveMockProvider implements AssertiveProvider {
 
   public static AssertivePolicy requirePolicy = null;
   public static AssertivePolicy ensurePolicy = null;

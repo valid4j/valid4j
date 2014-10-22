@@ -3,9 +3,9 @@ package org.valid4j;
 /**
  * Provider of default assertive policies for valid4j.
  */
-public class AssertiveDefaultProvider implements AssertivePolicyProvider {
+public class AssertiveDefaultProvider implements AssertiveProvider {
 
-  public static AssertivePolicyProvider defaultProvider() {
+  public static AssertiveProvider defaultProvider() {
     return new AssertiveDefaultProvider();
   }
 

@@ -1,14 +1,14 @@
 package org.valid4j.fixture;
 
 import org.valid4j.AssertivePolicy;
-import org.valid4j.AssertivePolicyProvider;
+import org.valid4j.AssertiveProvider;
 import org.valid4j.UnreachablePolicy;
 
 /**
  * Protected assertive policy provider. Used to demonstrate that initialization of a protected
  * assertive policy provider, will result in initialization error.
  */
-class AssertiveProtectedProvider implements AssertivePolicyProvider {
+class AssertiveProtectedProvider implements AssertiveProvider {
 
   @Override
   public AssertivePolicy requirePolicy() {

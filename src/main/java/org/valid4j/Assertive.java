@@ -42,7 +42,7 @@ public class Assertive {
   private static final String NULL_MESSAGE = null;
   private static final Throwable NO_CAUSE = null;
 
-  private static AssertivePolicyProvider provider;
+  private static AssertiveProvider provider;
 
   /**
    * To customize the behavior of Assertive, specify a system property (org.valid4j.Assertive)
@@ -61,7 +61,7 @@ public class Assertive {
     }
   }
 
-  private static AssertivePolicyProvider createProvider(String customizedProvider)
+  private static AssertiveProvider createProvider(String customizedProvider)
       throws ClassNotFoundException, IllegalAccessException, InstantiationException, ClassCastException {
     if (customizedProvider == null) {
       return cached(defaultProvider());
@@ -69,7 +69,7 @@ public class Assertive {
       return cached(disabledProvider());
     } else {
       Class c = Class.forName(customizedProvider);
-      AssertivePolicyProvider customized = (AssertivePolicyProvider) c.newInstance();
+      AssertiveProvider customized = (AssertiveProvider) c.newInstance();
       return cached(fallbackIfNotSuppliedBy(customized, defaultProvider()));
     }
   }
