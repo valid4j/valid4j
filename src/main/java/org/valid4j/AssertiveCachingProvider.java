@@ -6,7 +6,7 @@ import static org.valid4j.Validation.validate;
 /**
  * Assertive policy provider that caches the policies of the delegate.
  */
-public class AssertiveCachingProvider implements AssertiveProvider {
+class AssertiveCachingProvider implements AssertiveProvider {
 
   private final AssertivePolicy requirePolicy;
   private final AssertivePolicy ensurePolicy;

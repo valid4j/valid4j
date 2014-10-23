@@ -1,13 +1,14 @@
-package org.valid4j;
+package org.valid4j.impl;
+
+import org.valid4j.AssertivePolicy;
+import org.valid4j.AssertiveProvider;
+import org.valid4j.UnreachablePolicy;
 
 /**
  * An assertive policy provider that disables all checks and assertive handling
  */
+@SuppressWarnings("unused")
 public class AssertiveDisabledProvider implements AssertiveProvider {
-
-  public static AssertiveProvider disabledProvider() {
-    return new AssertiveDisabledProvider();
-  }
 
   @Override
   public AssertivePolicy requirePolicy() {

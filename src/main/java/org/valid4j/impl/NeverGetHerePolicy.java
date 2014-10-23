@@ -1,8 +1,9 @@
-package org.valid4j;
+package org.valid4j.impl;
+
+import org.valid4j.UnreachablePolicy;
+import org.valid4j.exceptions.NeverGetHereViolation;
 
 import static org.valid4j.Message.withFormattedMessage;
-
-import org.valid4j.exceptions.NeverGetHereViolation;
 
 /**
  * Policy for handling unreachable code by throwing an unrecoverable exception.

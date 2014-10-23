@@ -35,8 +35,8 @@ public class Assertive {
 
   public static final String ASSERTIVE_PROPERTY_NAME = AssertiveProvider.class.getName();
   public static final String DISABLED = "disabled";
-  public static final String DEFAULT_PROVIDER = "org.valid4j.AssertiveDefaultProvider";
-  public static final String DISABLED_PROVIDER = "org.valid4j.AssertiveDisabledProvider";
+  public static final String DEFAULT_PROVIDER = "org.valid4j.impl.AssertiveDefaultProvider";
+  public static final String DISABLED_PROVIDER = "org.valid4j.impl.AssertiveDisabledProvider";
 
   private static final String NULL_MESSAGE = null;
   private static final Throwable NO_CAUSE = null;

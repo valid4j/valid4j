@@ -1,6 +1,7 @@
-package org.valid4j;
+package org.valid4j.impl;
 
 import org.hamcrest.Matcher;
+import org.valid4j.AssertivePolicy;
 
 /**
  * An assertive policy that performs no checking at all.

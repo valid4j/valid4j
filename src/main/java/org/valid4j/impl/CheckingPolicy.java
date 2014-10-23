@@ -1,6 +1,8 @@
-package org.valid4j;
+package org.valid4j.impl;
 
 import org.hamcrest.Matcher;
+import org.valid4j.AssertivePolicy;
+import org.valid4j.ViolationPolicy;
 
 /**
  * An implementation of the assertive policy that checks the given conditions

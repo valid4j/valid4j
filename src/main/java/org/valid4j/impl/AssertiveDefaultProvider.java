@@ -1,13 +1,14 @@
-package org.valid4j;
+package org.valid4j.impl;
+
+import org.valid4j.AssertivePolicy;
+import org.valid4j.AssertiveProvider;
+import org.valid4j.UnreachablePolicy;
 
 /**
  * Provider of default assertive policies for valid4j.
  */
+@SuppressWarnings("unused")
 public class AssertiveDefaultProvider implements AssertiveProvider {
-
-  public static AssertiveProvider defaultProvider() {
-    return new AssertiveDefaultProvider();
-  }
 
   @Override
   public AssertivePolicy requirePolicy() {

@@ -1,10 +1,11 @@
-package org.valid4j;
+package org.valid4j.impl;
+
+import org.hamcrest.Matcher;
+import org.valid4j.ViolationPolicy;
+import org.valid4j.exceptions.EnsureViolation;
 
 import static org.valid4j.Message.withFormattedMessage;
 import static org.valid4j.Message.withMismatchMessageOf;
-
-import org.hamcrest.Matcher;
-import org.valid4j.exceptions.EnsureViolation;
 
 /**
  * Policy for handling post-conditions by throwing a contract violation.
