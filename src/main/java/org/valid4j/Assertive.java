@@ -5,7 +5,6 @@ import org.valid4j.exceptions.NeverGetHereViolation;
 
 import static org.valid4j.AssertiveCachingProvider.cached;
 import static org.valid4j.AssertiveDefaultProvider.defaultProvider;
-import static org.valid4j.AssertiveDisabledProvider.disabledProvider;
 import static org.valid4j.AssertiveFallbackProvider.fallbackIfNotSuppliedBy;
 import static org.valid4j.Message.withFormattedMessage;
 
@@ -38,6 +37,8 @@ public class Assertive {
 
   public static final String ASSERTIVE_PROPERTY_NAME = AssertiveProvider.class.getName();
   public static final String DISABLED = "disabled";
+  public static final String DEFAULT_PROVIDER = "org.valid4j.AssertiveDefaultProvider";
+  public static final String DISABLED_PROVIDER = "org.valid4j.AssertiveDisabledProvider";
 
   private static final String NULL_MESSAGE = null;
   private static final Throwable NO_CAUSE = null;
@@ -53,25 +54,23 @@ public class Assertive {
   }
 
   static void init() {
-    String customizedProvider = System.getProperty(ASSERTIVE_PROPERTY_NAME);
     try {
-      provider = createProvider(customizedProvider);
+      provider = createProvider(getProviderName());
     } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | ClassCastException e) {
       throw new ExceptionInInitializerError(e);
     }
   }
 
-  private static AssertiveProvider createProvider(String customizedProvider)
+  private static String getProviderName() {
+    String providerName = System.getProperty(ASSERTIVE_PROPERTY_NAME, DEFAULT_PROVIDER);
+    return DISABLED.equals(providerName) ? DISABLED_PROVIDER : providerName;
+  }
+
+  private static AssertiveProvider createProvider(String providerName)
       throws ClassNotFoundException, IllegalAccessException, InstantiationException, ClassCastException {
-    if (customizedProvider == null) {
-      return cached(defaultProvider());
-    } else if (DISABLED.equals(customizedProvider)) {
-      return cached(disabledProvider());
-    } else {
-      Class c = Class.forName(customizedProvider);
-      AssertiveProvider customized = (AssertiveProvider) c.newInstance();
-      return cached(fallbackIfNotSuppliedBy(customized, defaultProvider()));
-    }
+    Class c = Class.forName(providerName);
+    AssertiveProvider customized = (AssertiveProvider) c.newInstance();
+    return cached(fallbackIfNotSuppliedBy(customized, defaultProvider()));
   }
 
   private Assertive() {

@@ -1,5 +1,5 @@
 /**
- * Simple validation library
+ * Simple assertion and validation library
  * 
  * @see org.valid4j.Assertive
  * @see org.valid4j.Validation
