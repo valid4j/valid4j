@@ -24,6 +24,9 @@ public class AssertiveCustomizedBehavior {
   public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {
     clearProviderProperty();
     Assertive.init();
+    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
   }
 
   @Test
@@ -35,7 +38,6 @@ public class AssertiveCustomizedBehavior {
 
   @Test
   public void shouldUseCustomizedRequirePolicy() {
-    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
     Assertive.init();
 
@@ -47,7 +49,6 @@ public class AssertiveCustomizedBehavior {
 
   @Test
   public void shouldUseCustomizedEnsurePolicy() {
-    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
     Assertive.init();
 
@@ -58,7 +59,6 @@ public class AssertiveCustomizedBehavior {
 
   @Test
   public void shouldUseCustomizedNeverGetHerePolicy() {
-    AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
     Assertive.init();
 

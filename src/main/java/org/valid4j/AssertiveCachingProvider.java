@@ -1,5 +1,8 @@
 package org.valid4j;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.valid4j.Validation.validate;
+
 /**
  * Assertive policy provider that caches the policies of the delegate.
  */
@@ -13,10 +16,13 @@ public class AssertiveCachingProvider implements AssertiveProvider {
     return new AssertiveCachingProvider(delegate);
   }
 
-  public AssertiveCachingProvider(AssertiveProvider delegate) {
-    this.requirePolicy = delegate.requirePolicy();
-    this.ensurePolicy = delegate.ensurePolicy();
-    this.neverGetHerePolicy = delegate.neverGetHerePolicy();
+  public AssertiveCachingProvider(AssertiveProvider source) {
+    this.requirePolicy = validate(source.requirePolicy(), notNullValue(),
+        new NullPointerException("Missing require policy"));
+    this.ensurePolicy = validate(source.ensurePolicy(), notNullValue(),
+        new NullPointerException("Missing ensure policy"));
+    this.neverGetHerePolicy = validate(source.neverGetHerePolicy(), notNullValue(),
+        new NullPointerException("Missing never get here policy"));
   }
 
   @Override

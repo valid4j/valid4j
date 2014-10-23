@@ -1,15 +1,11 @@
 package org.valid4j;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.valid4j.exceptions.EnsureViolation;
-import org.valid4j.exceptions.NeverGetHereViolation;
-import org.valid4j.exceptions.RequireViolation;
 import org.valid4j.fixture.AssertiveMockProvider;
 
-import static org.valid4j.Assertive.*;
+import static org.mockito.Mockito.mock;
 import static org.valid4j.fixture.FixtureProviders.CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER;
 import static org.valid4j.fixture.FixtureProviders.setProviderProperty;
 
@@ -21,35 +17,39 @@ public class AssertiveFallbackBehavior {
   @Rule
   public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
 
-  @Before
-  public void setupCustomizedProviderWithNoPolicies() {
+  @Test
+  public void shouldFailMissingRequirePolicy() {
     AssertiveMockProvider.requirePolicy = null;
-    AssertiveMockProvider.ensurePolicy = null;
-    AssertiveMockProvider.neverGetHerePolicy = null;
+    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
 
+    thrown.expect(NullPointerException.class);
+    thrown.expectMessage("Missing require policy");
     Assertive.init();
   }
 
   @Test
-  public void shouldUseFallbackRequirePolicy() {
-    thrown.expect(RequireViolation.class);
+  public void shouldFailMissingEnsurePolicy() {
+    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.ensurePolicy = null;
+    AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
+    setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
 
-    require(false, "testing require of fallback policy");
+    thrown.expect(NullPointerException.class);
+    thrown.expectMessage("Missing ensure policy");
+    Assertive.init();
   }
 
   @Test
-  public void shouldUseFallbackEnsurePolicy() {
-    thrown.expect(EnsureViolation.class);
+  public void shouldFailMissingNeverGetHerePolicy() {
+    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.neverGetHerePolicy = null;
+    setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
 
-    ensure(false, "testing ensure of fallback policy");
+    thrown.expect(NullPointerException.class);
+    thrown.expectMessage("Missing never get here policy");
+    Assertive.init();
   }
-
-  @Test
-  public void shouldUseFallbackNeverGetHerePolicy() {
-    thrown.expect(NeverGetHereViolation.class);
-
-    neverGetHere("testing never-get-here of fallback policy");
-  }
-
 }

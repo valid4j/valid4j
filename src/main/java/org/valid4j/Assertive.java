@@ -4,8 +4,6 @@ import org.hamcrest.Matcher;
 import org.valid4j.exceptions.NeverGetHereViolation;
 
 import static org.valid4j.AssertiveCachingProvider.cached;
-import static org.valid4j.AssertiveDefaultProvider.defaultProvider;
-import static org.valid4j.AssertiveFallbackProvider.fallbackIfNotSuppliedBy;
 import static org.valid4j.Message.withFormattedMessage;
 
 /**
@@ -55,7 +53,7 @@ public class Assertive {
 
   static void init() {
     try {
-      provider = createProvider(getProviderName());
+      provider = cached(createProvider(getProviderName()));
     } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | ClassCastException e) {
       throw new ExceptionInInitializerError(e);
     }
@@ -69,8 +67,8 @@ public class Assertive {
   private static AssertiveProvider createProvider(String providerName)
       throws ClassNotFoundException, IllegalAccessException, InstantiationException, ClassCastException {
     Class c = Class.forName(providerName);
-    AssertiveProvider customized = (AssertiveProvider) c.newInstance();
-    return cached(fallbackIfNotSuppliedBy(customized, defaultProvider()));
+    AssertiveProvider newProvider = (AssertiveProvider) c.newInstance();
+    return newProvider;
   }
 
   private Assertive() {
