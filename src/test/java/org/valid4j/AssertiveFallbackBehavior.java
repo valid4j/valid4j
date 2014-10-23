@@ -1,13 +1,13 @@
 package org.valid4j;
 
+import org.junit.AfterClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.valid4j.fixture.AssertiveMockProvider;
 
 import static org.mockito.Mockito.mock;
-import static org.valid4j.fixture.FixtureProviders.CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER;
-import static org.valid4j.fixture.FixtureProviders.setProviderProperty;
+import static org.valid4j.fixture.FixtureProviders.*;
 
 /**
  * Test behavior when customized provider does not provide assertive policies.
@@ -15,7 +15,13 @@ import static org.valid4j.fixture.FixtureProviders.setProviderProperty;
 public class AssertiveFallbackBehavior {
 
   @Rule
-  public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+  public final ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+
+  @AfterClass
+  public static void restoreDefaultProvider() {
+    clearProviderProperty();
+    Assertive.init();
+  }
 
   @Test
   public void shouldFailMissingRequirePolicy() {

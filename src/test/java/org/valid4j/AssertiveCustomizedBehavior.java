@@ -1,5 +1,6 @@
 package org.valid4j;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import static org.valid4j.fixture.FixtureProviders.*;
 public class AssertiveCustomizedBehavior {
 
   @Rule
-  public ExpectedException thrown = ExpectedException.none();
+  public final ExpectedException thrown = ExpectedException.none();
 
   @Before
   public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {
@@ -27,6 +28,12 @@ public class AssertiveCustomizedBehavior {
     AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
     AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
+  }
+
+  @AfterClass
+  public static void makeSureAssertiveIsLoadedWithDefaultProvider() {
+    clearProviderProperty();
+    Assertive.init();
   }
 
   @Test

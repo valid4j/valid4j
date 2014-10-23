@@ -1,6 +1,7 @@
 package org.valid4j;
 
 import org.hamcrest.Matcher;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.valid4j.exceptions.NeverGetHereViolation;
@@ -8,6 +9,7 @@ import org.valid4j.exceptions.NeverGetHereViolation;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.valid4j.Assertive.*;
+import static org.valid4j.fixture.FixtureProviders.clearProviderProperty;
 import static org.valid4j.fixture.FixtureProviders.setProviderProperty;
 
 /**
@@ -15,46 +17,52 @@ import static org.valid4j.fixture.FixtureProviders.setProviderProperty;
  */
 public class AssertiveDisabledBehavior {
 
-	@Before
-	public void setupDisabledAssertivePolicyProvider() {
+  @Before
+  public void setupDisabledAssertivePolicyProvider() {
     setProviderProperty(Assertive.DISABLED);
-		Assertive.init();
-	}
+    Assertive.init();
+  }
 
-    @Test
-	public void shouldDoNothingOnRequireContracts() {
-        Object object = mock(Object.class);
-        Matcher<?> matcher = mock(Matcher.class);
+  @AfterClass
+  public static void restoreDefaultProvider() {
+    clearProviderProperty();
+    Assertive.init();
+  }
 
-        require(object, matcher);
-        require(true);
-        require(false);
+  @Test
+  public void shouldDoNothingOnRequireContracts() {
+    Object object = mock(Object.class);
+    Matcher<?> matcher = mock(Matcher.class);
 
-        verifyZeroInteractions(object, matcher);
-	}
+    require(object, matcher);
+    require(true);
+    require(false);
 
-    @Test
-    public void shouldDoNothingOnEnsureContracts() {
-        Object object = mock(Object.class);
-        Matcher<?> matcher = mock(Matcher.class);
+    verifyZeroInteractions(object, matcher);
+  }
 
-        ensure(object, matcher);
-        ensure(true);
-        ensure(false);
+  @Test
+  public void shouldDoNothingOnEnsureContracts() {
+    Object object = mock(Object.class);
+    Matcher<?> matcher = mock(Matcher.class);
 
-        verifyZeroInteractions(object, matcher);
-    }
+    ensure(object, matcher);
+    ensure(true);
+    ensure(false);
 
-    @Test
-    public void shouldDoNothingWhenReachingNeverGetHere() {
-        Throwable t = mock(Throwable.class);
-        String format = "message %s";
-        Object value = mock(Object.class);
+    verifyZeroInteractions(object, matcher);
+  }
 
-        neverGetHere(t, format, value);
+  @Test
+  public void shouldDoNothingWhenReachingNeverGetHere() {
+    Throwable t = mock(Throwable.class);
+    String format = "message %s";
+    Object value = mock(Object.class);
 
-        verifyZeroInteractions(t, value);
-    }
+    neverGetHere(t, format, value);
+
+    verifyZeroInteractions(t, value);
+  }
 
   @Test(expected = NeverGetHereViolation.class)
   public void shouldThrowDefaultErrorWhenReachingNeverGetHere() {
