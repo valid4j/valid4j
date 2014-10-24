@@ -4,6 +4,9 @@ import org.hamcrest.Matcher;
 import org.valid4j.AssertivePolicy;
 import org.valid4j.ViolationPolicy;
 
+import static org.valid4j.Message.withFormattedMessage;
+import static org.valid4j.Message.withMismatchMessageOf;
+
 /**
  * An implementation of the assertive policy that checks the given conditions
  * for violations.
@@ -19,14 +22,16 @@ public class CheckingPolicy implements AssertivePolicy {
   @Override
   public void check(boolean condition, String msg, Object... values) {
     if (!condition) {
-      violationPolicy.handleViolation(msg, values);
+      String message = withFormattedMessage(msg, values);
+      violationPolicy.handleViolation(message);
     }
   }
 
   @Override
   public void check(Object o, Matcher<?> matcher) {
     if (!matcher.matches(o)) {
-      violationPolicy.handleViolation(o, matcher);
+      String message = withMismatchMessageOf(o, matcher);
+      violationPolicy.handleViolation(message);
     }
   }
 
