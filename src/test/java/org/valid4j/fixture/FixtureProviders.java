@@ -4,6 +4,15 @@ import org.valid4j.Assertive;
 import org.valid4j.AssertiveCustomizedBehavior;
 import org.valid4j.AssertiveProvider;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * Provider names for unit testing purposes.
  */
@@ -21,5 +30,36 @@ public class FixtureProviders {
 
   public static String clearProviderProperty() {
     return System.clearProperty(Assertive.ASSERTIVE_PROPERTY_NAME);
+  }
+
+  public static void setProviderLoader(String providerName) {
+    Path assertiveProviderPath = getAssertiveProviderPath();
+    try {
+      try (Writer writer = new FileWriter(assertiveProviderPath.toFile())) {
+        writer.write(providerName);
+        writer.flush();
+      }
+    } catch (IOException e) {
+      throw new AssertionError("Could not create provider file", e);
+    }
+  }
+
+  public static void clearProviderLoader() {
+    Path assertiveProviderPath = getAssertiveProviderPath();
+    try {
+      Files.deleteIfExists(assertiveProviderPath);
+    } catch (IOException e) {
+      throw new AssertionError("Could not delete provider file", e);
+    }
+  }
+
+  private static Path getAssertiveProviderPath() {
+    try {
+      URI servicesFolder = ClassLoader.getSystemResource("META-INF/services").toURI();
+      Path servicesPath = Paths.get(servicesFolder);
+      return servicesPath.resolve(AssertiveProvider.class.getName());
+    } catch (URISyntaxException e) {
+      throw new AssertionError("Invalid URI syntax", e);
+    }
   }
 }
