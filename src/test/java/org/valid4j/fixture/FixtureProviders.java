@@ -7,7 +7,6 @@ import org.valid4j.AssertiveProvider;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,8 +32,9 @@ public class FixtureProviders {
   }
 
   public static void setProviderLoader(String providerName) {
-    Path assertiveProviderPath = getAssertiveProviderPath();
     try {
+      Files.createDirectories(getServicesPath());
+      Path assertiveProviderPath = getAssertiveProviderPath();
       try (Writer writer = new FileWriter(assertiveProviderPath.toFile())) {
         writer.write(providerName);
         writer.flush();
@@ -53,13 +53,16 @@ public class FixtureProviders {
     }
   }
 
-  private static Path getAssertiveProviderPath() {
+  private static Path getServicesPath() {
     try {
-      URI servicesFolder = ClassLoader.getSystemResource("META-INF/services").toURI();
-      Path servicesPath = Paths.get(servicesFolder);
-      return servicesPath.resolve(AssertiveProvider.class.getName());
+      Path rootPath = Paths.get(ClassLoader.getSystemResource("").toURI());
+      return rootPath.resolve("META-INF/services");
     } catch (URISyntaxException e) {
       throw new AssertionError("Invalid URI syntax", e);
     }
+  }
+
+  private static Path getAssertiveProviderPath() {
+    return getServicesPath().resolve(AssertiveProvider.class.getName());
   }
 }
