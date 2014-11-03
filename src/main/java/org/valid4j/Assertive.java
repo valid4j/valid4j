@@ -105,8 +105,7 @@ public class Assertive {
   private static AssertiveProvider createProviderForClassName(String providerName)
       throws ClassNotFoundException, IllegalAccessException, InstantiationException, ClassCastException {
     Class c = Class.forName(providerName);
-    AssertiveProvider newProvider = (AssertiveProvider) c.newInstance();
-    return newProvider;
+    return (AssertiveProvider) c.newInstance();
   }
 
   private Assertive() {
