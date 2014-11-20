@@ -1,4 +1,4 @@
-valid4j [![Build Status](https://travis-ci.org/helsing/valid4j.png)](https://travis-ci.org/helsing/valid4j)
+valid4j [![Build Status](https://travis-ci.org/helsing/valid4j.png)](https://travis-ci.org/helsing/valid4j) [![Coverage Status](https://coveralls.io/repos/helsing/valid4j/badge.png)](https://coveralls.io/r/helsing/valid4j)
 =======
 
 A simple validation library for Java which makes it possible to use your 
