@@ -43,6 +43,7 @@ public class Assertive {
 
   private static final String NULL_MESSAGE = null;
   private static final Throwable NO_CAUSE = null;
+  private static final Error DEFAULT_ERROR = null;
 
   private static AssertiveProvider provider;
 
@@ -236,4 +237,66 @@ public class Assertive {
   public static void neverGetHere(Throwable t, String msg, Object... values) {
     provider.neverGetHerePolicy().neverGetHere(t, msg, values);
   }
+
+  /**
+   * Unreachable code have been reached.
+   * This is considered to be a programming error.
+   * @return an error
+   */
+  public static Error neverGetHereError() {
+    provider.neverGetHerePolicy().neverGetHere(NO_CAUSE, NULL_MESSAGE);
+    return DEFAULT_ERROR;
+  }
+
+  /**
+   * Unreachable code have been reached. This is
+   * considered to be a programming error.
+   *
+   * @param msg descriptive message
+   * @return an error
+   */
+  public static Error neverGetHereError(String msg) {
+    provider.neverGetHerePolicy().neverGetHere(NO_CAUSE, msg);
+    return DEFAULT_ERROR;
+  }
+
+  /**
+   * Unreachable code have been reached. This is
+   * considered to be a programming error.
+   *
+   * @param msg    message {@link java.lang.String#format format string}
+   * @param values values passed into the msg format string
+   * @return an error
+   */
+  public static Error neverGetHereError(String msg, Object... values) {
+    provider.neverGetHerePolicy().neverGetHere(NO_CAUSE, msg, values);
+    return DEFAULT_ERROR;
+  }
+
+  /**
+   * Unexpected exception have been caught. This is considered
+   * to be a programming error.
+   *
+   * @param t the throwable being unexpectedly caught.
+   * @return an error
+   */
+  public static Error neverGetHereError(Throwable t) {
+    provider.neverGetHerePolicy().neverGetHere(t, NULL_MESSAGE);
+    return DEFAULT_ERROR;
+  }
+
+  /**
+   * Unexpected exception have been caught. This is considered
+   * to be a programming error.
+   *
+   * @param t      the throwable being unexpectedly caught.
+   * @param msg    message {@link java.lang.String#format format string}
+   * @param values values passed into the msg format string
+   * @return an error
+   */
+  public static Error neverGetHereError(Throwable t, String msg, Object... values) {
+    provider.neverGetHerePolicy().neverGetHere(t, msg, values);
+    return DEFAULT_ERROR;
+  }
+
 }

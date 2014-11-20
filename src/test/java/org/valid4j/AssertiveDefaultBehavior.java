@@ -1,6 +1,5 @@
 package org.valid4j;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -150,13 +149,6 @@ public class AssertiveDefaultBehavior {
 		neverGetHere();
 	}
 
-	@Ignore
-  @Test
-  public void shouldReturnThrowableToGiveCompilerHintOfUnreachableCode() {
-    thrown.expect(NeverGetHereViolation.class);
-    // TODO: throw neverGetHere();
-  }
-
   @Test
 	public void shouldThrowWhenReachingUnexpectedException() {
 		final Throwable cause = new UnsupportedEncodingException();
@@ -186,6 +178,43 @@ public class AssertiveDefaultBehavior {
 		thrown.expectMessage(containsString("any message"));
 		thrown.expectCause(sameInstance(t));
 		neverGetHere(t, "any message");
+	}
+
+	@Test
+	public void shouldThrowErrorWhenReachingUnreachableCode() {
+		thrown.expect(NeverGetHereViolation.class);
+		throw neverGetHereError();
+	}
+
+	@Test
+	public void shouldThrowErrorWhenReachingUnexpectedException() {
+		final Throwable cause = new UnsupportedEncodingException();
+		thrown.expect(NeverGetHereViolation.class);
+		thrown.expectCause(sameInstance(cause));
+		throw neverGetHereError(cause);
+	}
+
+	@Test
+	public void shouldThrowErrorWithMessageWhenReachingUnreachableCode() {
+		thrown.expect(NeverGetHereViolation.class);
+		thrown.expectMessage(containsString("something"));
+		throw neverGetHereError("something");
+	}
+
+	@Test
+	public void shouldThrowErrorWithFormattedMessageWhenReachingUnreachableCode() {
+		thrown.expect(NeverGetHereViolation.class);
+		thrown.expectMessage(containsString("some 3"));
+		throw neverGetHereError("some %d", 3);
+	}
+
+	@Test
+	public void shouldThrowErrorWithMessageWhenReachingUnexpectedException() {
+		final Throwable t = new UnsupportedEncodingException();
+		thrown.expect(NeverGetHereViolation.class);
+		thrown.expectMessage(containsString("any message"));
+		thrown.expectCause(sameInstance(t));
+		throw neverGetHereError(t, "any message");
 	}
 
 	// Return null message as a String in order to let the compiler bind to proper method.

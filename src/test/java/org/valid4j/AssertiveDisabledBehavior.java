@@ -3,10 +3,10 @@ package org.valid4j;
 import org.hamcrest.Matcher;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.valid4j.exceptions.NeverGetHereViolation;
 
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.valid4j.Assertive.*;
@@ -32,24 +32,34 @@ public class AssertiveDisabledBehavior {
 
   @Test
   public void shouldDoNothingOnRequireContracts() {
+    require(true);
+    require(false);
+    require(false, "disabled");
+  }
+
+  @Test
+  public void shouldNotInvokeMatchingOnRequireContracts() {
     Object object = mock(Object.class);
     Matcher<?> matcher = mock(Matcher.class);
 
     require(object, matcher);
-    require(true);
-    require(false);
 
     verifyZeroInteractions(object, matcher);
   }
 
   @Test
   public void shouldDoNothingOnEnsureContracts() {
+    ensure(true);
+    ensure(false);
+    ensure(false, "disabled");
+  }
+
+  @Test
+  public void shouldNotInvokeMatchingOnEnsureContracts() {
     Object object = mock(Object.class);
     Matcher<?> matcher = mock(Matcher.class);
 
     ensure(object, matcher);
-    ensure(true);
-    ensure(false);
 
     verifyZeroInteractions(object, matcher);
   }
@@ -60,18 +70,33 @@ public class AssertiveDisabledBehavior {
     String format = "message %s";
     Object value = mock(Object.class);
 
+    neverGetHere();
+    neverGetHere("disabled");
+    neverGetHere("disabled", value);
+    neverGetHere(t);
+    neverGetHere(t, format);
     neverGetHere(t, format, value);
 
     verifyZeroInteractions(t, value);
   }
 
-  @Ignore
-  @Test(expected = NeverGetHereViolation.class)
-  public void shouldThrowDefaultErrorWhenReachingNeverGetHere() {
+  @Test
+  public void shouldReturnDefaultErrorWhenReachingNeverGetHereError() {
     Throwable t = mock(Throwable.class);
     String format = "message %s";
     Object value = mock(Object.class);
 
-    // TODO: throw neverGetHere(t, format, value);
+    assertThat(neverGetHereError(), defaultError());
+    assertThat(neverGetHereError("disabled"), defaultError());
+    assertThat(neverGetHereError("disabled", value), defaultError());
+    assertThat(neverGetHereError(t), defaultError());
+    assertThat(neverGetHereError(t, format), defaultError());
+    assertThat(neverGetHereError(t, format, value), defaultError());
+
+    verifyZeroInteractions(t, value);
+  }
+
+  private static Matcher<? super Error> defaultError() {
+    return nullValue();
   }
 }
