@@ -1,41 +1,52 @@
 package org.valid4j.matchers;
 
-import org.hamcrest.Description;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 
 import static org.hamcrest.CoreMatchers.describedAs;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.valid4j.Assertive.neverGetHere;
 
 /**
  * Common convenience matchers for arguments
  */
 public class ArgumentMatchers {
 
-  public static Matcher<Object> isNotNull() {
-    return describedAs("not null", notNullValue());
+  private ArgumentMatchers() {
+    neverGetHere("Prevent instantiation");
   }
 
-  public static Matcher<Object> isNotNull(final String argumentName) {
-    return describedAs("%0 not null", notNullValue(), argumentName);
+  /**
+   * Wraps an existing matcher, decorating its description with the name specified. All other functions are
+   * delegated to the decorated matcher, including its mismatch description.
+   * <p/>
+   * Example:
+   * <pre>named("theNameOfMyArgument", notNullValue())</pre>
+   *
+   * @param name
+   *     the given name of the wrapped matcher
+   * @param matcher
+   *     the matcher to decorate with a name
+   */
+  @Factory
+  public static <T> Matcher<T> named(String name, Matcher<T> matcher) {
+    return describedAs("%0 = %1", matcher, name, matcher);
+
   }
 
-  public static Matcher<String> isNotEmptyString() {
-    return new TypeSafeMatcher<String>() {
+  /**
+   * A matcher matching non-null and non-empty strings
+   * <p/>
+   * Example:
+   * <pre>assertThat("this is not an empty string", notEmptyString())</pre>
+   */
+  @Factory
+  public static Matcher<String> notEmptyString() {
+    return new CustomTypeSafeMatcher<String>("not empty") {
       @Override
       protected boolean matchesSafely(String s) {
         return !s.isEmpty();
       }
-
-      @Override
-      public void describeTo(Description description) {
-        description.appendText("not empty");
-
-      }
     };
-  }
-
-  public static Matcher<String> isNotEmptyString(final String argumentName) {
-    return describedAs("%0 not empty", isNotEmptyString(), argumentName);
   }
 }
