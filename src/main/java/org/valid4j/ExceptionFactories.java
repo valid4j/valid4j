@@ -1,81 +1,55 @@
 package org.valid4j;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.valid4j.Assertive.neverGetHereError;
+import static org.valid4j.Assertive.require;
 
 public class ExceptionFactories {
 
-	public static class OneArgumentFactory<T extends Exception> implements ExceptionFactory<T> {
-
-		private final Constructor<T> exceptionConstructor;
-		
-		public OneArgumentFactory(Constructor<T> exceptionConstructor) {
-			// TODO: How about using contracts here?
-			if (!Modifier.isPublic(exceptionConstructor.getModifiers())) {
-				throw new AssertionError("Exception constructor must be public");
-			}
-			if (Modifier.isAbstract(exceptionConstructor.getModifiers())) {
-				throw new AssertionError("Exception class must not be abstract");
-			}
-			Class<?>[] parameters = exceptionConstructor.getParameterTypes();
-			if (parameters.length != 1) {
-				throw new AssertionError("Exception constructor must accept one argument");
-			}
-			if (!String.class.equals(parameters[0])) {
-				throw new AssertionError("Exception constructor must accept one String argument");
-			}
-			this.exceptionConstructor = exceptionConstructor;
-		}
-
-		@Override
-		public T newInstance(String msg) {
-			try {
-				return exceptionConstructor.newInstance(msg);
-			} catch (InstantiationException e) {
-				// TODO: If this really happens? What about actually returning the caught exception?
-				throw new AssertionError("Exception class must not be abstract", e);
-			} catch (IllegalAccessException e) {
-				throw new AssertionError("Exception constructor must be public", e);
-			} catch (IllegalArgumentException e) {
-				throw new AssertionError("Exception constructor must accept one String argument", e);
-			} catch (InvocationTargetException e) {
-				throw new AssertionError("The exception constructor must not throw an exception", e);
-			}
-		}
-	}
-
-	public static class NoArgumentFactory<T extends Exception> implements ExceptionFactory<T> {
-
-		private final Constructor<T> exceptionConstructor;
-		
-		public NoArgumentFactory(Constructor<T> exceptionConstructor) {
-			this.exceptionConstructor = exceptionConstructor;
-		}
-
-		@Override
-		public T newInstance(String msg) {
-			try {
-				return exceptionConstructor.newInstance();
-			} catch (InstantiationException e) {
-				throw new AssertionError("Exception class must not be abstract", e);
-			} catch (IllegalAccessException e) {
-				throw new AssertionError("Exception constructor must be public", e);
-			} catch (IllegalArgumentException e) {
-				throw new AssertionError("Exception constructor must accept no argument(s)", e);
-			} catch (InvocationTargetException e) {
-				throw new AssertionError("The exception constructor must not throw an exception", e);
-			}
-		}
+	private ExceptionFactories() {
+		throw neverGetHereError("Prevent instantiation");
 	}
 
 	public static <X extends Exception> ExceptionFactory<X> builder(Class<X> exceptionClass) {
-		try {
-			return new OneArgumentFactory<X>(exceptionClass.getConstructor(String.class));
-		} catch (NoSuchMethodException e) {
-			try {
-				return new NoArgumentFactory<X>(exceptionClass.getConstructor());
-			} catch (NoSuchMethodException e2) {
-				throw new AssertionError("Exception class required to have a public constructor accepting one string argument or no arguments. (Note: Inner classes do not satisfy this condition)", e);
+		require(exceptionClass, notNullValue());
+		Constructor<X> constructor = findOneStringArgumentPublicConstructor(exceptionClass);
+		if (constructor != null) {
+			return new ExceptionOneStringArgumentFactory<X>(constructor);
+		} else {
+			constructor = findNoArgumentPublicConstructor(exceptionClass);
+			if (constructor != null) {
+				return new ExceptionNoArgumentFactory<X>(constructor);
+			} else {
+				throw neverGetHereError("Exception class must have a public constructor accepting one string argument or no arguments. (Note: Inner classes do not satisfy this condition)");
 			}
 		}
-	}	
+	}
+
+	private static <X extends Exception> Constructor<X> findOneStringArgumentPublicConstructor(Class<X> exceptionClass) {
+		Constructor<?> publicConstructors[] = exceptionClass.getConstructors();
+		for (Constructor<?> constructor : publicConstructors) {
+			if (constructor.getParameterTypes().length != 1) {
+				continue;
+			}
+			if (!constructor.getParameterTypes()[0].equals(String.class)) {
+				continue;
+			}
+			return ((Constructor<X>) constructor);
+		}
+		return null;
+	}
+
+	private static <X extends Exception> Constructor<X> findNoArgumentPublicConstructor(Class<X> exceptionClass) {
+		Constructor<?> publicConstructors[] = exceptionClass.getConstructors();
+		for (Constructor<?> constructor : publicConstructors) {
+			if (constructor.getParameterTypes().length != 0) {
+				continue;
+			}
+			return ((Constructor<X>) constructor);
+		}
+		return null;
+	}
+
 }
