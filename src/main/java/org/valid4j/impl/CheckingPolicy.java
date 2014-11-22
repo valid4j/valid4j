@@ -2,7 +2,6 @@ package org.valid4j.impl;
 
 import org.hamcrest.Matcher;
 import org.valid4j.AssertivePolicy;
-import org.valid4j.ViolationPolicy;
 
 import static org.valid4j.Message.withFormattedMessage;
 import static org.valid4j.Message.withMismatchMessageOf;

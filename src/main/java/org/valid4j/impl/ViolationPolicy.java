@@ -1,4 +1,4 @@
-package org.valid4j;
+package org.valid4j.impl;
 
 /**
  * Policy for handling contract violations
