@@ -8,8 +8,8 @@ import static org.valid4j.Validation.validate;
  */
 class AssertiveCachingProvider implements AssertiveProvider {
 
-  private final AssertivePolicy requirePolicy;
-  private final AssertivePolicy ensurePolicy;
+  private final CheckPolicy requirePolicy;
+  private final CheckPolicy ensurePolicy;
   private final UnreachablePolicy neverGetHerePolicy;
 
   public static AssertiveProvider cached(AssertiveProvider delegate) {
@@ -26,12 +26,12 @@ class AssertiveCachingProvider implements AssertiveProvider {
   }
 
   @Override
-  public AssertivePolicy requirePolicy() {
+  public CheckPolicy requirePolicy() {
     return requirePolicy;
   }
 
   @Override
-  public AssertivePolicy ensurePolicy() {
+  public CheckPolicy ensurePolicy() {
     return ensurePolicy;
   }
 

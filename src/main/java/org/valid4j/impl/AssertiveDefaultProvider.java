@@ -1,7 +1,7 @@
 package org.valid4j.impl;
 
-import org.valid4j.AssertivePolicy;
 import org.valid4j.AssertiveProvider;
+import org.valid4j.CheckPolicy;
 import org.valid4j.UnreachablePolicy;
 import org.valid4j.exceptions.ContractViolation;
 
@@ -32,12 +32,12 @@ public class AssertiveDefaultProvider implements AssertiveProvider {
   }
 
   @Override
-  public AssertivePolicy requirePolicy() {
+  public CheckPolicy requirePolicy() {
     return new CheckingPolicy(new RequireViolationPolicy(violations));
   }
 
   @Override
-  public AssertivePolicy ensurePolicy() {
+  public CheckPolicy ensurePolicy() {
     return new CheckingPolicy(new EnsureViolationPolicy(violations));
   }
 

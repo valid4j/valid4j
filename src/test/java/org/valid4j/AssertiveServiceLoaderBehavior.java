@@ -34,8 +34,8 @@ public class AssertiveServiceLoaderBehavior {
 
   @Test
   public void shouldLoadProviderFromServiceLoader() throws Exception {
-    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
-    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.requirePolicy = mock(CheckPolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderLoader(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
     Assertive.init();
@@ -57,8 +57,8 @@ public class AssertiveServiceLoaderBehavior {
 
   @Test
   public void shouldLoadDefaultProviderIfTooManyProvidersAreFound() {
-    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
-    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.requirePolicy = mock(CheckPolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderLoader(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER +
         "\n" +

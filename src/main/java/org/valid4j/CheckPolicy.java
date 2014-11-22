@@ -3,9 +3,9 @@ package org.valid4j;
 import org.hamcrest.Matcher;
 
 /**
- * Policy for checking contract conditions.
+ * Policy for checking conditions.
  */
-public interface AssertivePolicy {
+public interface CheckPolicy {
 
 	void check(boolean condition, String msg, Object... values);
 

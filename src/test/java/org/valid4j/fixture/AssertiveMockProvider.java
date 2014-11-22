@@ -1,7 +1,7 @@
 package org.valid4j.fixture;
 
-import org.valid4j.AssertivePolicy;
 import org.valid4j.AssertiveProvider;
+import org.valid4j.CheckPolicy;
 import org.valid4j.UnreachablePolicy;
 
 /**
@@ -9,17 +9,17 @@ import org.valid4j.UnreachablePolicy;
  */
 public class AssertiveMockProvider implements AssertiveProvider {
 
-  public static AssertivePolicy requirePolicy = null;
-  public static AssertivePolicy ensurePolicy = null;
+  public static CheckPolicy requirePolicy = null;
+  public static CheckPolicy ensurePolicy = null;
   public static UnreachablePolicy neverGetHerePolicy = null;
 
   @Override
-  public AssertivePolicy requirePolicy() {
+  public CheckPolicy requirePolicy() {
     return requirePolicy;
   }
 
   @Override
-  public AssertivePolicy ensurePolicy() {
+  public CheckPolicy ensurePolicy() {
     return ensurePolicy;
   }
 

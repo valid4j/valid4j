@@ -1,7 +1,7 @@
 package org.valid4j.impl;
 
 import org.hamcrest.Matcher;
-import org.valid4j.AssertivePolicy;
+import org.valid4j.CheckPolicy;
 
 import static org.valid4j.Message.withFormattedMessage;
 import static org.valid4j.Message.withMismatchMessageOf;
@@ -10,7 +10,7 @@ import static org.valid4j.Message.withMismatchMessageOf;
  * An implementation of the assertive policy that checks the given conditions
  * for violations.
  */
-public class CheckingPolicy implements AssertivePolicy {
+public class CheckingPolicy implements CheckPolicy {
 
   private final ViolationPolicy violationPolicy;
 

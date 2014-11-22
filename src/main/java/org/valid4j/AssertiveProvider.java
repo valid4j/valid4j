@@ -8,12 +8,12 @@ public interface AssertiveProvider {
 	/**
 	 * @return the policy to use for checking preconditions
 	 */
-	AssertivePolicy requirePolicy();
+	CheckPolicy requirePolicy();
 	
 	/**
 	 * @return the policy to use for checking postconditions
 	 */
-	AssertivePolicy ensurePolicy();
+	CheckPolicy ensurePolicy();
 	
 	/**
 	 * @return the policy to use for reaching presumably unreachable code.

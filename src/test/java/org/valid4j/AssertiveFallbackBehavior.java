@@ -26,7 +26,7 @@ public class AssertiveFallbackBehavior {
   @Test
   public void shouldFailMissingRequirePolicy() {
     AssertiveMockProvider.requirePolicy = null;
-    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
 
@@ -37,7 +37,7 @@ public class AssertiveFallbackBehavior {
 
   @Test
   public void shouldFailMissingEnsurePolicy() {
-    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.requirePolicy = mock(CheckPolicy.class);
     AssertiveMockProvider.ensurePolicy = null;
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
@@ -49,8 +49,8 @@ public class AssertiveFallbackBehavior {
 
   @Test
   public void shouldFailMissingNeverGetHerePolicy() {
-    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
-    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.requirePolicy = mock(CheckPolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
     AssertiveMockProvider.neverGetHerePolicy = null;
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
 

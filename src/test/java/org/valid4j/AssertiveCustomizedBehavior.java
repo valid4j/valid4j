@@ -25,8 +25,8 @@ public class AssertiveCustomizedBehavior {
   public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {
     clearProviderProperty();
     Assertive.init();
-    AssertiveMockProvider.requirePolicy = mock(AssertivePolicy.class);
-    AssertiveMockProvider.ensurePolicy = mock(AssertivePolicy.class);
+    AssertiveMockProvider.requirePolicy = mock(CheckPolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
   }
 

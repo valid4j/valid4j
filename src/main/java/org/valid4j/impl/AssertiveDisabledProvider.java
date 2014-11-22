@@ -1,7 +1,7 @@
 package org.valid4j.impl;
 
-import org.valid4j.AssertivePolicy;
 import org.valid4j.AssertiveProvider;
+import org.valid4j.CheckPolicy;
 import org.valid4j.UnreachablePolicy;
 
 /**
@@ -11,12 +11,12 @@ import org.valid4j.UnreachablePolicy;
 public class AssertiveDisabledProvider implements AssertiveProvider {
 
   @Override
-  public AssertivePolicy requirePolicy() {
+  public CheckPolicy requirePolicy() {
     return new NonCheckingPolicy();
   }
 
   @Override
-  public AssertivePolicy ensurePolicy() {
+  public CheckPolicy ensurePolicy() {
     return new NonCheckingPolicy();
   }
 
