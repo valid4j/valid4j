@@ -18,6 +18,10 @@ public class Validation {
     neverGetHere("Prevent instantiation");
   }
 
+  public static <X extends Exception> ExceptionFactory<X> otherwiseThrowing(Class<X> exceptionClass) {
+    return ExceptionFactories.builder(exceptionClass);
+  }
+
   /**
    * Validate the boolean expression that is supposed to be true.
    * If not, a recoverable exception will be thrown that the client
@@ -36,6 +40,12 @@ public class Validation {
   public static <X extends Exception> void validate(boolean condition, Class<X> exceptionClass) throws X {
     if (!condition) {
       throw ExceptionFactories.builder(exceptionClass).newInstance(null);
+    }
+  }
+
+  public static <X extends Exception> void validate(boolean condition, ExceptionFactory<X> factory) throws X {
+    if (!condition) {
+      throw factory.newInstance(null);
     }
   }
 
@@ -60,6 +70,13 @@ public class Validation {
   public static <T, X extends Exception> T validate(T o, Matcher<?> matcher, Class<X> exceptionClass) throws X {
     if (!matcher.matches(o)) {
       throw ExceptionFactories.builder(exceptionClass).newInstance(withMessage(o, matcher));
+    }
+    return o;
+  }
+
+  public static <T, X extends Exception> T validate(T o, Matcher<?> matcher, ExceptionFactory<X> factory) throws X {
+    if (!matcher.matches(o)) {
+      throw factory.newInstance(withMessage(o, matcher));
     }
     return o;
   }
