@@ -5,21 +5,19 @@ import org.hamcrest.StringDescription;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.valid4j.exceptions.NeverGetHereViolation;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.startsWith;
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.valid4j.matchers.ArgumentMatchers.named;
 import static org.valid4j.matchers.ArgumentMatchers.notEmptyString;
+import static org.valid4j.matchers.ConstructionHelper.tryToInstantiate;
+import static org.valid4j.matchers.ConstructorMatchers.classWithPrivateConstructor;
+import static org.valid4j.matchers.ExceptionMatchers.preventInstantiationViolation;
 
 /**
  * Testing the behavior of argument matchers
@@ -67,26 +65,13 @@ public class ArgumentMatchersBehavior {
 
   @Test
   public void shouldHavePrivateConstructor() {
-    Constructor<?>[] constructors = ArgumentMatchers.class.getDeclaredConstructors();
-    assertThat(constructors.length, equalTo(1));
-    assertThat(Modifier.isPrivate(constructors[0].getModifiers()), is(true));
+    assertThat(ArgumentMatchers.class, classWithPrivateConstructor());
   }
 
   @Test
   public void shouldPreventInstantiation() throws Exception {
     thrown.expect(InvocationTargetException.class);
-    thrown.expectCause(
-        allOf(
-            isA(NeverGetHereViolation.class),
-            hasMessage(containsString("Prevent instantiation"))));
-
-    Constructor<?> constructor = ArgumentMatchers.class.getDeclaredConstructor();
-    constructor.setAccessible(true);
-    try {
-      constructor.newInstance();
-    } finally {
-      constructor.setAccessible(false);
-    }
+    thrown.expectCause(preventInstantiationViolation());
+    tryToInstantiate(ArgumentMatchers.class);
   }
-
 }

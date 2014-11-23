@@ -8,11 +8,15 @@ import org.valid4j.exceptions.NeverGetHereViolation;
 import org.valid4j.exceptions.RequireViolation;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.valid4j.Assertive.*;
+import static org.valid4j.matchers.ConstructionHelper.tryToInstantiate;
+import static org.valid4j.matchers.ConstructorMatchers.classWithPrivateConstructor;
+import static org.valid4j.matchers.ExceptionMatchers.preventInstantiationViolation;
 
 public class AssertiveDefaultBehavior {
 	
@@ -215,6 +219,18 @@ public class AssertiveDefaultBehavior {
 		thrown.expectMessage(containsString("any message"));
 		thrown.expectCause(sameInstance(t));
 		throw neverGetHereError(t, "any message");
+	}
+
+	@Test
+	public void shouldHavePrivateConstructor() {
+		assertThat(Assertive.class, classWithPrivateConstructor());
+	}
+
+	@Test
+	public void shouldPreventInstantiation() throws Exception {
+		thrown.expect(InvocationTargetException.class);
+		thrown.expectCause(preventInstantiationViolation());
+		tryToInstantiate(Assertive.class);
 	}
 
 	// Return null message as a String in order to let the compiler bind to proper method.
