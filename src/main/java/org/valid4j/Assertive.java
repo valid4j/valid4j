@@ -108,7 +108,7 @@ public class Assertive {
   }
 
   private Assertive() {
-    neverGetHere("Prevent instantiation");
+    throw neverGetHereError("Prevent instantiation");
   }
 
   /**

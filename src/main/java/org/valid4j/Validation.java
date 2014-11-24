@@ -2,7 +2,7 @@ package org.valid4j;
 
 import org.hamcrest.Matcher;
 
-import static org.valid4j.Assertive.neverGetHere;
+import static org.valid4j.Assertive.neverGetHereError;
 import static org.valid4j.ExceptionFactories.exception;
 import static org.valid4j.Message.describingMismatchOf;
 
@@ -17,7 +17,7 @@ import static org.valid4j.Message.describingMismatchOf;
 public class Validation {
 
   private Validation() {
-    neverGetHere("Prevent instantiation");
+    throw neverGetHereError("Prevent instantiation");
   }
 
   public static <X extends Exception> ExceptionFactory<X> otherwiseThrowing(Class<X> exceptionClass) {
