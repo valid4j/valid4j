@@ -9,7 +9,16 @@ A simple validation library for Java which makes it possible to use your
 favorite [hamcrest-matchers](http://hamcrest.org/JavaHamcrest/) to 
 express pre- and post-conditions in your code. Use the global default 
 policy to signal logical violations in your code or optionally specify 
-your own handling.
+your own handling. Documentation is available at [www.valid4j.org](http://www.valid4j.org).
+
+This library is available at [Maven Central Repository](http://search.maven.org/).
+Add this dependency to your `pom.xml`
+
+    <dependency>
+      <groupId>org.valid4j</groupId>
+      <artifactId>valid4j</artifactId>
+      <version>0.4.0</version>
+    </dependency>
 
 Statically import the library entry point:
 

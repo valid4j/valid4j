@@ -42,10 +42,19 @@
 
     <faq id="how-install">
       <question>
-        How do I install Foo?
+        How do I install valid4j?
       </question>
       <answer>
-        <p>some markup goes here</p>
+        <p>This library is available at [Maven Central Repository](http://search.maven.org/).
+        Add this dependency to your `pom.xml`
+        <blockquote>
+          &lt;dependency&gt;
+            &lt;groupId&gt;org.valid4j&lt;/groupId&gt;
+            &lt;artifactId&gt;valid4j&lt;/artifactId&gt;
+            &lt;version&gt;0.4.0&lt;/version&gt;
+          &lt;/dependency&gt;
+        </blockquote>
+        </p>
       </answer>
     </faq>
 
