@@ -1,13 +1,13 @@
 package org.valid4j;
 
-import org.hamcrest.*;
+import org.hamcrest.Matcher;
 
 public class Validator<T extends Exception> {
 	
 	private final ExceptionFactory<T> exception;
 	
 	public static <X extends Exception> Validator<X> validator(Class<X> validationException) {
-		return new Validator<X>(ExceptionFactories.builder(validationException));
+		return new Validator<X>(ExceptionFactories.exception(validationException));
 	}
 		
 	public Validator(ExceptionFactory<T> exceptionFactory) {

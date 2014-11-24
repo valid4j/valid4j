@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-import static org.valid4j.ExceptionFactories.builder;
+import static org.valid4j.ExceptionFactories.exception;
 
 public class ExceptionFactoryBehavior {
 
@@ -85,24 +85,24 @@ public class ExceptionFactoryBehavior {
 
 	@Test
 	public void shouldBuildExceptionWithPublicOneStringArgumentConstructor() {
-		ExceptionFactory<OneStringArgumentException> builder = builder(OneStringArgumentException.class);
-		RuntimeException e = builder.newInstance("exception message");
+		ExceptionFactory<OneStringArgumentException> exception = exception(OneStringArgumentException.class);
+		RuntimeException e = exception.newInstance("exception message");
 		assertThat(e, instanceOf(OneStringArgumentException.class));
 		assertThat(e.getMessage(), equalTo("exception message"));
 	}
 	
 	@Test
 	public void shouldBuildExceptionWithNullMessage() {
-		ExceptionFactory<OneStringArgumentException> builder = builder(OneStringArgumentException.class);
-		RuntimeException e = builder.newInstance(null);
+		ExceptionFactory<OneStringArgumentException> exception = exception(OneStringArgumentException.class);
+		RuntimeException e = exception.newInstance(null);
 		assertThat(e, instanceOf(OneStringArgumentException.class));
 		assertThat(e.getMessage(), nullValue());
 	}
 	
 	@Test
 	public void shouldBuildExceptionWithNoArgumentConstructor() {
-		ExceptionFactory<NoArgumentException> builder = builder(NoArgumentException.class);
-		RuntimeException e = builder.newInstance("exception message");
+		ExceptionFactory<NoArgumentException> exception = exception(NoArgumentException.class);
+		RuntimeException e = exception.newInstance("exception message");
 		assertThat(e, instanceOf(NoArgumentException.class));
 		assertThat(e.getMessage(), nullValue());
 	}
@@ -111,39 +111,39 @@ public class ExceptionFactoryBehavior {
 	public void shouldRejectExceptionWithNoPublicConstructor() {
 		thrown.expect(instanceOf(AssertionError.class));
 		thrown.expectMessage("must have a public constructor");
-		builder(NoPublicConstructorException.class);
+		exception(NoPublicConstructorException.class);
 	}
 
 	@Test
 	public void shouldRejectInnerClassExceptions() {
 		thrown.expect(instanceOf(AssertionError.class));
-		builder(InnerClassException.class);
+		exception(InnerClassException.class);
 	}
 
 	@Test
 	public void shouldRejectAbstractExceptions() {
 		thrown.expect(instanceOf(AssertionError.class));
-		builder(AbstractException.class);
+		exception(AbstractException.class);
 	}
 	
 	@Test
 	public void shouldRejectExceptionWithNoStringArgumentConstructor() {
 		thrown.expect(instanceOf(AssertionError.class));
-		builder(NoStringArgumentException.class);
+		exception(NoStringArgumentException.class);
 	}
 
 	@Test
 	public void shouldFailOnOneArgumentExceptionThatThrowByThemselves() {
-		ExceptionFactory<SelfThrowingException> builder = builder(SelfThrowingException.class);
+		ExceptionFactory<SelfThrowingException> exception = exception(SelfThrowingException.class);
 		thrown.expect(instanceOf(AssertionError.class));
-		builder.newInstance("exception message");
+		exception.newInstance("exception message");
 	}
 
 	@Test
 	public void shouldFailOnNoArgumentExceptionThatThrowByThemselves() {
-		ExceptionFactory<SelfThrowingNoArgumentException> builder = builder(SelfThrowingNoArgumentException.class);
+		ExceptionFactory<SelfThrowingNoArgumentException> exception = exception(SelfThrowingNoArgumentException.class);
 		thrown.expect(instanceOf(AssertionError.class));
-		builder.newInstance("exception message");
+		exception.newInstance("exception message");
 	}
 
 }

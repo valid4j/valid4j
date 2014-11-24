@@ -3,6 +3,7 @@ package org.valid4j;
 import org.hamcrest.Matcher;
 
 import static org.valid4j.Assertive.neverGetHere;
+import static org.valid4j.ExceptionFactories.exception;
 
 /**
  * Entry point for validation methods. 
@@ -19,7 +20,7 @@ public class Validation {
   }
 
   public static <X extends Exception> ExceptionFactory<X> otherwiseThrowing(Class<X> exceptionClass) {
-    return ExceptionFactories.builder(exceptionClass);
+    return exception(exceptionClass);
   }
 
   /**
@@ -48,7 +49,7 @@ public class Validation {
    */
   public static <X extends Exception> void validate(boolean condition, Class<X> exceptionClass) throws X {
     if (!condition) {
-      throw ExceptionFactories.builder(exceptionClass).newInstance(null);
+      throw exception(exceptionClass).newInstance(null);
     }
   }
 
@@ -98,7 +99,7 @@ public class Validation {
    */
   public static <T, X extends Exception> T validate(T o, Matcher<?> matcher, Class<X> exceptionClass) throws X {
     if (!matcher.matches(o)) {
-      throw ExceptionFactories.builder(exceptionClass).newInstance(withMessage(o, matcher));
+      throw exception(exceptionClass).newInstance(withMessage(o, matcher));
     }
     return o;
   }

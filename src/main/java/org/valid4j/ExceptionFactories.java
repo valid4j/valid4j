@@ -12,7 +12,7 @@ public class ExceptionFactories {
 		throw neverGetHereError("Prevent instantiation");
 	}
 
-	public static <X extends Exception> ExceptionFactory<X> builder(Class<X> exceptionClass) {
+	public static <X extends Exception> ExceptionFactory<X> exception(Class<X> exceptionClass) {
 		require(exceptionClass, notNullValue());
 		Constructor<X> constructor = findOneStringArgumentPublicConstructor(exceptionClass);
 		if (constructor != null) {
