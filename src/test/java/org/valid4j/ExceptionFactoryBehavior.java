@@ -4,9 +4,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.valid4j.ExceptionFactories.exception;
+import static org.valid4j.matchers.ConstructionHelper.tryToInstantiate;
+import static org.valid4j.matchers.ConstructorMatchers.classWithPrivateConstructor;
+import static org.valid4j.matchers.ExceptionMatchers.preventInstantiationViolation;
 
 public class ExceptionFactoryBehavior {
 
@@ -146,4 +151,15 @@ public class ExceptionFactoryBehavior {
 		exception.newInstance("exception message");
 	}
 
+	@Test
+	public void shouldHavePrivateConstructor() {
+		assertThat(ExceptionFactories.class, classWithPrivateConstructor());
+	}
+
+	@Test
+	public void shouldPreventInstantiation() throws Exception {
+		thrown.expect(InvocationTargetException.class);
+		thrown.expectCause(preventInstantiationViolation());
+		tryToInstantiate(ExceptionFactories.class);
+	}
 }

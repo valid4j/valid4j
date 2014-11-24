@@ -5,7 +5,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 import static org.hamcrest.CoreMatchers.describedAs;
-import static org.valid4j.Assertive.neverGetHere;
+import static org.valid4j.Assertive.neverGetHereError;
 
 /**
  * Common convenience matchers for arguments
@@ -13,7 +13,7 @@ import static org.valid4j.Assertive.neverGetHere;
 public class ArgumentMatchers {
 
   private ArgumentMatchers() {
-    neverGetHere("Prevent instantiation");
+    throw neverGetHereError("Prevent instantiation");
   }
 
   /**
