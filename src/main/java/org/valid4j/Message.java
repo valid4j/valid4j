@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.IllegalFormatException;
 
 /**
- * Class that represents a message and builds the message upon invocation of toString().
+ * Class that represents a message, but builds the message first upon invocation of toString().
  */
 public class Message {
 
-  public static Message from(final String format, final Object... args) {
+  public static Message describing(final String format, final Object... args) {
     return new Message() {
       @Override
       public String toString() {
@@ -20,7 +20,7 @@ public class Message {
     };
   }
 
-  public static Message withMismatchOf(final Object actual, final Matcher<?> matcher) {
+  public static Message describingMismatchOf(final Object actual, final Matcher<?> matcher) {
     return new Message() {
       @Override
       public String toString() {
@@ -29,7 +29,7 @@ public class Message {
     };
   }
 
-  public static String withFormattedMessage(String msg, Object... values) {
+  private static String withFormattedMessage(String msg, Object... values) {
     try {
       if (msg != null) {
         return String.format(msg, values);
@@ -43,7 +43,7 @@ public class Message {
     }
   }
 
-  public static String withMismatchMessageOf(Object actual, Matcher<?> matcher) {
+  private static String withMismatchMessageOf(Object actual, Matcher<?> matcher) {
     return new StringDescription().
         appendText("expected: ").
         appendDescriptionOf(matcher).

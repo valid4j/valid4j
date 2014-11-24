@@ -3,8 +3,8 @@ package org.valid4j.impl;
 import org.hamcrest.Matcher;
 import org.valid4j.CheckPolicy;
 
-import static org.valid4j.Message.withFormattedMessage;
-import static org.valid4j.Message.withMismatchMessageOf;
+import static org.valid4j.Message.describing;
+import static org.valid4j.Message.describingMismatchOf;
 
 /**
  * An implementation of the assertive policy that checks the given conditions
@@ -21,7 +21,7 @@ public class CheckingPolicy implements CheckPolicy {
   @Override
   public void check(boolean condition, String msg, Object... values) {
     if (!condition) {
-      String message = withFormattedMessage(msg, values);
+      String message = describing(msg, values).toString();
       violationPolicy.handleViolation(message);
     }
   }
@@ -29,7 +29,7 @@ public class CheckingPolicy implements CheckPolicy {
   @Override
   public void check(Object o, Matcher<?> matcher) {
     if (!matcher.matches(o)) {
-      String message = withMismatchMessageOf(o, matcher);
+      String message = describingMismatchOf(o, matcher).toString();
       violationPolicy.handleViolation(message);
     }
   }

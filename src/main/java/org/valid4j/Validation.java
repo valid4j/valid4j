@@ -4,6 +4,7 @@ import org.hamcrest.Matcher;
 
 import static org.valid4j.Assertive.neverGetHere;
 import static org.valid4j.ExceptionFactories.exception;
+import static org.valid4j.Message.describingMismatchOf;
 
 /**
  * Entry point for validation methods. 
@@ -99,7 +100,7 @@ public class Validation {
    */
   public static <T, X extends Exception> T validate(T o, Matcher<?> matcher, Class<X> exceptionClass) throws X {
     if (!matcher.matches(o)) {
-      throw exception(exceptionClass).newInstance(withMessage(o, matcher));
+      throw exception(exceptionClass).newInstance(describingMismatchOf(o, matcher).toString());
     }
     return o;
   }
@@ -117,12 +118,8 @@ public class Validation {
    */
   public static <T, X extends Exception> T validate(T o, Matcher<?> matcher, ExceptionFactory<X> factory) throws X {
     if (!matcher.matches(o)) {
-      throw factory.newInstance(withMessage(o, matcher));
+      throw factory.newInstance(describingMismatchOf(o, matcher).toString());
     }
     return o;
-  }
-
-  private static String withMessage(Object actual, Matcher<?> matcher) {
-    return Message.withMismatchMessageOf(actual, matcher);
   }
 }

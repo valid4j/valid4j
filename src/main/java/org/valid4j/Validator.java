@@ -2,6 +2,9 @@ package org.valid4j;
 
 import org.hamcrest.Matcher;
 
+import static org.valid4j.Message.describing;
+import static org.valid4j.Message.describingMismatchOf;
+
 public class Validator<T extends Exception> {
 	
 	private final ExceptionFactory<T> exception;
@@ -22,13 +25,13 @@ public class Validator<T extends Exception> {
 
 	public void validate(boolean condition, String formatString, Object... params) throws T {
 		if (!condition) {
-			throw newRecoverableException(withMessage(formatString, params));
+			throw newRecoverableException(describing(formatString, params).toString());
 		}
 	}
 
 	public <V> V validate(V actual, Matcher<?> matcher) throws T {
 		if (!matcher.matches(actual)) {
-			throw newRecoverableException(withMessage(actual, matcher));
+			throw newRecoverableException(describingMismatchOf(actual, matcher).toString());
 		}
 		return actual;
 	}
@@ -36,13 +39,4 @@ public class Validator<T extends Exception> {
 	private T newRecoverableException(final String msg) {
 		return exception.newInstance(msg);
 	}
-
-	private String withMessage(String formatString, Object... values) {
-		return Message.withFormattedMessage(formatString, values);
-	}
-
-	private String withMessage(Object actual, Matcher<?> matcher) {
-		return Message.withMismatchMessageOf(actual, matcher);
-	}
-
 }
