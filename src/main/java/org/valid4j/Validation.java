@@ -37,12 +37,30 @@ public class Validation {
     }
   }
 
+  /**
+   * Validate the boolean expression that is supposed to be true.
+   * If not, a recoverable exception will be thrown that the client
+   * is supposed to catch and recover from.
+   *
+   * @param condition the condition to validate. Supposed to be true.
+   * @param exceptionClass the class of recoverable exception to be thrown if validation fails.
+   * @throws X the recoverable exception, if validation fails
+   */
   public static <X extends Exception> void validate(boolean condition, Class<X> exceptionClass) throws X {
     if (!condition) {
       throw ExceptionFactories.builder(exceptionClass).newInstance(null);
     }
   }
 
+  /**
+   * Validate the boolean expression that is supposed to be true.
+   * If not, a recoverable exception will be thrown that the client
+   * is supposed to catch and recover from.
+   *
+   * @param condition the condition to validate. Supposed to be true.
+   * @param factory the factory of recoverable exception to be thrown if validation fails.
+   * @throws X the recoverable exception, if validation fails
+   */
   public static <X extends Exception> void validate(boolean condition, ExceptionFactory<X> factory) throws X {
     if (!condition) {
       throw factory.newInstance(null);
@@ -54,8 +72,8 @@ public class Validation {
    * If not, a recoverable exception will be thrown that the client
    * is supposed to catch and recover from.
    *
-   * @param o         the object to validate
-   * @param matcher   the matcher that the object must satisfy
+   * @param o the object to validate
+   * @param matcher the matcher that the object must satisfy
    * @param exception the recoverable exception to be thrown if validation fails.
    * @return the validated object, if valid
    * @throws X the recoverable exception, if validation fails
@@ -67,6 +85,17 @@ public class Validation {
     return o;
   }
 
+  /**
+   * Validate the given object that is supposed to satisfy the matcher.
+   * If not, a recoverable exception will be thrown that the client
+   * is supposed to catch and recover from.
+   *
+   * @param o the object to validate
+   * @param matcher the matcher that the object must satisfy
+   * @param exceptionClass the class of recoverable exception to be thrown if validation fails.
+   * @return the validated object, if valid
+   * @throws X the recoverable exception, if validation fails
+   */
   public static <T, X extends Exception> T validate(T o, Matcher<?> matcher, Class<X> exceptionClass) throws X {
     if (!matcher.matches(o)) {
       throw ExceptionFactories.builder(exceptionClass).newInstance(withMessage(o, matcher));
@@ -74,6 +103,17 @@ public class Validation {
     return o;
   }
 
+  /**
+   * Validate the given object that is supposed to satisfy the matcher.
+   * If not, a recoverable exception will be thrown that the client
+   * is supposed to catch and recover from.
+   *
+   * @param o the object to validate
+   * @param matcher the matcher that the object must satisfy
+   * @param factory the factory of recoverable exception to be thrown if validation fails.
+   * @return the validated object, if valid
+   * @throws X the recoverable exception, if validation fails
+   */
   public static <T, X extends Exception> T validate(T o, Matcher<?> matcher, ExceptionFactory<X> factory) throws X {
     if (!matcher.matches(o)) {
       throw factory.newInstance(withMessage(o, matcher));
