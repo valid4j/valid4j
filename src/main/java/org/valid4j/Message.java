@@ -1,12 +1,33 @@
 package org.valid4j;
 
-import java.util.Arrays;
-import java.util.IllegalFormatException;
-
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
+import java.util.Arrays;
+import java.util.IllegalFormatException;
+
+/**
+ * Class that represents a message and builds the message upon invocation of toString().
+ */
 public class Message {
+
+  public static Message from(final String format, final Object... args) {
+    return new Message() {
+      @Override
+      public String toString() {
+        return withFormattedMessage(format, args);
+      }
+    };
+  }
+
+  public static Message withMismatchOf(final Object actual, final Matcher<?> matcher) {
+    return new Message() {
+      @Override
+      public String toString() {
+        return withMismatchMessageOf(actual, matcher);
+      }
+    };
+  }
 
   public static String withFormattedMessage(String msg, Object... values) {
     try {
