@@ -5,11 +5,13 @@ valid4j
 [![Coverage Status](https://coveralls.io/repos/helsing/valid4j/badge.png)](https://coveralls.io/r/helsing/valid4j)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.valid4j/valid4j/badge.png)](https://maven-badges.herokuapp.com/maven-central/org.valid4j/valid4j)
 
-A simple validation library for Java which makes it possible to use your 
+A simple assertion and validation library for Java which makes it possible to use your
 favorite [hamcrest-matchers](http://hamcrest.org/JavaHamcrest/) to 
 express pre- and post-conditions in your code. Use the global default 
 policy to signal logical violations in your code or optionally specify 
-your own handling. Documentation is available at [www.valid4j.org](http://www.valid4j.org).
+your own handling.
+
+Full documentation is available at [www.valid4j.org](http://www.valid4j.org).
 
 This library is available at [Maven Central Repository](http://search.maven.org/).
 Add this dependency to your `pom.xml`
@@ -19,6 +21,8 @@ Add this dependency to your `pom.xml`
       <artifactId>valid4j</artifactId>
       <version>0.4.0</version>
     </dependency>
+
+# Design-by-contract
 
 Statically import the library entry point:
 
@@ -45,3 +49,18 @@ Make use of the convenient pass-through of valid objects:
     // Return valid results
     return ensure(result, notNullValue());
 
+# Validation
+
+Statically import the library entry point:
+
+    import static org.valid4j.Validation.*;
+
+Use expressive hamcrest-matchers to validate input
+
+    validate(argument, isValid(), otherwiseThrowing(InvalidException.class));
+
+Make use of the convenient pass-through of valid objects:
+
+    // Initialize members with valid arguments
+    this.member = validate(arg, isValid(), otherwiseThrowing(InvalidException.class));
+    
