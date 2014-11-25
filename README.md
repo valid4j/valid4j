@@ -22,7 +22,7 @@ Add this dependency to your `pom.xml`
       <version>0.4.0</version>
     </dependency>
 
-# Design-by-contract
+### Design-by-contract (assertions)
 
 Statically import the library entry point:
 
@@ -49,7 +49,7 @@ Make use of the convenient pass-through of valid objects:
     // Return valid results
     return ensure(result, notNullValue());
 
-# Validation
+### Validation
 
 Statically import the library entry point:
 
@@ -63,4 +63,3 @@ Make use of the convenient pass-through of valid objects:
 
     // Initialize members with valid arguments
     this.member = validate(arg, isValid(), otherwiseThrowing(InvalidException.class));
-    
