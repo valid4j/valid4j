@@ -1,10 +1,17 @@
 Overview
 ========
 
-Valid4J is a simple validation library for Java which makes it possible to use your 
+valid4j is a simple assertion and validation library for Java which makes it possible to use your
 favorite [hamcrest-matchers](http://hamcrest.org/JavaHamcrest/) to express pre- and post-conditions 
-in your code, as well as making customized validation. Use the global default policy to signal logical 
-violations in your code or optionally specify your own handling.
+in your code in a [design by contract](http://en.wikipedia.org/wiki/Design_by_contract) style.
+
+valid4j provides you with an option to customize the global assertion policy by implementing an
+`org.valid4j.AssertiveProvider` and register it as a service loader in `META-INF/services`.
+
+valid4j also provides support for regular input validation using [hamcrest-matchers](http://hamcrest.org/JavaHamcrest/)
+throwing custom recoverable exceptions if validation fails.
+
+More info [found here](./concepts.html).
 
 ## Installation
 
@@ -25,12 +32,12 @@ Statically import the library entry point:
 
 Use assertive preconditions to check for programming errors in calling clients:
 
-    // Express your preconditions using plain boolean expressions
+    // Use hamcrest-matchers to specify your preconditions
+    require(list, everyItem(greaterThanOrEqualTo(3)));
+
+    // Or express your preconditions using plain boolean expressions
     require(v > 0.0, "The value (%f) must be positive", v);
-    
-    // Or use hamcrest-matchers
-    require(v, containsString("great!"));
-    
+
 Use assertive postconditions to check for programming errors in your supplied code:
 
     ensure(result != null);
@@ -39,12 +46,21 @@ Use assertive postconditions to check for programming errors in your supplied co
 Make use of the convenient pass-through of valid objects:
 
     // Initialize members with valid arguments
-    this.member = require(argument, notNullValue());
+    this.message = require(message, containsString("Greetings"));
 
     // Return valid results
-    return ensure(result, notNullValue());
+    return ensure(list, hasSize(greaterThan(1)));
 
-## Getting started with validation
+Clearly express what you assume is unreachable code:
+
+    neverGetHere("This should never happen");
+
+    // If needed, give the compiler a hint that this branch won't return
+    throw neverGetHereError("Really...!?");
+
+More info [found here](./concepts.html).
+
+## Validation
 
 Statically import the library entry point:
 
@@ -52,26 +68,23 @@ Statically import the library entry point:
 
 Use condition checking to perform simpler error handling and throw recoverable exceptions:
 
-    // Express conditions using plain boolean expressions
-    validate(v > 0.0, new NotValidException());
-    
-    // Or use hamcrest-matchers
-    validate(v, containsString("great!"), new MissingGreatException());
+    // Use expressive hamcrest-matchers
+    validate(v, containsString("Greetings"), otherwiseThrowing(MissingGreatException.class));
+
+    // Or use plain boolean expressions
+    validate(v > 0.0, otherwiseThrowing(NotAPositiveNumberException.class));
+
+More info [found here](./concepts.html).
 
 ## Motivation for valid4j
 
 The rationale behind valid4j (that we think is lacking from comparable alternatives
 from e.g. Google Guava, or Apache Commons):
 
-  * provide better support for programming by contract, using pre- and post-conditions
+  * provide better support for [design by contract](http://en.wikipedia.org/wiki/Design_by_contract), using pre- and post-conditions
   * similar support for recoverable exceptions, as for programming errors
   * make use of hamcrest library for extensibility
   * make it possible to customize the global policy for contract violations
-
-## And beyond...
-
-  * [In-depth concepts...](./concepts.html)
-  * [FAQ](./faq.html)
 
 ## Project license
 
