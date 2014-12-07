@@ -106,7 +106,10 @@
 <div class="page-header">
  <h1 id="overview">Overview</h1>
 </div> 
-<p>Valid4J is a simple validation library for Java which makes it possible to use your favorite <a class="externalLink" href="http://hamcrest.org/JavaHamcrest/">hamcrest-matchers</a> to express pre- and post-conditions in your code, as well as making customized validation. Use the global default policy to signal logical violations in your code or optionally specify your own handling.</p> 
+<p>valid4j is a simple assertion and validation library for Java which makes it possible to use your favorite <a class="externalLink" href="http://hamcrest.org/JavaHamcrest/">hamcrest-matchers</a> to express pre- and post-conditions in your code in a <a class="externalLink" href="http://en.wikipedia.org/wiki/Design_by_contract">design by contract</a> style.</p> 
+<p>valid4j provides you with an option to customize the global assertion policy by implementing an <tt>org.valid4j.AssertiveProvider</tt> and register it as a service loader in <tt>META-INF/services</tt>.</p> 
+<p>valid4j also provides support for regular input validation using <a class="externalLink" href="http://hamcrest.org/JavaHamcrest/">hamcrest-matchers</a> throwing custom recoverable exceptions if validation fails.</p> 
+<p>More info <a href="./concepts.html">found here</a>.</p> 
 <div class="section"> 
  <h2 id="Installation">Installation</h2> 
  <p>This library is available at <a class="externalLink" href="http://search.maven.org/">Maven Central Repository</a>. Add this dependency to your <tt>pom.xml</tt></p> 
@@ -128,11 +131,11 @@
  </div> 
  <p>Use assertive preconditions to check for programming errors in calling clients:</p> 
  <div class="source"> 
-  <pre>// Express your preconditions using plain boolean expressions
-require(v &gt; 0.0, &quot;The value (%f) must be positive&quot;, v);
+  <pre>// Use hamcrest-matchers to specify your preconditions
+require(list, everyItem(greaterThanOrEqualTo(3)));
 
-// Or use hamcrest-matchers
-require(v, containsString(&quot;great!&quot;));
+// Or express your preconditions using plain boolean expressions
+require(v &gt; 0.0, &quot;The value (%f) must be positive&quot;, v);
 </pre> 
  </div> 
  <p>Use assertive postconditions to check for programming errors in your supplied code:</p> 
@@ -144,15 +147,24 @@ ensure(result, greaterThan(3.0));
  <p>Make use of the convenient pass-through of valid objects:</p> 
  <div class="source"> 
   <pre>// Initialize members with valid arguments
-this.member = require(argument, notNullValue());
+this.message = require(message, containsString(&quot;Greetings&quot;));
 
 // Return valid results
-return ensure(result, notNullValue());
+return ensure(list, hasSize(greaterThan(1)));
 </pre> 
  </div> 
+ <p>Clearly express what you assume is unreachable code:</p> 
+ <div class="source"> 
+  <pre>neverGetHere(&quot;This should never happen&quot;);
+
+// If needed, give the compiler a hint that this branch won't return
+throw neverGetHereError(&quot;Really...!?&quot;);
+</pre> 
+ </div> 
+ <p>More info <a href="./concepts.html">found here</a>.</p> 
 </div> 
 <div class="section"> 
- <h2 id="Getting_started_with_validation">Getting started with validation</h2> 
+ <h2 id="Validation">Validation</h2> 
  <p>Statically import the library entry point:</p> 
  <div class="source"> 
   <pre>import static org.valid4j.Validation.*;
@@ -160,29 +172,23 @@ return ensure(result, notNullValue());
  </div> 
  <p>Use condition checking to perform simpler error handling and throw recoverable exceptions:</p> 
  <div class="source"> 
-  <pre>// Express conditions using plain boolean expressions
-validate(v &gt; 0.0, new NotValidException());
+  <pre>// Use expressive hamcrest-matchers
+validate(v, containsString(&quot;Greetings&quot;), otherwiseThrowing(MissingGreatException.class));
 
-// Or use hamcrest-matchers
-validate(v, containsString(&quot;great!&quot;), new MissingGreatException());
+// Or use plain boolean expressions
+validate(v &gt; 0.0, otherwiseThrowing(NotAPositiveNumberException.class));
 </pre> 
  </div> 
+ <p>More info <a href="./concepts.html">found here</a>.</p> 
 </div> 
 <div class="section"> 
  <h2 id="Motivation_for_valid4j">Motivation for valid4j</h2> 
  <p>The rationale behind valid4j (that we think is lacking from comparable alternatives from e.g. Google Guava, or Apache Commons):</p> 
  <ul> 
-  <li>provide better support for programming by contract, using pre- and post-conditions</li> 
+  <li>provide better support for <a class="externalLink" href="http://en.wikipedia.org/wiki/Design_by_contract">design by contract</a>, using pre- and post-conditions</li> 
   <li>similar support for recoverable exceptions, as for programming errors</li> 
   <li>make use of hamcrest library for extensibility</li> 
   <li>make it possible to customize the global policy for contract violations</li> 
- </ul> 
-</div> 
-<div class="section"> 
- <h2 id="And_beyond">And beyond…</h2> 
- <ul> 
-  <li><a href="./concepts.html">In-depth concepts…</a></li> 
-  <li><a href="./faq.html">FAQ</a></li> 
  </ul> 
 </div> 
 <div class="section"> 
@@ -200,9 +206,8 @@ validate(v, containsString(&quot;great!&quot;), new MissingGreatException());
 			<ul class="nav nav-list">
 		<li><a href="#Installation" title="Installation">Installation</a>
 		<li><a href="#Getting_started" title="Getting started">Getting started</a>
-		<li><a href="#Getting_started_with_validation" title="Getting started with validation">Getting started with validation</a>
+		<li><a href="#Validation" title="Validation">Validation</a>
 		<li><a href="#Motivation_for_valid4j" title="Motivation for valid4j">Motivation for valid4j</a>
-		<li><a href="#And_beyond" title="And beyond…">And beyond…</a>
 		<li><a href="#Project_license" title="Project license">Project license</a>
 				<li class="divider"></li>
 			</ul>
