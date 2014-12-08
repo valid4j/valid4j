@@ -212,6 +212,8 @@ the program fulfill their obligations. Do not use contracts to deal with situati
 couldn't be considered to be in our control, like invalid user input, network connection errors, 
 or file system issues. Contracts are no substitute for proper error handling and recovery.
 
+![Contracts is not validation](images/contracts-and-validation.png "Contracts != Validation")
+
 Use error handling to ensure the robustness of a program. To deal with exceptional cases
 outside our control, like erroneous user input or failed network connections, we need
 error handling. Do not use error handling to deal with logical errors, i.e. programming errors.
@@ -281,7 +283,7 @@ Principle (LSP)](http://en.wikipedia.org/wiki/Liskov_substitution_principle).
 It states that, if S is a subtype of T, then objects of type T may be replaced 
 with objects of type S. Think, S is-a T.
 
-    TBD: Picture...
+![Contracts and inheritance](images/contracts-and-lsp.png "LSP")
 
 In regards to contracts this means that a subclass must not require more from 
 its client, than the base class. And a subclass must not ensure less to its 
@@ -294,7 +296,7 @@ Therefore:
 
 # Contracts and multi-threading
 
-As we all know: avoid shared mutable state!
+The first rule of multi-threading: avoid shared mutable state!
 
 That being said, if we want to use contracts on shared mutable objects, we 
 can't put preconditions on the current supplier *state*. This is because, in a 
@@ -302,7 +304,7 @@ multi-threaded environment there is no way for a client to make sure that such
 a condition holds before making the call (effectively making the class pretty 
 useless).
 
-    TBD: Picture...
+![Contracts and multi-threading](images/contracts-and-multi-threading.png "Multi-threading")
 
 One option would be to throw a (recoverable) exception if the condition is
 not satisfied. In such an event the client could just catch and recover from
@@ -335,8 +337,6 @@ an example of proper usage in non-production code.
 Contracts are enforced during unreliable live execution, whereas unit tests 
 exercise the code in a safe test environment. So, make sure to leave
 the contracts switched on, even in production.
-
-    TBD Picture...
 
 Contracts specify the space of allowed invocations of a method, by specifying
 which conditions must be satisfied prior to invocation. This knowledge may be 
