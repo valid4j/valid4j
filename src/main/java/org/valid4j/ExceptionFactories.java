@@ -2,9 +2,11 @@ package org.valid4j;
 
 import java.lang.reflect.Constructor;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.valid4j.Assertive.neverGetHereError;
 import static org.valid4j.Assertive.require;
+import static org.valid4j.matchers.ClassMatchers.isAbstractClass;
 
 public class ExceptionFactories {
 
@@ -14,6 +16,7 @@ public class ExceptionFactories {
 
 	public static <X extends Exception> ExceptionFactory<X> exception(Class<X> exceptionClass) {
 		require(exceptionClass, notNullValue());
+		require(exceptionClass, not(isAbstractClass()));
 		Constructor<X> constructor = findOneStringArgumentPublicConstructor(exceptionClass);
 		if (constructor != null) {
 			return new ExceptionOneStringArgumentFactory<X>(constructor);

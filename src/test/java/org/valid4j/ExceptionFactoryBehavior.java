@@ -1,6 +1,5 @@
 package org.valid4j;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -126,7 +125,6 @@ public class ExceptionFactoryBehavior {
 		exception(InnerClassException.class);
 	}
 
-	@Ignore
 	@Test
 	public void shouldRejectAbstractExceptions() {
 		thrown.expect(instanceOf(AssertionError.class));

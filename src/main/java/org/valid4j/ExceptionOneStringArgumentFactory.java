@@ -18,7 +18,6 @@ public class ExceptionOneStringArgumentFactory<T extends Exception> implements E
   public ExceptionOneStringArgumentFactory(Constructor<T> exceptionConstructor) {
 		require(exceptionConstructor, notNullValue());
     require(Modifier.isPublic(exceptionConstructor.getModifiers()), "Exception constructor must be public");
-    require(!Modifier.isAbstract(exceptionConstructor.getModifiers()), "Exception class must not be abstract");
     final Class<?>[] parameters = exceptionConstructor.getParameterTypes();
     require(parameters.length == 1, "Exception constructor must accept one and only one argument");
     require(String.class.equals(parameters[0]), "Exception constructor must accept a String argument");
