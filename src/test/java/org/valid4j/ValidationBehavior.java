@@ -14,7 +14,7 @@ import static org.valid4j.matchers.ExceptionMatchers.preventInstantiationViolati
 public class ValidationBehavior {
 
   @Rule
-  public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+  public ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void shouldHavePrivateConstructor() {

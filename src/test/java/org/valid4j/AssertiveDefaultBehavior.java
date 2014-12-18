@@ -21,7 +21,7 @@ import static org.valid4j.matchers.ExceptionMatchers.preventInstantiationViolati
 public class AssertiveDefaultBehavior {
 	
 	@Rule
-	public final ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+	public final ExpectedException thrown = ExpectedException.none();
 
 	@Test
 	public void shouldPassWhenRequiredConditionIsTrue() {

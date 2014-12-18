@@ -25,7 +25,7 @@ import static org.valid4j.matchers.ExceptionMatchers.preventInstantiationViolati
 public class ArgumentMatchersBehavior {
 
   @Rule
-  public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+  public ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void shouldDecorateWrappedMatcherWithName() {

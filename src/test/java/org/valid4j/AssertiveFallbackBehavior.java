@@ -15,7 +15,7 @@ import static org.valid4j.fixture.FixtureProviders.*;
 public class AssertiveFallbackBehavior {
 
   @Rule
-  public final ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+  public final ExpectedException thrown = ExpectedException.none();
 
   @AfterClass
   public static void restoreDefaultProvider() {

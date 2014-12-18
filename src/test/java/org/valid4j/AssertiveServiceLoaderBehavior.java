@@ -18,7 +18,7 @@ import static org.valid4j.fixture.FixtureProviders.*;
 public class AssertiveServiceLoaderBehavior {
 
   @Rule
-  public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+  public ExpectedException thrown = ExpectedException.none();
 
   @Before
   public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {

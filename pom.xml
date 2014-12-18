@@ -9,7 +9,7 @@
 
   <name>${project.groupId}:${project.artifactId}</name>
   <url>http://valid4j.org</url>
-  <description>Simple validation framework for Java</description>
+  <description>Simple assertion and validation library for Java</description>
   <inceptionYear>2014</inceptionYear>
 
   <prerequisites>
@@ -25,7 +25,7 @@
   </licenses>
 
   <organization>
-    <name>Valid4J</name>
+    <name>valid4j</name>
     <url>http://valid4j.org</url>
   </organization>
 
@@ -85,8 +85,8 @@
 
     <!-- Dependency versions -->
     <hamcrest.version>1.3</hamcrest.version>
-    <junit.version>4.11</junit.version>
-    <mockito.version>1.10.8</mockito.version>
+    <junit.version>4.12</junit.version>
+    <mockito.version>1.10.17</mockito.version>
   </properties>
 
   <build>
