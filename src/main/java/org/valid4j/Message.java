@@ -1,5 +1,6 @@
 package org.valid4j;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
@@ -44,12 +45,12 @@ public class Message {
   }
 
   private static String withMismatchMessageOf(Object actual, Matcher<?> matcher) {
-    return new StringDescription().
+    Description mismatchDescription = new StringDescription().
         appendText("expected: ").
         appendDescriptionOf(matcher).
-        appendText("\n but was: ").
-        appendValue(actual).
-        toString();
+        appendText("\n but: ");
+    matcher.describeMismatch(actual, mismatchDescription);
+    return mismatchDescription.toString();
   }
   
   private static String fallbackFormattingOf(String msg, Object... values) {

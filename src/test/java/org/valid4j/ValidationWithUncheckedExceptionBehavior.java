@@ -63,7 +63,7 @@ public class ValidationWithUncheckedExceptionBehavior {
   public void shouldThrowWhenMatchValidationFail2() {
     thrown.expect(isA(IllegalArgumentException.class));
     thrown.expectMessage(containsString("expected: null"));
-    thrown.expectMessage(containsString("was: "));
+    thrown.expectMessage(containsString("but: was "));
     validate(new Object(), nullValue(), IllegalArgumentException.class);
   }
 
@@ -71,7 +71,7 @@ public class ValidationWithUncheckedExceptionBehavior {
   public void shouldThrowWhenMatchValidationFail3() {
     thrown.expect(isA(IllegalArgumentException.class));
     thrown.expectMessage(containsString("expected: null"));
-    thrown.expectMessage(containsString("was: "));
+    thrown.expectMessage(containsString("but: was "));
     validate(new Object(), nullValue(), otherwiseThrowing(IllegalArgumentException.class));
   }
 

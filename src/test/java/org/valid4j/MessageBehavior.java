@@ -58,13 +58,13 @@ public class MessageBehavior {
   public void shouldBuildMismatchMessage() {
     Object m = Message.describingMismatchOf(3, not(equalTo(2)));
     assertThat(m.toString(), containsString("expected: not <2>"));
-    assertThat(m.toString(), containsString("was: <3>"));
+    assertThat(m.toString(), containsString("but: was <3>"));
   }
 
   @Test
   public void shouldBuildMismatchMessageOfNullArguments() {
     Object m = Message.describingMismatchOf(null, notNullValue());
     assertThat(m.toString(), containsString("expected: not null"));
-    assertThat(m.toString(), containsString("was: null"));
+    assertThat(m.toString(), containsString("but: was null"));
   }
 }

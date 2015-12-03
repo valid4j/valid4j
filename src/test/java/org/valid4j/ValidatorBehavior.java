@@ -1,11 +1,12 @@
 package org.valid4j;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.valid4j.Validator.*;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import org.junit.*;
-import org.junit.rules.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+import static org.valid4j.Validator.validator;
 
 public class ValidatorBehavior {
 	
@@ -55,7 +56,7 @@ public class ValidatorBehavior {
 	public void shouldThrowWithDescriptiveMessageWhenMatchingValidationFails() throws MyRecoverableException {
 		thrown.expect(MyRecoverableException.class);
 		thrown.expectMessage(containsString("expected: not <2>"));
-		thrown.expectMessage(containsString("was: <2>"));
+		thrown.expectMessage(containsString("but: was <2>"));
 		example.validate(2, not(equalTo(2)));
 	}
 	

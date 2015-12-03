@@ -113,7 +113,7 @@ public class AssertiveDefaultBehavior {
 	public void shouldThrowWithMatchingMessageWhenRequireFails() {
 		thrown.expect(RequireViolation.class);
 		thrown.expectMessage(containsString("expected: not <2>"));
-		thrown.expectMessage(containsString("was: <2>"));
+		thrown.expectMessage(containsString("but: was <2>"));
 		require(2, not(equalTo(2)));
 	}
 
@@ -142,7 +142,7 @@ public class AssertiveDefaultBehavior {
 	@Test
 	public void shouldThrowWithMatchingMessageWhenEnsureFails() {
 		thrown.expect(EnsureViolation.class);
-		thrown.expectMessage(containsString("was: <3>"));
+		thrown.expectMessage(containsString("but: was <3>"));
 		thrown.expectMessage(containsString("expected: <5>"));
 		ensure(3, equalTo(5));
 	}
