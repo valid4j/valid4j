@@ -49,7 +49,16 @@ Make use of the convenient pass-through of valid objects:
     // Return valid results
     return ensure(result, notNullValue());
 
-### Validation
+Contract violations will contain a descriptive error message:
+
+    // E.g this contract
+    require("This message is bad", containsString("good"));
+    
+    // Will yield this error
+    org.valid4j.exceptions.RequireViolation: expected: a string containing "good"
+     but: was "This message is bad"
+
+### Validation (e.g. input validation)
 
 Statically import the library entry point:
 
@@ -63,3 +72,14 @@ Make use of the convenient pass-through of valid objects:
 
     // Initialize members with valid arguments
     this.member = validate(arg, isValid(), otherwiseThrowing(InvalidException.class));
+
+Failed validations will contain a descriptive message:
+
+    // E.g this validation
+    validate("This message is bad", containsString("good"), IllegalArgumentException.class);
+    
+    // Will yield this exception with message
+    // (NOTE: Exception class must accept one String argument in constructor for this feature)
+    java.lang.IllegalArgumentException: expected: a string containing "good"
+     but: was "This message is bad"
+     
