@@ -1,7 +1,7 @@
 package org.valid4j.impl;
 
-import org.valid4j.exceptions.ContractViolation;
-import org.valid4j.exceptions.EnsureViolation;
+import org.valid4j.errors.ContractViolation;
+import org.valid4j.errors.EnsureViolation;
 
 import java.util.Queue;
 

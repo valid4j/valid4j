@@ -3,7 +3,7 @@ package org.valid4j.impl;
 import org.valid4j.AssertiveProvider;
 import org.valid4j.CheckPolicy;
 import org.valid4j.UnreachablePolicy;
-import org.valid4j.exceptions.ContractViolation;
+import org.valid4j.errors.ContractViolation;
 
 import java.util.ArrayList;
 import java.util.List;

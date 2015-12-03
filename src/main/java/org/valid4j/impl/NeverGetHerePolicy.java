@@ -1,8 +1,8 @@
 package org.valid4j.impl;
 
 import org.valid4j.UnreachablePolicy;
-import org.valid4j.exceptions.ContractViolation;
-import org.valid4j.exceptions.NeverGetHereViolation;
+import org.valid4j.errors.ContractViolation;
+import org.valid4j.errors.NeverGetHereViolation;
 
 import java.util.Queue;
 

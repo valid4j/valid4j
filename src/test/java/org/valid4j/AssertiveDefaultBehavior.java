@@ -3,9 +3,9 @@ package org.valid4j;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.valid4j.exceptions.EnsureViolation;
-import org.valid4j.exceptions.NeverGetHereViolation;
-import org.valid4j.exceptions.RequireViolation;
+import org.valid4j.errors.EnsureViolation;
+import org.valid4j.errors.NeverGetHereViolation;
+import org.valid4j.errors.RequireViolation;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;

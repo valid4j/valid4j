@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.valid4j.exceptions.RequireViolation;
+import org.valid4j.errors.RequireViolation;
 import org.valid4j.fixture.AssertiveMockProvider;
 
 import static org.mockito.Mockito.*;

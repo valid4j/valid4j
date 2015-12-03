@@ -6,10 +6,10 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.valid4j.exceptions.ContractViolation;
-import org.valid4j.exceptions.EnsureViolation;
-import org.valid4j.exceptions.NeverGetHereViolation;
-import org.valid4j.exceptions.RequireViolation;
+import org.valid4j.errors.ContractViolation;
+import org.valid4j.errors.EnsureViolation;
+import org.valid4j.errors.NeverGetHereViolation;
+import org.valid4j.errors.RequireViolation;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;

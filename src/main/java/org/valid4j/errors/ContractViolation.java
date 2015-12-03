@@ -1,9 +1,9 @@
-package org.valid4j.exceptions;
+package org.valid4j.errors;
 
 /**
  * Exception thrown to indicate that a contract violation have been detected.
  * Contract violations are considered to be programming errors, and hence
- * should not be catched and recovered from in normal application flow.
+ * should not be caught and recovered from in normal application flow.
  */
 public class ContractViolation extends AssertionError {
 	

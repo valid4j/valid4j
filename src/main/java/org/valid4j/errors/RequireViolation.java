@@ -1,8 +1,8 @@
-package org.valid4j.exceptions;
+package org.valid4j.errors;
 
 /**
  * Exception thrown to indicate that a programming error have been detected,
- * on the clients part. A precondition does not hold.
+ * on the clients part. A pre-condition does not hold.
  */
 public class RequireViolation extends ContractViolation {
 

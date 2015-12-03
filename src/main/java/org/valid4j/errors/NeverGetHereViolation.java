@@ -1,7 +1,7 @@
-package org.valid4j.exceptions;
+package org.valid4j.errors;
 
 /**
- * Exception being thrown to indicate that expectedly unreachable code
+ * Exception being thrown to indicate that supposedly unreachable code
  * have been reached, and that this is considered a programming error.
  */
 public class NeverGetHereViolation extends ContractViolation {
