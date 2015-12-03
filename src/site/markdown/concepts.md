@@ -25,13 +25,14 @@ Recoverable exceptions, on the other hand, signal exceptional cases that a corre
 should handle gracefully. This might be network connection errors, file system errors or data input
 validation errors. This is what we in everyday talk refer to as error handling, fault tolerance and the like.
   
-According to the Java exception hierarchy, as a general rule programming errors should inherit from 
-`RuntimeException` whereas `Error` is reserved for internal errors of the Java runtime system. However, 
-there is also differing opinions regarding the proper use of checked vs unchecked exceptions.
-This has led to the widespread use of `RuntimeException` also for recoverable exceptions.
+According to the usage guidelines of the Java exception hierarchy, as a general rule programming errors 
+should inherit from `RuntimeException` whereas `Error` is reserved for internal errors of the Java 
+runtime system. However, there is also differing opinions in the Java community regarding the proper 
+use of checked vs unchecked exceptions. This has led to the widespread use of `RuntimeException` also 
+for recoverable exceptions.
 
 Valid4J prefers to use `Error` to signal programming errors, and is agnostic to the question of
-using checked or unchecked recoverable exceptions.
+using `Exception` (checked) or `RuntimeException` (unchecked) for recoverable exceptions.
 
 # Defensive programming, don't do it
 
