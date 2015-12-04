@@ -1,4 +1,4 @@
 org.valid4j
-org.valid4j.exceptions
+org.valid4j.errors
 org.valid4j.impl
 org.valid4j.matchers
