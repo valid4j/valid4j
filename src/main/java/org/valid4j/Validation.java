@@ -29,6 +29,7 @@ public class Validation {
    * If not, a recoverable exception will be thrown that the client
    * is supposed to catch and recover from.
    *
+   * @param <X> type of exception to throw if validation fails
    * @param condition the condition to validate. Supposed to be true.
    * @param exception the recoverable exception to be thrown if validation fails.
    * @throws X the recoverable exception, if validation fails
@@ -44,6 +45,7 @@ public class Validation {
    * If not, a recoverable exception will be thrown that the client
    * is supposed to catch and recover from.
    *
+   * @param <X> type of exception to throw if validation fails
    * @param condition the condition to validate. Supposed to be true.
    * @param exceptionClass the class of recoverable exception to be thrown if validation fails.
    * @throws X the recoverable exception, if validation fails
@@ -59,6 +61,7 @@ public class Validation {
    * If not, a recoverable exception will be thrown that the client
    * is supposed to catch and recover from.
    *
+   * @param <X> type of exception to throw if validation fails
    * @param condition the condition to validate. Supposed to be true.
    * @param factory the factory of recoverable exception to be thrown if validation fails.
    * @throws X the recoverable exception, if validation fails
@@ -74,6 +77,8 @@ public class Validation {
    * If not, a recoverable exception will be thrown that the client
    * is supposed to catch and recover from.
    *
+   * @param <T> type of object to validate
+   * @param <X> type of exception to throw if validation fails
    * @param o the object to validate
    * @param matcher the matcher that the object must satisfy
    * @param exception the recoverable exception to be thrown if validation fails.
@@ -92,6 +97,8 @@ public class Validation {
    * If not, a recoverable exception will be thrown that the client
    * is supposed to catch and recover from.
    *
+   * @param <T> type of object to validate
+   * @param <X> type of exception to throw if validation fails
    * @param o the object to validate
    * @param matcher the matcher that the object must satisfy
    * @param exceptionClass the class of recoverable exception to be thrown if validation fails.
@@ -110,6 +117,8 @@ public class Validation {
    * If not, a recoverable exception will be thrown that the client
    * is supposed to catch and recover from.
    *
+   * @param <T> type of object to validate
+   * @param <X> type of exception to throw if validation fails
    * @param o the object to validate
    * @param matcher the matcher that the object must satisfy
    * @param factory the factory of recoverable exception to be thrown if validation fails.

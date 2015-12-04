@@ -19,14 +19,18 @@ public class ArgumentMatchers {
   /**
    * Wraps an existing matcher, decorating its description with the name specified. All other functions are
    * delegated to the decorated matcher, including its mismatch description.
-   * <p/>
+   *
    * Example:
    * <pre>named("theNameOfMyArgument", notNullValue())</pre>
    *
+   * @param <T>
+   *     the type of object to match
    * @param name
    *     the given name of the wrapped matcher
    * @param matcher
    *     the matcher to decorate with a name
+   * @return
+   *     the decorated matcher
    */
   @Factory
   public static <T> Matcher<T> named(String name, Matcher<T> matcher) {
@@ -36,9 +40,12 @@ public class ArgumentMatchers {
 
   /**
    * A matcher matching non-null and non-empty strings
-   * <p/>
+   *
    * Example:
    * <pre>assertThat("this is not an empty string", notEmptyString())</pre>
+   *
+   * @return
+   *     matcher for a not empty string
    */
   @Factory
   public static Matcher<String> notEmptyString() {

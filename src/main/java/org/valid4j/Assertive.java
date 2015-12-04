@@ -11,12 +11,12 @@ import static org.valid4j.AssertiveCachingProvider.cached;
 
 /**
  * Entry point for the global assertive policy.
- * <p/>
+ * <p>
  * Violations indicate the presence of a programming error.
  * Never try to catch and recover from a programming error. Rather
  * a reasonable global approach would be to return a HTTP 500 response,
  * restart the application or similar.
- * <p/>
+ * </p>
  * Make use of hamcrest matchers to conveniently express conditions and get clear error messages.
  * Example:
  * <pre>
@@ -24,9 +24,9 @@ import static org.valid4j.AssertiveCachingProvider.cached;
  *   require(i, greaterThan(0));
  * }
  * </pre>
- * <p/>
+ * <p>
  * All error messages are {@link java.lang.String#format format strings} as defined by {@link java.lang.String}.
- * <p/>
+ * </p>
  * Example:
  * <pre>
  * {@code
@@ -127,6 +127,7 @@ public class Assertive {
    * Violations are considered to be programming errors,
    * on the clients part.
    *
+   * @param <T>     type of object to check
    * @param o       the object to check
    * @param matcher the matcher that the given object must satisfy
    * @return the validated object
@@ -165,6 +166,7 @@ public class Assertive {
    * Violations are considered to be programming errors,
    * on the suppliers part.
    *
+   * @param <T>     type of object to check
    * @param o       the object to check
    * @param matcher the matcher that the given object must satisfy
    * @return        the validated object
