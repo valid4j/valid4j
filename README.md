@@ -19,7 +19,7 @@ Add this dependency to your `pom.xml`
     <dependency>
       <groupId>org.valid4j</groupId>
       <artifactId>valid4j</artifactId>
-      <version>0.4.0</version>
+      <version>0.5.0</version>
     </dependency>
 
 ### Design-by-contract (assertions)
