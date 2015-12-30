@@ -55,7 +55,7 @@
 
   <ciManagement>
     <system>Travis CI</system>
-    <url>http://travis-ci.org/#!/helsing/valid4j</url>
+    <url>http://travis-ci.org/#!/valid4j/valid4j</url>
   </ciManagement>
 
   <distributionManagement>
