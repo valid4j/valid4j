@@ -2,7 +2,7 @@ valid4j
 =======
 
 [![Build Status](https://travis-ci.org/valid4j/valid4j.png)](https://travis-ci.org/valid4j/valid4j)
-[![Coverage Status](https://coveralls.io/repos/valid4j/valid4j/badge.png)](https://coveralls.io/r/valid4j/valid4j)
+[![Coverage Status](https://coveralls.io/repos/valid4j/valid4j/badge.png?branch=master&service=github)](https://coveralls.io/github/valid4j/valid4j?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.valid4j/valid4j/badge.png)](https://maven-badges.herokuapp.com/maven-central/org.valid4j/valid4j)
 
 A simple assertion and validation library for Java which makes it possible to use your
