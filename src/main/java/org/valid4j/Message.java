@@ -45,17 +45,17 @@ public class Message {
   }
 
   private static String withMismatchMessageOf(Object actual, Matcher<?> matcher) {
-    Description mismatchDescription = new StringDescription().
-        appendText("expected: ").
-        appendDescriptionOf(matcher).
-        appendText("\n but: ");
+    Description mismatchDescription = new StringDescription()
+        .appendText("expected: ")
+        .appendDescriptionOf(matcher)
+        .appendText("\n but: ");
     matcher.describeMismatch(actual, mismatchDescription);
     return mismatchDescription.toString();
   }
-  
+
   private static String fallbackFormattingOf(String msg, Object... values) {
-    return new StringBuilder(msg).
-        append(Arrays.toString(values)).
-        toString();
+    return new StringBuilder(msg)
+        .append(Arrays.toString(values))
+        .toString();
   }
 }
