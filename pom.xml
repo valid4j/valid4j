@@ -43,19 +43,19 @@
   </developers>
 
   <scm>
-    <connection>scm:git:git://github.com/helsing/valid4j.git</connection>
-    <developerConnection>scm:git:git@github.com:helsing/valid4j.git</developerConnection>
-    <url>http://github.com/helsing/valid4j/tree/master</url>
+    <connection>scm:git:git://github.com/valid4j/valid4j.git</connection>
+    <developerConnection>scm:git:git@github.com:valid4j/valid4j.git</developerConnection>
+    <url>http://github.com/valid4j/valid4j/tree/master</url>
   </scm>
 
   <issueManagement>
     <system>github</system>
-    <url>https://github.com/helsing/valid4j/issues</url>
+    <url>https://github.com/valid4j/valid4j/issues</url>
   </issueManagement>
 
   <ciManagement>
     <system>Travis CI</system>
-    <url>http://travis-ci.org/#!/helsing/valid4j</url>
+    <url>http://travis-ci.org/#!/valid4j/valid4j</url>
   </ciManagement>
 
   <distributionManagement>
