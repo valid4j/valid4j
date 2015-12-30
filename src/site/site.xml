@@ -15,7 +15,7 @@
       <theme>bootswatch-spacelab</theme>
       <brand>
         <name>valid4j</name>
-        <href>http://helsing.github.io/valid4j/</href>
+        <href>http://valid4j.github.io/valid4j/</href>
       </brand>
       <slogan position="bannerLeft">Simple validation for Java</slogan>
       <titleTemplate>%1$s</titleTemplate>
@@ -33,7 +33,7 @@
       <item name="Concepts" href="concepts.html" />
       <item name="JavaDoc" href="apidocs/index.html" />
       <item name="FAQ" href="faq.html" />
-      <item name="GitHub" href="https://github.com/helsing/valid4j" />
+      <item name="GitHub" href="https://github.com/valid4j/valid4j" />
     </menu>
     <menu ref="reports" />
     <!-- <links> -->
