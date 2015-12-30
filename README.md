@@ -79,7 +79,7 @@ Failed validations will contain a descriptive message:
     validate("This message is bad", containsString("good"), IllegalArgumentException.class);
     
     // Will yield this exception with message
-    // (NOTE: Exception class must accept one String argument in constructor for this feature)
+    // (NOTE: Exception class must accept one String argument in constructor for this feature to be supported)
     java.lang.IllegalArgumentException: expected: a string containing "good"
      but: was "This message is bad"
      
