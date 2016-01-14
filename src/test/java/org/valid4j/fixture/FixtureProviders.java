@@ -1,6 +1,6 @@
 package org.valid4j.fixture;
 
-import org.valid4j.Assertive;
+import org.valid4j.AssertiveConstants;
 import org.valid4j.AssertiveCustomizedBehavior;
 import org.valid4j.AssertiveProvider;
 
@@ -24,11 +24,11 @@ public class FixtureProviders {
   public static final String CLASS_NAME_OF_PROTECTED_PROVIDER = AssertiveProtectedProvider.class.getName();
 
   public static void setProviderProperty(String className) {
-    System.setProperty(Assertive.ASSERTIVE_PROPERTY_NAME, className);
+    System.setProperty(AssertiveConstants.ASSERTIVE_PROPERTY_NAME, className);
   }
 
   public static String clearProviderProperty() {
-    return System.clearProperty(Assertive.ASSERTIVE_PROPERTY_NAME);
+    return System.clearProperty(AssertiveConstants.ASSERTIVE_PROPERTY_NAME);
   }
 
   public static void setProviderLoader(String providerName) {

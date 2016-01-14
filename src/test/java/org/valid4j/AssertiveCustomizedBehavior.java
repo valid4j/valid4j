@@ -21,32 +21,32 @@ public class AssertiveCustomizedBehavior {
   @Rule
   public final ExpectedException thrown = ExpectedException.none();
 
-  @Before
-  public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {
-    clearProviderProperty();
-    Assertive.init();
-    AssertiveMockProvider.requirePolicy = mock(CheckPolicy.class);
-    AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
-    AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
-  }
-
   @AfterClass
   public static void makeSureAssertiveIsLoadedWithDefaultProvider() {
     clearProviderProperty();
-    Assertive.init();
+    AssertiveInstance.init();
+  }
+
+  @Before
+  public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {
+    clearProviderProperty();
+    AssertiveInstance.init();
+    AssertiveMockProvider.requirePolicy = mock(CheckPolicy.class);
+    AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
+    AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
   }
 
   @Test
   public void shouldInjectCustomizedAssertivePolicyProvider() {
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
 
-    Assertive.init();
+    AssertiveInstance.init();
   }
 
   @Test
   public void shouldUseCustomizedRequirePolicy() {
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
-    Assertive.init();
+    AssertiveInstance.init();
 
     require(true, "testing require");
 
@@ -57,7 +57,7 @@ public class AssertiveCustomizedBehavior {
   @Test
   public void shouldUseCustomizedEnsurePolicy() {
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
-    Assertive.init();
+    AssertiveInstance.init();
 
     ensure(false, "testing ensure");
 
@@ -67,7 +67,7 @@ public class AssertiveCustomizedBehavior {
   @Test
   public void shouldUseCustomizedNeverGetHerePolicy() {
     setProviderProperty(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
-    Assertive.init();
+    AssertiveInstance.init();
 
     neverGetHere("testing never get here");
 
@@ -81,7 +81,7 @@ public class AssertiveCustomizedBehavior {
     thrown.expect(ExceptionInInitializerError.class);
     thrown.expectCause(isA(ClassNotFoundException.class));
 
-    Assertive.init();
+    AssertiveInstance.init();
   }
 
   @Test
@@ -91,7 +91,7 @@ public class AssertiveCustomizedBehavior {
     thrown.expect(ExceptionInInitializerError.class);
     thrown.expectCause(isA(ClassCastException.class));
 
-    Assertive.init();
+    AssertiveInstance.init();
   }
 
   @Test
@@ -101,7 +101,7 @@ public class AssertiveCustomizedBehavior {
     thrown.expect(ExceptionInInitializerError.class);
     thrown.expectCause(isA(InstantiationException.class));
 
-    Assertive.init();
+    AssertiveInstance.init();
   }
 
   @Test
@@ -111,6 +111,6 @@ public class AssertiveCustomizedBehavior {
     thrown.expect(ExceptionInInitializerError.class);
     thrown.expectCause(isA(IllegalAccessException.class));
 
-    Assertive.init();
+    AssertiveInstance.init();
   }
 }

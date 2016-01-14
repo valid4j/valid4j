@@ -24,15 +24,49 @@ import static org.valid4j.impl.AssertiveDefaultProvider.getFirstTrackedViolation
  */
 public class AssertiveTrackingBehavior {
 
-  @Before
-  public void initializeAssertiveAndItsTracker() {
-    restoreAssertiveAndItsTracker();
-  }
-
   @AfterClass
   public static void restoreAssertiveAndItsTracker() {
     clearProviderProperty();
-    Assertive.init();
+    AssertiveInstance.init();
+  }
+
+  private static Matcher<ContractViolation> isRequireViolation(String msg) {
+    return allOf(instanceOf(RequireViolation.class), withMessage(msg));
+  }
+
+  private static Matcher<? super Throwable> withMessage(final String msg) {
+    return new TypeSafeMatcher<Throwable>() {
+      @Override
+      protected boolean matchesSafely(Throwable t) {
+        return msg.equals(t.getMessage());
+      }
+
+      @Override
+      public void describeTo(Description description) {
+        description.appendText("with message ").appendText(msg);
+      }
+    };
+  }
+
+  private static void requireIgnoreThrow(boolean condition, String message) {
+    try {
+      require(condition, message);
+    } catch (RequireViolation e) {
+      // Do nothing
+    }
+  }
+
+  private static void ensureIgnoreThrow(boolean condition, String message) {
+    try {
+      ensure(condition, message);
+    } catch (EnsureViolation e) {
+      // Do nothing
+    }
+  }
+
+  @Before
+  public void initializeAssertiveAndItsTracker() {
+    restoreAssertiveAndItsTracker();
   }
 
   @Test
@@ -103,46 +137,12 @@ public class AssertiveTrackingBehavior {
         isRequireViolation("10")));
   }
 
-  private static Matcher<ContractViolation> isRequireViolation(String msg) {
-    return allOf(instanceOf(RequireViolation.class), withMessage(msg));
-  }
-
   private Matcher<ContractViolation> isEnsureViolation(String msg) {
     return allOf(instanceOf(EnsureViolation.class), withMessage(msg));
   }
 
   private Matcher<ContractViolation> isNeverGetHereViolation(String msg) {
     return allOf(instanceOf(NeverGetHereViolation.class), withMessage(msg));
-  }
-
-  private static Matcher<? super Throwable> withMessage(final String msg) {
-    return new TypeSafeMatcher<Throwable>() {
-      @Override
-      protected boolean matchesSafely(Throwable t) {
-        return msg.equals(t.getMessage());
-      }
-
-      @Override
-      public void describeTo(Description description) {
-        description.appendText("with message ").appendText(msg);
-      }
-    };
-  }
-
-  private static void requireIgnoreThrow(boolean condition, String message) {
-    try {
-      require(condition, message);
-    } catch (RequireViolation e) {
-      // Do nothing
-    }
-  }
-
-  private static void ensureIgnoreThrow(boolean condition, String message) {
-    try {
-      ensure(condition, message);
-    } catch (EnsureViolation e) {
-      // Do nothing
-    }
   }
 
   private void neverGetHereIgnoreThrow(String msg) {

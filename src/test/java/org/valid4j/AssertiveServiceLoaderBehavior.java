@@ -20,16 +20,16 @@ public class AssertiveServiceLoaderBehavior {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  @Before
-  public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {
-    makeSureAssertiveIsLoadedWithDefaultProvider();
-  }
-
   @AfterClass
   public static void makeSureAssertiveIsLoadedWithDefaultProvider() {
     clearProviderLoader();
     clearProviderProperty();
-    Assertive.init();
+    AssertiveInstance.init();
+  }
+
+  @Before
+  public void makeSureAssertiveCanBeLoadedWithDefaultProvider() {
+    makeSureAssertiveIsLoadedWithDefaultProvider();
   }
 
   @Test
@@ -38,7 +38,7 @@ public class AssertiveServiceLoaderBehavior {
     AssertiveMockProvider.ensurePolicy = mock(CheckPolicy.class);
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderLoader(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER);
-    Assertive.init();
+    AssertiveInstance.init();
 
     require(true, "test require policy is loaded from file");
     verify(AssertiveMockProvider.requirePolicy).check(true, "test require policy is loaded from file");
@@ -62,10 +62,10 @@ public class AssertiveServiceLoaderBehavior {
     AssertiveMockProvider.neverGetHerePolicy = mock(UnreachablePolicy.class);
     setProviderLoader(CLASS_NAME_OF_CUSTOMIZED_MOCK_PROVIDER +
         "\n" +
-        Assertive.DEFAULT_PROVIDER +
+        AssertiveConstants.DEFAULT_PROVIDER +
         "\n" +
-        Assertive.DISABLED_PROVIDER);
-    Assertive.init();
+        AssertiveConstants.DISABLED_PROVIDER);
+    AssertiveInstance.init();
 
     thrown.expect(RequireViolation.class);
     require(false, "test default provider if too many providers are found");

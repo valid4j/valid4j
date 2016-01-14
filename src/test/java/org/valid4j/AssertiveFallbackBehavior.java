@@ -20,7 +20,7 @@ public class AssertiveFallbackBehavior {
   @AfterClass
   public static void restoreDefaultProvider() {
     clearProviderProperty();
-    Assertive.init();
+    AssertiveInstance.init();
   }
 
   @Test
@@ -32,7 +32,7 @@ public class AssertiveFallbackBehavior {
 
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("Missing require policy");
-    Assertive.init();
+    AssertiveInstance.init();
   }
 
   @Test
@@ -44,7 +44,7 @@ public class AssertiveFallbackBehavior {
 
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("Missing ensure policy");
-    Assertive.init();
+    AssertiveInstance.init();
   }
 
   @Test
@@ -56,6 +56,6 @@ public class AssertiveFallbackBehavior {
 
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("Missing never get here policy");
-    Assertive.init();
+    AssertiveInstance.init();
   }
 }

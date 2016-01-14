@@ -18,16 +18,20 @@ import static org.valid4j.fixture.FixtureProviders.setProviderProperty;
  */
 public class AssertiveDisabledBehavior {
 
-  @Before
-  public void setupDisabledAssertivePolicyProvider() {
-    setProviderProperty(Assertive.DISABLED);
-    Assertive.init();
-  }
-
   @AfterClass
   public static void restoreDefaultProvider() {
     clearProviderProperty();
-    Assertive.init();
+    AssertiveInstance.init();
+  }
+
+  private static Matcher<? super Error> defaultError() {
+    return nullValue();
+  }
+
+  @Before
+  public void setupDisabledAssertivePolicyProvider() {
+    setProviderProperty(AssertiveConstants.DISABLED);
+    AssertiveInstance.init();
   }
 
   @Test
@@ -94,9 +98,5 @@ public class AssertiveDisabledBehavior {
     assertThat(neverGetHereError(t, format, value), defaultError());
 
     verifyZeroInteractions(t, value);
-  }
-
-  private static Matcher<? super Error> defaultError() {
-    return nullValue();
   }
 }
