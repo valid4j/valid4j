@@ -9,4 +9,4 @@
  * 
  * @see org.valid4j.Assertive
  */
-package org.valid4j.errors;
+package org.valid4j.provider.errors;

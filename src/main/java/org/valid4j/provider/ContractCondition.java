@@ -1,4 +1,4 @@
-package org.valid4j;
+package org.valid4j.provider;
 
 /**
  * Represents a contract condition that should always be satisfied.

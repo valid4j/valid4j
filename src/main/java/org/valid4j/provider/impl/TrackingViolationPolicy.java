@@ -1,6 +1,6 @@
-package org.valid4j.impl;
+package org.valid4j.provider.impl;
 
-import org.valid4j.errors.ContractViolation;
+import org.valid4j.provider.errors.ContractViolation;
 
 import java.util.Queue;
 

@@ -1,4 +1,4 @@
-package org.valid4j;
+package org.valid4j.provider;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,19 +6,20 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 import static org.valid4j.Assertive.neverGetHereError;
-import static org.valid4j.AssertiveCachingProvider.cached;
-import static org.valid4j.AssertiveConstants.*;
+import static org.valid4j.provider.AssertiveCachingProvider.cached;
+import static org.valid4j.provider.AssertiveConstants.*;
 
 /**
+ * Instance holder for global AssertiveProvider.
  */
 public class AssertiveInstance {
 
   private static AssertiveProvider provider;
 
   /**
-   * To customize the behavior of Assertive, specify a system property 'org.valid4j.AssertiveProvider'
+   * To customize the behavior of Assertive, specify a system property 'org.valid4j.provider.AssertiveProvider'
    * with the class name of the assertive provider to use. Or register the assertive provider in a file
-   * on the classpath at 'META-INF/services/org.valid4j.AssertiveProvider' with a single line in it
+   * on the classpath at 'META-INF/services/org.valid4j.provider.AssertiveProvider' with a single line in it
    * containing the class name of the assertive provider to use.
    */
   static {

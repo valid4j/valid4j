@@ -1,4 +1,4 @@
-package org.valid4j.errors;
+package org.valid4j.provider.errors;
 
 /**
  * Exception being thrown to indicate that supposedly unreachable code

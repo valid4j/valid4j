@@ -1,12 +1,12 @@
-package org.valid4j;
+package org.valid4j.provider;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.valid4j.errors.RequireViolation;
 import org.valid4j.fixture.AssertiveMockProvider;
+import org.valid4j.provider.errors.RequireViolation;
 
 import static org.mockito.Mockito.*;
 import static org.valid4j.Assertive.*;

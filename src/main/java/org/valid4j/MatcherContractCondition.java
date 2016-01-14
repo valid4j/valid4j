@@ -1,6 +1,7 @@
 package org.valid4j;
 
 import org.hamcrest.Matcher;
+import org.valid4j.provider.ContractCondition;
 
 import static org.valid4j.Message.describingMismatchOf;
 

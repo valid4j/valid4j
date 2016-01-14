@@ -1,8 +1,8 @@
 package org.valid4j.fixture;
 
-import org.valid4j.AssertiveConstants;
-import org.valid4j.AssertiveCustomizedBehavior;
-import org.valid4j.AssertiveProvider;
+import org.valid4j.provider.AssertiveConstants;
+import org.valid4j.provider.AssertiveCustomizedBehavior;
+import org.valid4j.provider.AssertiveProvider;
 
 import java.io.FileWriter;
 import java.io.IOException;

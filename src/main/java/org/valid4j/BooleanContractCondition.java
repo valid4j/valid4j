@@ -1,5 +1,7 @@
 package org.valid4j;
 
+import org.valid4j.provider.ContractCondition;
+
 /**
  * An implementation of a plain boolean contract condition.
  */

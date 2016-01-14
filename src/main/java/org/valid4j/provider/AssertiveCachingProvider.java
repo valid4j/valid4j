@@ -1,4 +1,4 @@
-package org.valid4j;
+package org.valid4j.provider;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.valid4j.Validation.validate;
@@ -12,10 +12,6 @@ class AssertiveCachingProvider implements AssertiveProvider {
   private final CheckPolicy ensurePolicy;
   private final UnreachablePolicy neverGetHerePolicy;
 
-  public static AssertiveProvider cached(AssertiveProvider delegate) {
-    return new AssertiveCachingProvider(delegate);
-  }
-
   public AssertiveCachingProvider(AssertiveProvider source) {
     this.requirePolicy = validate(source.requirePolicy(), notNullValue(),
         new NullPointerException("Missing require policy"));
@@ -23,6 +19,10 @@ class AssertiveCachingProvider implements AssertiveProvider {
         new NullPointerException("Missing ensure policy"));
     this.neverGetHerePolicy = validate(source.neverGetHerePolicy(), notNullValue(),
         new NullPointerException("Missing never get here policy"));
+  }
+
+  public static AssertiveProvider cached(AssertiveProvider delegate) {
+    return new AssertiveCachingProvider(delegate);
   }
 
   @Override

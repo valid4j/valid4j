@@ -1,10 +1,10 @@
-package org.valid4j;
+package org.valid4j.provider;
 
 /**
  * Policy for handling unreachable code
  */
 public interface UnreachablePolicy {
 
-  void neverGetHere(Throwable t, String msg, Object... values);
+  void neverGetHere(Throwable t, Object messageBuilder);
 
 }

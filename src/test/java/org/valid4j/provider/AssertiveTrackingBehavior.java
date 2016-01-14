@@ -1,4 +1,4 @@
-package org.valid4j;
+package org.valid4j.provider;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -6,10 +6,10 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.valid4j.errors.ContractViolation;
-import org.valid4j.errors.EnsureViolation;
-import org.valid4j.errors.NeverGetHereViolation;
-import org.valid4j.errors.RequireViolation;
+import org.valid4j.provider.errors.ContractViolation;
+import org.valid4j.provider.errors.EnsureViolation;
+import org.valid4j.provider.errors.NeverGetHereViolation;
+import org.valid4j.provider.errors.RequireViolation;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 import static org.valid4j.Assertive.*;
 import static org.valid4j.fixture.FixtureProviders.clearProviderProperty;
-import static org.valid4j.impl.AssertiveDefaultProvider.getFirstTrackedViolations;
+import static org.valid4j.provider.impl.AssertiveDefaultProvider.getFirstTrackedViolations;
 
 /**
  * Testing behavior of tracking contract violations of the default assertive behavior

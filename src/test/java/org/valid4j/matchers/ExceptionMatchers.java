@@ -1,7 +1,7 @@
 package org.valid4j.matchers;
 
 import org.hamcrest.Matcher;
-import org.valid4j.errors.NeverGetHereViolation;
+import org.valid4j.provider.errors.NeverGetHereViolation;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;

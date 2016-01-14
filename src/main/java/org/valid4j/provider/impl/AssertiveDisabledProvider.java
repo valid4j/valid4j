@@ -1,8 +1,8 @@
-package org.valid4j.impl;
+package org.valid4j.provider.impl;
 
-import org.valid4j.AssertiveProvider;
-import org.valid4j.CheckPolicy;
-import org.valid4j.UnreachablePolicy;
+import org.valid4j.provider.AssertiveProvider;
+import org.valid4j.provider.CheckPolicy;
+import org.valid4j.provider.UnreachablePolicy;
 
 /**
  * An assertive policy provider that disables all checks and assertive handling
@@ -27,7 +27,7 @@ public class AssertiveDisabledProvider implements AssertiveProvider {
 
   private static class DoNothingPolicy implements UnreachablePolicy {
     @Override
-    public void neverGetHere(Throwable t, String msg, Object... values) {
+    public void neverGetHere(Throwable t, Object messageBuilder) {
       // Do nothing
     }
   }

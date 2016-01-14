@@ -6,7 +6,7 @@ favorite [hamcrest-matchers](http://hamcrest.org/JavaHamcrest/) to express pre- 
 in your code in a [design by contract](http://en.wikipedia.org/wiki/Design_by_contract) style.
 
 valid4j provides you with an option to customize the global assertion policy by implementing an
-`org.valid4j.AssertiveProvider` and register it as a service loader in `META-INF/services`.
+`org.valid4j.provider.AssertiveProvider` and register it as a service loader in `META-INF/services`.
 
 valid4j also provides support for regular input validation using [hamcrest-matchers](http://hamcrest.org/JavaHamcrest/)
 throwing custom recoverable exceptions if validation fails.

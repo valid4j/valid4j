@@ -3,9 +3,9 @@ package org.valid4j;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.valid4j.errors.EnsureViolation;
-import org.valid4j.errors.NeverGetHereViolation;
-import org.valid4j.errors.RequireViolation;
+import org.valid4j.provider.errors.EnsureViolation;
+import org.valid4j.provider.errors.NeverGetHereViolation;
+import org.valid4j.provider.errors.RequireViolation;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
@@ -23,6 +23,11 @@ public class AssertiveDefaultBehavior {
 	@Rule
 	public final ExpectedException thrown = ExpectedException.none();
 
+	// Return null message as a String in order to let the compiler bind to proper method.
+	private static String nullMessage() {
+		return null;
+	}
+	
 	@Test
 	public void shouldPassWhenRequiredConditionIsTrue() {
 		require(true);
@@ -47,7 +52,7 @@ public class AssertiveDefaultBehavior {
 	public void shouldPassWhenRequiredConditionMatches() {
 		require(3, equalTo(3));
 	}
-	
+
 	@Test
 	public void shouldPassValidObjectAsRequiredResult() {
 		Date argument = new Date();
@@ -79,7 +84,7 @@ public class AssertiveDefaultBehavior {
 	public void shouldPassWhenEnsuredConditionMatches() {
 		ensure(4, equalTo(4));
 	}
-	
+
 	@Test
 	public void shouldPassValidObjectAsEnsuredResult() {
 		Date argument = new Date();
@@ -92,7 +97,7 @@ public class AssertiveDefaultBehavior {
 		thrown.expect(RequireViolation.class);
 		require(false);
 	}
-	
+
 	@Test
 	public void shouldThrowWithMessageWhenRequireFails() {
 		thrown.expect(RequireViolation.class);
@@ -174,7 +179,7 @@ public class AssertiveDefaultBehavior {
 		thrown.expectMessage(containsString("some 3"));
 		neverGetHere("some %d", 3);
 	}
-	
+
 	@Test
 	public void shouldThrowWithMessageWhenReachingUnexpectedException() {
 		final Throwable t = new UnsupportedEncodingException();
@@ -231,11 +236,6 @@ public class AssertiveDefaultBehavior {
 		thrown.expect(InvocationTargetException.class);
 		thrown.expectCause(preventInstantiationViolation());
 		tryToInstantiate(Assertive.class);
-	}
-
-	// Return null message as a String in order to let the compiler bind to proper method.
-	private static String nullMessage() {
-		return null;
 	}
 
 }

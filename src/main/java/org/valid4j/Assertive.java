@@ -1,6 +1,8 @@
 package org.valid4j;
 
 import org.hamcrest.Matcher;
+import org.valid4j.provider.AssertiveInstance;
+import org.valid4j.provider.AssertiveProvider;
 
 import static org.valid4j.BooleanContractCondition.booleanContract;
 import static org.valid4j.MatcherContractCondition.matcherContract;
@@ -145,7 +147,7 @@ public class Assertive {
    * @param values values passed into the msg format string
    */
   public static void neverGetHere(String msg, Object... values) {
-    getProvider().neverGetHerePolicy().neverGetHere(NO_CAUSE, msg, values);
+    getProvider().neverGetHerePolicy().neverGetHere(NO_CAUSE, describing(msg, values));
   }
 
   /**
@@ -167,7 +169,7 @@ public class Assertive {
    * @param values values passed into the msg format string
    */
   public static void neverGetHere(Throwable t, String msg, Object... values) {
-    getProvider().neverGetHerePolicy().neverGetHere(t, msg, values);
+    getProvider().neverGetHerePolicy().neverGetHere(t, describing(msg, values));
   }
 
   /**
@@ -201,7 +203,7 @@ public class Assertive {
    * @return an error
    */
   public static Error neverGetHereError(String msg, Object... values) {
-    getProvider().neverGetHerePolicy().neverGetHere(NO_CAUSE, msg, values);
+    getProvider().neverGetHerePolicy().neverGetHere(NO_CAUSE, describing(msg, values));
     return DEFAULT_ERROR;
   }
 
@@ -227,7 +229,7 @@ public class Assertive {
    * @return an error
    */
   public static Error neverGetHereError(Throwable t, String msg, Object... values) {
-    getProvider().neverGetHerePolicy().neverGetHere(t, msg, values);
+    getProvider().neverGetHerePolicy().neverGetHere(t, describing(msg, values));
     return DEFAULT_ERROR;
   }
 

@@ -1,4 +1,4 @@
-package org.valid4j;
+package org.valid4j.provider;
 
 import org.junit.AfterClass;
 import org.junit.Rule;
