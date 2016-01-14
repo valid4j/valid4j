@@ -8,6 +8,7 @@ import org.junit.rules.ExpectedException;
 import org.valid4j.fixture.AssertiveMockProvider;
 
 import static org.hamcrest.CoreMatchers.isA;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.valid4j.Assertive.*;
@@ -50,9 +51,8 @@ public class AssertiveCustomizedBehavior {
 
     require(true, "testing require");
 
-    verify(AssertiveMockProvider.requirePolicy).check(true, "testing require");
+    verify(AssertiveMockProvider.requirePolicy).check(any(ContractCondition.class));
   }
-
 
   @Test
   public void shouldUseCustomizedEnsurePolicy() {
@@ -61,7 +61,7 @@ public class AssertiveCustomizedBehavior {
 
     ensure(false, "testing ensure");
 
-    verify(AssertiveMockProvider.ensurePolicy).check(false, "testing ensure");
+    verify(AssertiveMockProvider.ensurePolicy).check(any(ContractCondition.class));
   }
 
   @Test

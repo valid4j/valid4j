@@ -2,6 +2,10 @@ package org.valid4j;
 
 import org.hamcrest.Matcher;
 
+import static org.valid4j.BooleanContractCondition.booleanContract;
+import static org.valid4j.MatcherContractCondition.matcherContract;
+import static org.valid4j.Message.describing;
+
 /**
  * Entry point for the global assertive policy.
  * <p>
@@ -45,7 +49,7 @@ public class Assertive {
    * @param condition the condition to check
    */
   public static void require(boolean condition) {
-    getProvider().requirePolicy().check(condition, NULL_MESSAGE);
+    getProvider().requirePolicy().check(booleanContract(condition, NULL_MESSAGE));
   }
 
   /**
@@ -59,7 +63,7 @@ public class Assertive {
    * @return the validated object
    */
   public static <T> T require(T o, Matcher<?> matcher) {
-    getProvider().requirePolicy().check(o, matcher);
+    getProvider().requirePolicy().check(matcherContract(o, matcher));
     return o;
   }
 
@@ -73,7 +77,7 @@ public class Assertive {
    * @param values    values passed into the msg format string
    */
   public static void require(boolean condition, String msg, Object... values) {
-    getProvider().requirePolicy().check(condition, msg, values);
+    getProvider().requirePolicy().check(booleanContract(condition, describing(msg, values)));
   }
 
   /**
@@ -84,7 +88,7 @@ public class Assertive {
    * @param condition the condition to check
    */
   public static void ensure(boolean condition) {
-    getProvider().ensurePolicy().check(condition, NULL_MESSAGE);
+    getProvider().ensurePolicy().check(booleanContract(condition, NULL_MESSAGE));
   }
 
   /**
@@ -98,7 +102,7 @@ public class Assertive {
    * @return        the validated object
    */
   public static <T> T ensure(T o, Matcher<?> matcher) {
-    getProvider().ensurePolicy().check(o, matcher);
+    getProvider().ensurePolicy().check(matcherContract(o, matcher));
     return o;
   }
 
@@ -112,7 +116,7 @@ public class Assertive {
    * @param values    values passed into the msg format string
    */
   public static void ensure(boolean condition, String msg, Object... values) {
-    getProvider().ensurePolicy().check(condition, msg, values);
+    getProvider().ensurePolicy().check(booleanContract(condition, describing(msg, values)));
   }
 
   /**

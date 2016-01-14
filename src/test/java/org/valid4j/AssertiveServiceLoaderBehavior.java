@@ -41,10 +41,10 @@ public class AssertiveServiceLoaderBehavior {
     AssertiveInstance.init();
 
     require(true, "test require policy is loaded from file");
-    verify(AssertiveMockProvider.requirePolicy).check(true, "test require policy is loaded from file");
+    verify(AssertiveMockProvider.requirePolicy).check(any(ContractCondition.class));
 
     ensure(true, "test ensure policy is loaded from file");
-    verify(AssertiveMockProvider.ensurePolicy).check(true, "test ensure policy is loaded from file");
+    verify(AssertiveMockProvider.ensurePolicy).check(any(ContractCondition.class));
 
     neverGetHere("test never get here policy is loaded from file");
     verify(AssertiveMockProvider.neverGetHerePolicy).neverGetHere(null, "test never get here policy is loaded from file");
